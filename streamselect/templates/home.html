@@ -1,0 +1,31 @@
+{% extends 'base.html' %} 
+{% block title %}HOME{% endblock %} 
+{% block content %}
+    {% if user.is_authenticated %}
+    <div>
+        <h3>Welcome {{ user.username }}!</h3>
+        <h5><a href="{% url 'profile' %}">Add profile</a></h5>
+        <h5><a href="{% url 'password_change' %}">Change Password</a></h5>
+
+        <a href="{% url 'logout' %}">Logout?</a>
+        <p>If you want your future to be successful, then first you have to plan for it.
+            Stream selection after 10th determines your future and for this it is necessary to test your capabilities.
+            Along with this, it should also be seen in which subject you can perform well.
+            If you take a step once, then it becomes difficult to reverse it. That's why 10th is considered important for you.
+            You can solve this problem only by psychometric test, this test can help you a lot in your 1st stream selection.
+        </p>
+    </div>
+{% else %}
+    <div>
+        <h3>Welcome!</h3>
+        <p>If you want your future to be successful, then first you have to plan for it.
+            Stream selection after 10th determines your future and for this it is necessary to test your capabilities.
+            Along with this, it should also be seen in which subject you can perform well.
+            If you take a step once, then it becomes difficult to reverse it. That's why 10th is considered important for you.
+            You can solve this problem only by psychometric test, this test can help you a lot in your 1st stream selection.
+        </p>
+        <a  href="{% url 'register' %}">Signup</a>
+        <a  href="{% url 'login' %}">Login</a>
+    </div>
+{% endif %}
+{% endblock %}
