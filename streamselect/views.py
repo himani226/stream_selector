@@ -15,7 +15,7 @@ from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.db.models.query_utils import Q
 from .forms import ProfileForm, SetPasswordForm
-from .models import userbasicinfo
+from .models import UserBasicInfo, UserImage
 
 
 @login_required()
@@ -95,7 +95,7 @@ def profile(request):
         photo = request.FILES['image']
         user=request.user
         if request.user.is_authenticated:
-            profilemodel = userbasicinfo()
+            profilemodel = UserBasicInfo()
             profilemodel.full_name = name
             profilemodel.father_name = fathername
             profilemodel.mother_name = mothername
@@ -108,9 +108,15 @@ def profile(request):
             profilemodel.school = school
             profilemodel.mobile_num = mobile
             profilemodel.alt_mobile_num = altnumber
-            profilemodel.photo = photo
             profilemodel.uid = user
             profilemodel.save()
+            profilemodel = UserBasicInfo.objects.get(full_name=request.POST.get('name'))
+            userimage = UserImage()
+            userimage.name = profilemodel
+            userimage.user_image = photo
+            userimage.user_image_ext = photo.name.split('.')[-1]
+            userimage.save()
+
             messages.success(request, f'Your data has been added.')
             return redirect('home')
     else:

@@ -4,13 +4,13 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, SetPasswordForm, PasswordResetForm
 from django.core.exceptions import ValidationError
 
-from .models import userbasicinfo
+from .models import UserBasicInfo
 
 # create a ModelForm
 class ProfileForm(forms.ModelForm):
     # specify the name of model to use
     class Meta:
-        model = userbasicinfo
+        model = UserBasicInfo
         #fields = '__all__'
         exclude = ['uid']
 
