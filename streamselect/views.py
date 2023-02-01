@@ -91,7 +91,7 @@ def profile(request):
         disability = request.POST['disability']
         school = request.POST['school']
         mobile = request.POST['number']
-        altnumber = request.POST['anumber']
+        anumber = request.POST['anumber']
         photo = request.FILES['image']
         user=request.user
         if request.user.is_authenticated:
@@ -107,10 +107,11 @@ def profile(request):
             profilemodel.disability = disability
             profilemodel.school = school
             profilemodel.mobile_num = mobile
-            profilemodel.alt_mobile_num = altnumber
-            profilemodel.uid = user
+            profilemodel.parents_num = anumber
+            profilemodel.user_id = user.id
             profilemodel.save()
-            profilemodel = UserBasicInfo.objects.get(full_name=request.POST.get('name'))
+
+            profilemodel = UserBasicInfo.objects.filter(full_name=name).first()
             userimage = UserImage()
             userimage.name = profilemodel
             userimage.user_image = photo
@@ -212,3 +213,5 @@ def password_reset_confirm(request, uidb64, token):
 
     messages.error(request, 'Something went wrong, redirecting back to Homepage')
     return redirect("home")
+
+
