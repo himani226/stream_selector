@@ -12,7 +12,7 @@ class ProfileForm(forms.ModelForm):
     class Meta:
         model = userbasicinfo
         #fields = '__all__'
-        exclude = ['user_id']
+        exclude = ['uid']
 
 
 class SetPasswordForm(SetPasswordForm):

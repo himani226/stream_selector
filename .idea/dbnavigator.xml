@@ -20,10 +20,7 @@
     <last-used-providers />
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files>
-      <object connection-id="5fcab527-fdb4-44ea-aed2-756dd9321e0e" object-ref="schemas/main/tables/auth_user" />
-      <object connection-id="5fcab527-fdb4-44ea-aed2-756dd9321e0e" object-ref="schemas/main/tables/streamselect_userbasicinfo" />
-    </open-files>
+    <open-files />
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
     <filter-actions connection-id="5fcab527-fdb4-44ea-aed2-756dd9321e0e" dataset="main.auth_user" active-filter-id="EMPTY_FILTER" />

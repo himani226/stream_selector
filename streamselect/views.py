@@ -15,6 +15,7 @@ from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.db.models.query_utils import Q
 from .forms import ProfileForm, SetPasswordForm
+from .models import userbasicinfo
 
 
 @login_required()
@@ -79,14 +80,39 @@ def user_login(request):
 @login_required()
 def profile(request):
     if request.method == 'POST':
+        name = request.POST['sname']
+        fathername = request.POST['fathername']
+        mothername = request.POST['mothername']
+        dob = request.POST['dob']
+        gender = request.POST['gender']
+        category = request.POST['category']
+        address = request.POST['address']
+        area = request.POST['area']
+        disability = request.POST['disability']
+        school = request.POST['school']
+        mobile = request.POST['number']
+        altnumber = request.POST['anumber']
+        photo = request.FILES['image']
         user=request.user
-        form = ProfileForm(request.POST)
         if request.user.is_authenticated:
-            if form.is_valid():
-                form.user_id = user
-                form.save()
+            profilemodel = userbasicinfo()
+            profilemodel.full_name = name
+            profilemodel.father_name = fathername
+            profilemodel.mother_name = mothername
+            profilemodel.dob = dob
+            profilemodel.gender = gender
+            profilemodel.category = category
+            profilemodel.address = address
+            profilemodel.area = area
+            profilemodel.disability = disability
+            profilemodel.school = school
+            profilemodel.mobile_num = mobile
+            profilemodel.alt_mobile_num = altnumber
+            profilemodel.photo = photo
+            profilemodel.uid = user
+            profilemodel.save()
             messages.success(request, f'Your data has been added.')
-            return redirect('profile')
+            return redirect('home')
     else:
         form = ProfileForm()
     context = {'form': form}

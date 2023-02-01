@@ -3,7 +3,7 @@ from django.db import models
 
 
 class userbasicinfo(models.Model):
-    user_id = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    uid = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     added_on = models.DateTimeField(auto_now=True)
     full_name = models.CharField(max_length=100)
     father_name = models.CharField(max_length=100)
@@ -16,4 +16,5 @@ class userbasicinfo(models.Model):
     disability=models.CharField(max_length=100)
     school_name_board = models.CharField(max_length=100)
     mobile_num = models.CharField(max_length=12)
+    alt_mobile_num = models.CharField(max_length=12)
     photo = models.ImageField(upload_to='User_image', null=True)

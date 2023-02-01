@@ -2,8 +2,7 @@
 {% load crispy_forms_tags %}
 {% block content %}
 	<div class="content-section">
-        <form method="POST">
-            {% csrf_token %}
+        <form method="POST" enctype="multipart/form-data">
             {% for message in messages  %}
               <div class="alert alert-{{ message.tags }} alert-dismissible fade show" style="color:red" role="alert">
                     <strong>Message : </strong> {{ message }}
@@ -12,7 +11,30 @@
                     </button>
               </div>
             {% endfor %}
-            {{ form|crispy }}
+            {% csrf_token %}
+                <input type="text" class="form-control form-control-user" name="sname"
+                                            placeholder="Student name">
+            <input type="text" class="form-control form-control-user" name="fathername"
+                                            placeholder="Father name">
+            <input type="text" class="form-control form-control-user" name="mothername"
+                                            placeholder="Mother Name">
+            <input type="text" class="form-control form-control-user" name="dob"
+                                            placeholder="Date of Birth">
+            <input type="text" class="form-control form-control-user" name="gender"
+                                            placeholder="Gender">
+            <input type="text" class="form-control form-control-user" name="category"
+                                            placeholder="Category">
+            <input type="text" class="form-control form-control-user" name="address"
+                                            placeholder="Address">
+            <input type="text" class="form-control form-control-user" name="area"
+                                            placeholder="Area">
+            <input type="text" class="form-control form-control-user" name="number" placeholder="Mobile Number">
+            <input type="text" class="form-control form-control-user" name="anumber" placeholder="Alternate Mobile Number">
+            <input type="text" class="form-control form-control-user" name="school" placeholder="School Name and Board">
+            <input type="text" class="form-control form-control-user" name="disability" placeholder="Any disability">
+            <input type="file" class="form-control form-control-user" name="image" placeholder="Upload Photo">
+
+
             <button class="btn btn-outline-info" type="submit">Submit</button>
         </form>
   	</div>
