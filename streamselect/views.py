@@ -1,3 +1,4 @@
+import razorpay as razorpay
 import six
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordResetForm, UserCreationForm
@@ -6,7 +7,7 @@ from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage
 from django.forms import forms
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, get_user_model
 from django.contrib import messages
@@ -14,13 +15,36 @@ from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.db.models.query_utils import Q
+from django.views.decorators.csrf import csrf_exempt
+
+from stream_selector import settings
 from .forms import ProfileForm, SetPasswordForm
-from .models import UserBasicInfo, UserImage
+from .models import UserBasicInfo
 
 
 @login_required()
 def home(request):
-    return render(request, 'home.html')
+    currency = 'INR'
+    amount = 1000  # Rs. 10
+
+    # Create a Razorpay Order
+    razorpay_order = razorpay_client.order.create(dict(amount=amount,
+                                                       currency=currency,
+                                                       payment_capture='0'))
+
+    # order id of newly created order.
+    razorpay_order_id = razorpay_order['id']
+    callback_url = 'http://127.0.0.1:8000/payment_handler/'
+
+    # we need to pass these details to frontend.
+    context = {}
+    context['razorpay_order_id'] = razorpay_order_id
+    context['razorpay_merchant_key'] = settings.RAZOR_KEY_ID
+    context['razorpay_amount'] = amount
+    context['currency'] = currency
+    context['callback_url'] = callback_url
+
+    return render(request, 'home.html', context=context)
 
 
 def register(request):
@@ -77,7 +101,7 @@ def user_login(request):
     else:
         return render(request, 'login.html')
 
-@login_required()
+@login_required
 def profile(request):
     if request.method == 'POST':
         name = request.POST['sname']
@@ -88,11 +112,10 @@ def profile(request):
         category = request.POST['category']
         address = request.POST['address']
         area = request.POST['area']
-        disability = request.POST['disability']
         school = request.POST['school']
         mobile = request.POST['number']
         anumber = request.POST['anumber']
-        photo = request.FILES['image']
+        #photo = request.FILES['image']
         user=request.user
         if request.user.is_authenticated:
             profilemodel = UserBasicInfo()
@@ -104,19 +127,18 @@ def profile(request):
             profilemodel.category = category
             profilemodel.address = address
             profilemodel.area = area
-            profilemodel.disability = disability
             profilemodel.school = school
             profilemodel.mobile_num = mobile
             profilemodel.parents_num = anumber
             profilemodel.user_id = user.id
             profilemodel.save()
 
-            profilemodel = UserBasicInfo.objects.filter(full_name=name).first()
-            userimage = UserImage()
-            userimage.name = profilemodel
-            userimage.user_image = photo
-            userimage.user_image_ext = photo.name.split('.')[-1]
-            userimage.save()
+            #profilemodel = UserBasicInfo.objects.filter(full_name=name).first()
+            #userimage = UserImage()
+            #userimage.name = profilemodel
+            #userimage.user_image = photo
+            #userimage.user_image_ext = photo.name.split('.')[-1]
+            #userimage.save()
 
             messages.success(request, f'Your data has been added.')
             return redirect('home')
@@ -214,4 +236,80 @@ def password_reset_confirm(request, uidb64, token):
     messages.error(request, 'Something went wrong, redirecting back to Homepage')
     return redirect("home")
 
+
+# authorize razorpay client with API Keys.
+razorpay_client = razorpay.Client(
+    auth=(settings.RAZOR_KEY_ID, settings.RAZOR_KEY_SECRET))
+
+
+'''@login_required
+def checkout(request):
+    currency = 'INR'
+    amount = 1000  # Rs. 10
+
+    # Create a Razorpay Order
+    razorpay_order = razorpay_client.order.create(dict(amount=amount,
+                                                       currency=currency,
+                                                       payment_capture='0'))
+
+    # order id of newly created order.
+    razorpay_order_id = razorpay_order['id']
+    callback_url = 'payment_handler/'
+
+    # we need to pass these details to frontend.
+    context = {}
+    context['razorpay_order_id'] = razorpay_order_id
+    context['razorpay_merchant_key'] = settings.RAZOR_KEY_ID
+    context['razorpay_amount'] = amount
+    context['currency'] = currency
+    context['callback_url'] = callback_url
+
+    return render(request, 'checkout.html', context=context)'''
+
+
+# we need to csrf_exempt this url as
+# POST request will be made by Razorpay
+# and it won't have the csrf token.
+@csrf_exempt
+def payment_handler(request):
+    # only accept POST request.
+    if request.method == "POST":
+        try:
+            # get the required parameters from post request.
+            payment_id = request.POST.get('razorpay_payment_id', '')
+            razorpay_order_id = request.POST.get('razorpay_order_id', '')
+            signature = request.POST.get('razorpay_signature', '')
+            params_dict = {
+                'razorpay_order_id': razorpay_order_id,
+                'razorpay_payment_id': payment_id,
+                'razorpay_signature': signature
+            }
+
+            # verify the payment signature.
+            result = razorpay_client.utility.verify_payment_signature(
+                params_dict)
+            if result is not None:
+                amount = 10000  # Rs. 10
+                try:
+
+                    # capture the payemt
+                    razorpay_client.payment.capture(payment_id, amount)
+
+                    # render success page on successful caputre of payment
+                    return render(request, 'paymentsuccess.html')
+                except:
+
+                    # if there is an error while capturing payment.
+                    return render(request, 'paymentfailure.html')
+            else:
+
+                # if signature verification fails.
+                return render(request, 'paymentfailure.html')
+        except:
+
+            # if we don't find the required parameters in POST data
+            return HttpResponseBadRequest()
+    else:
+        # if other than POST request is made.
+        return HttpResponseBadRequest()
 

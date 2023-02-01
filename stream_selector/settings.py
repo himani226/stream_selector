@@ -163,3 +163,6 @@ EMAIL_USE_TLS=True
 EMAIL_HOST_USER="vichaar.team@gmail.com"
 EMAIL_HOST_PASSWORD="31vich@r15"
 
+####Added for payment integration##########
+RAZOR_KEY_ID = 'rzp_test_xJDj49JpzsGOu1'
+RAZOR_KEY_SECRET = 'QOhUjDdHktvYBf5ub3RS9UVm'
