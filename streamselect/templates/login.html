@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block title %}Login Page{% endblock %}
 {% block content %}
-    <div class="container">
+<div class="container">
         <!-- Outer Row -->
         <div class="row justify-content-center">
 
@@ -15,22 +16,22 @@
                             <div class="col-lg-6">
                                 <div class="p-5">
                                     <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">STREAM SELECTOR LOGIN</h1>
+                                        <h1 class="h4 text-gray-900 mb-4">intelliTest  LOGIN</h1>
                                     </div>
                                     {% for message in messages  %}
-                                      <div class="alert alert-{{ message.tags }} alert-dismissible fade show" style="color:red" role="alert">
+                                        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" style="color:red" role="alert">
                                             <strong>Message : </strong> {{ message }}
                                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                              <span aria-hidden="true">&times;</span>
+                                                <span aria-hidden="true">&times;</span>
                                             </button>
-                                      </div>
+                                        </div>
                                     {% endfor %}
                                     <form class="user" action="" method="POST">
                                         {% csrf_token %}
                                         <div class="form-group">
-                                            <input type="text" class="form-control form-control-user"
-                                                id="exampleInputUser" aria-describedby="UserHelp"
-                                                name="username" placeholder="User Name">
+                                            <input type="email" class="form-control form-control-user"
+                                                id="exampleInputEmail" name="username" aria-describedby="emailHelp"
+                                                placeholder="User Name">
                                         </div>
                                         <div class="form-group">
                                             <input type="password" class="form-control form-control-user"
@@ -43,11 +44,14 @@
                                                     Me</label>
                                             </div>
                                         </div>
-                                        <button type="submit" class="btn btn-primary btn-user btn-block">Login</button>
-                                        <hr>
-                                        <a href="{% url 'social:begin' 'google-oauth2' %}" class="btn btn-google btn-user btn-block">
-                                            <i class="fab fa-google fa-fw"></i> Login with Google
+                                        <a href="index.html" class="btn btn-primary btn-user btn-block">
+                                            Login
                                         </a>
+                                    </form>
+                                    <hr>
+                                    <a href="{% url 'social:begin' 'google-oauth2' %}">
+                                      <img src="{% static 'img/btn_google.png' %}" class="img-fluid rounded mx-auto d-block">
+                                    </a>
 
                                     <hr>
                                     <div class="text-center">
@@ -61,10 +65,8 @@
                         </div>
                     </div>
                 </div>
-
             </div>
-
         </div>
+</div>
 
-    </div>
 {% endblock %}

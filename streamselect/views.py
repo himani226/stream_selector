@@ -19,7 +19,13 @@ from django.views.decorators.csrf import csrf_exempt
 
 from stream_selector import settings
 from .forms import ProfileForm, SetPasswordForm
-from .models import UserBasicInfo
+from .models import UserBasicInfo,PaymentCheck
+
+from django_xhtml2pdf.utils import pdf_decorator
+
+@pdf_decorator(pdfname='test_result.pdf')
+def result(request):
+    return render(request, 'result.html')
 
 
 @login_required()
@@ -34,7 +40,7 @@ def home(request):
 
     # order id of newly created order.
     razorpay_order_id = razorpay_order['id']
-    callback_url = 'http://127.0.0.1:8000/payment_handler/'
+    callback_url = 'payment_handler/'
 
     # we need to pass these details to frontend.
     context = {}
@@ -274,6 +280,7 @@ def checkout(request):
 def payment_handler(request):
     # only accept POST request.
     if request.method == "POST":
+        user=reuest.user
         try:
             # get the required parameters from post request.
             payment_id = request.POST.get('razorpay_payment_id', '')
@@ -294,7 +301,10 @@ def payment_handler(request):
 
                     # capture the payemt
                     razorpay_client.payment.capture(payment_id, amount)
-
+                    check = PaymentCheck()
+                    check.user = user.id
+                    check.order_id = payment_id
+                    payment_status = "Success"
                     # render success page on successful caputre of payment
                     return render(request, 'paymentsuccess.html')
                 except:
