@@ -11,6 +11,7 @@ urlpatterns = [
     path('register/', stream_views.register, name='register'),
     path('profile/', stream_views.profile, name='profile'),
     path('result/', stream_views.result, name='result'),
+    path('stream_test/', stream_views.stream_test, name='streamtest'),
     path('payment_handler/', stream_views.payment_handler, name='payment_handler'),
     path('password_change', stream_views.password_change, name='password_change'),
     path('password_reset', stream_views.password_reset, name='password_reset'),

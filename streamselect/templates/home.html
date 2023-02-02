@@ -24,7 +24,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="{% url 'home' %}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -39,7 +39,7 @@
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link " href="#" >
+                <a class="nav-link " href="{% url 'streamtest' %}" >
                     <i class="fas fa-fw fa-chalkboard-teacher"></i>
                     <span>Stream Selector</span>
                 </a>
@@ -48,7 +48,7 @@
 
             <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link " href="#">
+                <a class="nav-link " href="{% url 'streamtest' %}">
                     <i class="fas fa-fw fa-user-graduate"></i>
                     <span>Career Selector</span>
                 </a>
@@ -73,8 +73,8 @@
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">User Profile</h6>
-                        <a class="collapse-item" href="login.html">Student Info</a>
-						 <a class="collapse-item" href="login.html">Edit Profile</a>
+                        <a class="collapse-item" href="{% url 'profile' %}">Student Info</a>
+						 <!--<a class="collapse-item" href="login.html">Edit Profile</a>-->
 						 <a class="collapse-item" href="login.html">Change Password</a>
                        </div>
                 </div>
@@ -165,12 +165,12 @@
 
                         <!-- Nav Item - Alerts -->
                         <li class="nav-item dropdown no-arrow mx-1">
-                            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
+                            <!--<a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-bell fa-fw"></i>
-                                <!-- Counter - Alerts -->
+                                Counter - Alerts
                                 <span class="badge badge-danger badge-counter">3+</span>
-                            </a>
+                            </a>-->
                             <!-- Dropdown - Alerts -->
                             <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="alertsDropdown">
@@ -239,7 +239,7 @@
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-                        <a href="#" class="d-none d-sm-inline-block btn btn-danger shadow-sm"><i
+                        <a href="{% url 'result' %}" class="d-none d-sm-inline-block btn btn-danger shadow-sm"><i
                                 class="fas fa-file-alt fa-sm text-white-50"></i>  Generate Score Report</a>
                     </div>
 
@@ -254,7 +254,7 @@
                                         <div class="col mr-2">
                                             <div class="text-s font-weight-bold text-primary text-uppercase mb-1">
                                                 Stream Selector Test</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">GIVE TEST</div>
+                                            <div class="h5 mb-0 font-weight-bold btn btn-primary">GIVE TEST</div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-chalkboard-teacher fa-2x text-gray-300"></i>
@@ -272,7 +272,7 @@
                                         <div class="col mr-2">
                                             <div class="text-s font-weight-bold text-success text-uppercase mb-1">
                                                 Career Selector Test</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">GIVE TEST</div>
+                                            <div class="h5 mb-0 font-weight-bold btn btn-success">GIVE TEST</div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-user-graduate fa-2x text-gray-300"></i>
@@ -292,7 +292,7 @@
                                             </div>
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col-auto">
-                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">VIEW RESULT</div>
+                                                    <div class="h5 mb-0 mr-3 font-weight-bold btn btn-info">VIEW RESULT</div>
                                                 </div>
                                                <!-- <div class="col">
                                                     <div class="progress progress-sm mr-2">

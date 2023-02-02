@@ -280,7 +280,7 @@ def checkout(request):
 def payment_handler(request):
     # only accept POST request.
     if request.method == "POST":
-        user=reuest.user
+        user=request.user
         try:
             # get the required parameters from post request.
             payment_id = request.POST.get('razorpay_payment_id', '')
@@ -323,3 +323,6 @@ def payment_handler(request):
         # if other than POST request is made.
         return HttpResponseBadRequest()
 
+
+def stream_test(request):
+    return render(request, 'streamtest.html')
