@@ -16,7 +16,7 @@ from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.db.models.query_utils import Q
 from django.views.decorators.csrf import csrf_exempt
-
+from datetime import datetime
 from stream_selector import settings
 from .forms import ProfileForm, SetPasswordForm
 from .models import UserBasicInfo,PaymentCheck
@@ -96,6 +96,9 @@ def user_login(request):
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
+        if username == "" and password == "":
+            messages.error(request, "Kindly fill the fields")
+            return redirect("login")
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
@@ -118,6 +121,7 @@ def profile(request):
         category = request.POST['category']
         address = request.POST['address']
         area = request.POST['area']
+        board = request.POST['board']
         school = request.POST['school']
         mobile = request.POST['number']
         anumber = request.POST['anumber']
@@ -128,12 +132,13 @@ def profile(request):
             profilemodel.full_name = name
             profilemodel.father_name = fathername
             profilemodel.mother_name = mothername
-            profilemodel.dob = dob
+            profilemodel.dob = datetime.strptime(dob,"%Y-%m-%d")
             profilemodel.gender = gender
             profilemodel.category = category
             profilemodel.address = address
             profilemodel.area = area
-            profilemodel.school = school
+            profilemodel.board = board
+            profilemodel.school_name = school
             profilemodel.mobile_num = mobile
             profilemodel.parents_num = anumber
             profilemodel.user_id = user.id
@@ -147,7 +152,7 @@ def profile(request):
             #userimage.save()
 
             messages.success(request, f'Your data has been added.')
-            return redirect('home')
+            return redirect('profile')
     else:
         form = ProfileForm()
     context = {'form': form}

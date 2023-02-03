@@ -18,7 +18,8 @@ class UserBasicInfo(models.Model):
     category = models.CharField(max_length=100)
     address = models.CharField(max_length=100)
     area = models.CharField(max_length=100)
-    school_name_board = models.CharField(max_length=100)
+    board = models.CharField(max_length=100)
+    school_name = models.CharField(max_length=100)
     mobile_num = models.CharField(max_length=12)
     parents_num = models.CharField(max_length=12)
 
@@ -32,7 +33,8 @@ class UserBasicInfo(models.Model):
             'category': self.category,
             'address': self.address,
             'area': self.area,
-            'school_name_board': self.school_name_board,
+            'board': self.board,
+            'school_name': self.school_name,
             'mobile_num': self.mobile_num,
             'phone_num': self.parents_num,
             # 'user_profile_image': UserImage.objects.filter(agent=self).user_image
