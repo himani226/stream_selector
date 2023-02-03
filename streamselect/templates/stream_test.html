@@ -1,0 +1,68 @@
+{% extends "base_internal.html" %}
+{% load static %}
+{% block content %}
+{% if user.is_authenticated %}
+<form method="POST" enctype="multipart/form-data">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h4 class="text-right">Stream Test - Section 1</h4>
+                        </div>
+                            {% for message in messages  %}
+                                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" style="color:red" role="alert">
+                                    <strong>Message : </strong> {{ message }}
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            {% endfor %}
+                            {% csrf_token %}
+                            <div class="row mt-2">
+                                <div class="col-md-6"><label class="labels">Role Model</label><input type="text" name="role" class="form-control" placeholder="role model" value=""></div>
+                                <div class="col-md-6"><label class="labels">Nature</label><input type="text" class="form-control" name="nature" value="" placeholder="Nature"></div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-md-6"><label class="labels">Communication Skills</label><input type="text" class="form-control" name="com_skills" placeholder="Father Name" value=""></div>
+                                <div class="col-md-6"><label class="labels">Personality Development Course</label><input type="text" class="form-control" name="development_course" value="" placeholder="Mother Name"></div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-md-6"><label class="labels">Exam Attempts</label>
+                                    <select class="form-select form-control" name="exam_attempts" id="gender">
+                                        <option selected="selected">Select a Gender</option>
+                                            <option>1</option>
+                                            <option>2</option>
+                                            <option>None</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6"><label class="labels">Any health issues</label>
+                                    <select class="form-select form-control" name="health_issues" id="category">
+                                        <option selected="selected">Select a health issues</option>
+                                        <option>yes</option>
+                                        <option>no</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                            <!--<div class="col-md-6"><label class="labels">Are you differently abled?</label>
+                                <select class="form-select form-control" id="disablity">
+              <option selected="selected">Select</option>
+                                <option>Yes</option>
+                                <option>No</option>
+                                 </select>
+                            </div>-->
+                                <div class="col-md-6"><label class="labels">Drugs</label><input type="text" class="form-control" name="drugs" placeholder="Drugs" value=""></div>
+                                <div class="col-md-6"><label class="labels">School Type</label>
+                                    <select class="form-select form-control" name="school_type" id="area">
+                                        <option selected="selected">Select School Type</option>
+                                        <option>Government</option>
+                                        <option>Private</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-md-6"><label class="labels">Attendance</label><input type="text" name="attendance" class="form-control" placeholder="Attendance" value=""></div>
+                                <div class="col-md-6"><label class="labels">Scholarship</label><input type="text" name="scholarship" class="form-control" value="" placeholder="Scholarship"></div>
+                            </div>
+
+                        <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="submit">Next</button> <button class="btn btn-danger profile-button" type="reset">Clear</button></div>
+                    </form>
+{% endif %}
+{% endblock %}

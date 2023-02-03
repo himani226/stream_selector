@@ -1,7 +1,6 @@
 {% load static %}
 <html lang="en">
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -20,12 +19,13 @@
     <title>intelliTest - KAAMYAAB BANO</title>
 </head>
     <body id="page-top">
+    <div id="google_translate_element" class="text-right"></div>
     <!-- Page Wrapper -->
         <div id="wrapper">
         <!-- Sidebar -->
             <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
             <!-- Sidebar - Brand -->
-                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{% url 'home' %}">
                     <div class="sidebar-brand-icon">
                      <img src="{% static 'img/logo_icon.svg' %}" width="50px" >
                     </div>
@@ -42,13 +42,10 @@
                 <!-- Divider -->
                 <hr class="sidebar-divider">
                 <!-- Heading -->
-                <div class="sidebar-heading">
-                    Select Test
-                </div>
 
                 <!-- Nav Item - Pages Collapse Menu -->
                 <li class="nav-item">
-                    <a class="nav-link " href="{% url 'streamtest' %}" >
+                    <a class="nav-link " href="{% url 'stream_test' %}" >
                         <i class="fas fa-fw fa-chalkboard-teacher"></i>
                         <span>Stream Selector</span>
                     </a>
@@ -57,7 +54,7 @@
 
                 <!-- Nav Item - Utilities Collapse Menu -->
                 <li class="nav-item">
-                    <a class="nav-link " href="{% url 'streamtest' %}">
+                    <a class="nav-link " href="#">
                         <i class="fas fa-fw fa-user-graduate"></i>
                         <span>Career Selector</span>
                     </a>
@@ -68,9 +65,6 @@
                 <hr class="sidebar-divider">
 
                 <!-- Heading -->
-                <div class="sidebar-heading">
-                    Addons
-                </div>
 
                 <!-- Nav Item - Pages Collapse Menu -->
                 <li class="nav-item">
@@ -162,14 +156,14 @@
                             </div>
                         </li>
                         <!-- Nav Item - Alerts -->
-                        <li class="nav-item dropdown no-arrow mx-1">
-                            <!--<a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
+                       <!-- <li class="nav-item dropdown no-arrow mx-1">
+                            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-bell fa-fw"></i>
                                 Counter - Alerts
                                 <span class="badge badge-danger badge-counter">3+</span>
-                            </a>-->
-                            <!-- Dropdown - Alerts -->
+                            </a>
+                             Dropdown - Alerts
                             <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="alertsDropdown">
                                 <h6 class="dropdown-header">
@@ -189,7 +183,7 @@
                                 <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
                             </div>
                         </li>
-                        <div class="topbar-divider d-none d-sm-block"></div>
+                        <div class="topbar-divider d-none d-sm-block"></div>-->
 
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
@@ -202,18 +196,18 @@
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
+                                <!--<a class="dropdown-item" href="#">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Edit Profile
-                                </a>
+                                </a>-->
                                 <a class="dropdown-item" href="#">
                                     <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Change Password
                                 </a>
-                                <a class="dropdown-item" href="#">
+                                <!--<a class="dropdown-item" href="#">
                                     <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Activity Log
-                                </a>
+                                </a>--> <!-- later on activity-->
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -280,4 +274,13 @@
     <!-- Page level custom scripts -->
     <script src="{% static 'js/demo/chart-area-demo.js' %}"></script>
     <script src="{% static 'js/demo/chart-pie-demo.js' %}"></script>
+<script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement(
+                {pageLanguage: 'en',includedLanguages: 'hi', layout: google.translate.TranslateElement.InlineLayout.SIMPLE},
+                'google_translate_element'
+            );
+        }
+    </script>
+<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </html>

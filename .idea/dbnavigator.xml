@@ -43,11 +43,12 @@
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="a3429bba-5a67-4c81-b396-541864290f93" />
+    <connection id="23842f9c-e781-470c-ade1-2d8b81e7b48d" />
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
+    <filter-actions connection-id="23842f9c-e781-470c-ade1-2d8b81e7b48d" dataset="main.streamselect_userbasicinfo" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="a3429bba-5a67-4c81-b396-541864290f93" dataset="main.streamselect_userbasicinfo" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="a3429bba-5a67-4c81-b396-541864290f93" dataset="main.streamselect_userimage" active-filter-id="EMPTY_FILTER" />
-    <filter-actions connection-id="23842f9c-e781-470c-ade1-2d8b81e7b48d" dataset="main.streamselect_userbasicinfo" active-filter-id="EMPTY_FILTER" />
   </component>
   <component name="DBNavigator.Project.EditorStateManager">
     <last-used-providers />
@@ -293,7 +294,6 @@
         <object-type name="FUNCTION" sorting-type="NAME" />
         <object-type name="PROCEDURE" sorting-type="NAME" />
         <object-type name="ARGUMENT" sorting-type="POSITION" />
-        <object-type name="TYPE ATTRIBUTE" sorting-type="POSITION" />
       </sorting>
       <default-editors>
         <object-type name="VIEW" editor-type="SELECTION" />

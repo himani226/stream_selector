@@ -52,6 +52,7 @@ class UserBasicInfo(models.Model):
 
 
 class SectionFirst(models.Model):
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     role_model = models.CharField(max_length=100)
     nature = models.CharField(max_length=100)
     com_skills = models.CharField(max_length=100)

@@ -19,7 +19,7 @@ from django.views.decorators.csrf import csrf_exempt
 from datetime import datetime
 from stream_selector import settings
 from .forms import ProfileForm, SetPasswordForm
-from .models import UserBasicInfo,PaymentCheck
+from .models import UserBasicInfo,PaymentCheck, SectionFirst
 
 from django_xhtml2pdf.utils import pdf_decorator
 
@@ -30,27 +30,7 @@ def result(request):
 
 @login_required()
 def home(request):
-    currency = 'INR'
-    amount = 1000  # Rs. 10
-
-    # Create a Razorpay Order
-    razorpay_order = razorpay_client.order.create(dict(amount=amount,
-                                                       currency=currency,
-                                                       payment_capture='0'))
-
-    # order id of newly created order.
-    razorpay_order_id = razorpay_order['id']
-    callback_url = 'payment_handler/'
-
-    # we need to pass these details to frontend.
-    context = {}
-    context['razorpay_order_id'] = razorpay_order_id
-    context['razorpay_merchant_key'] = settings.RAZOR_KEY_ID
-    context['razorpay_amount'] = amount
-    context['currency'] = currency
-    context['callback_url'] = callback_url
-
-    return render(request, 'home.html', context=context)
+    return render(request, 'home.html')
 
 
 def register(request):
@@ -75,6 +55,10 @@ def register(request):
         if (pass1 != pass2):
             messages.error(request, " Passwords do not match")
             return redirect('register')
+
+        if username == "" and pass1 == "" and email == "" and fname == "" and lname == "":
+            messages.error(request, "Kindly fill the fields")
+            return redirect("register")
 
         # Create the user
         if not (User.objects.filter(username=username).exists() or User.objects.filter(email=email).exists()):
@@ -126,6 +110,10 @@ def profile(request):
         mobile = request.POST['number']
         anumber = request.POST['anumber']
         #photo = request.FILES['image']
+        if name == "" and fathername == "" and mothername == "" and dob == "" and gender == "" and category == "" and \
+                address == "" and area == "" and board == "" and school == "" and mobile == "" and anumber == "":
+            messages.error(request, "Kindly fill the fields")
+            return redirect("profile")
         user=request.user
         if request.user.is_authenticated:
             profilemodel = UserBasicInfo()
@@ -153,10 +141,62 @@ def profile(request):
 
             messages.success(request, f'Your data has been added.')
             return redirect('profile')
+        else:
+            messages.error(request, f'There is some error in your form. Kindly check and fill it again.')
+            return redirect('profile')
     else:
-        form = ProfileForm()
-    context = {'form': form}
-    return render(request, 'profile.html', context)
+        return render(request, 'profile.html')
+
+
+@login_required
+def stream_test(request):
+    user = request.user
+    uid = UserBasicInfo.objects.get(user_id=user.id)
+    if uid != user.id:
+        if request.method == 'POST':
+                role = request.POST['role']
+                nature = request.POST['nature']
+                com_skills = request.POST['com_skills']
+                development_course = request.POST['development_course']
+                exam_attempts = request.POST['exam_attempts']
+                health_issues = request.POST['health_issues']
+                drugs = request.POST['drugs']
+                school_type = request.POST['school_type']
+                attendance = request.POST['attendance']
+                scholarship = request.POST['scholarship']
+
+                if role == "" and nature == "" and com_skills == "" and development_course == "" and exam_attempts == "" and health_issues == "" and \
+                        drugs == "" and school_type == "" and attendance == "" and scholarship == "":
+                    messages.error(request, "Kindly fill the fields")
+                    return redirect("streamtest")
+                if request.user.is_authenticated:
+                    firstmodel = SectionFirst()
+                    firstmodel.role = role
+                    firstmodel.nature = nature
+                    firstmodel.com_skills = com_skills
+                    firstmodel.development_course = development_course
+                    firstmodel.exam_attempts = exam_attempts
+                    firstmodel.health_issues = health_issues
+                    firstmodel.drugs = drugs
+                    firstmodel.school_type = school_type
+                    firstmodel.attendance = attendance
+                    firstmodel.scholarship = scholarship
+                    firstmodel.user_id = user.id
+                    firstmodel.save()
+
+                    # check errors
+
+                    #success message redirect to result page
+                    messages.success(request, f'Your data has been added.')
+                    return redirect('checkout')
+                else:
+                    messages.error(request, f'Some error in the form.')
+                    return redirect('checkout')
+        else:
+            return render(request, 'stream_test.html')
+    else:
+        messages.error(request, f'Pending....Fill this form first before giving the exam.')
+        return redirect("profile")
 
 
 @login_required
@@ -248,12 +288,7 @@ def password_reset_confirm(request, uidb64, token):
     return redirect("home")
 
 
-# authorize razorpay client with API Keys.
-razorpay_client = razorpay.Client(
-    auth=(settings.RAZOR_KEY_ID, settings.RAZOR_KEY_SECRET))
-
-
-'''@login_required
+@login_required
 def checkout(request):
     currency = 'INR'
     amount = 1000  # Rs. 10
@@ -275,7 +310,12 @@ def checkout(request):
     context['currency'] = currency
     context['callback_url'] = callback_url
 
-    return render(request, 'checkout.html', context=context)'''
+    return render(request, 'checkout.html', context=context)
+
+# authorize razorpay client with API Keys.
+razorpay_client = razorpay.Client(
+    auth=(settings.RAZOR_KEY_ID, settings.RAZOR_KEY_SECRET))
+
 
 
 # we need to csrf_exempt this url as
@@ -329,5 +369,3 @@ def payment_handler(request):
         return HttpResponseBadRequest()
 
 
-def stream_test(request):
-    return render(request, 'streamtest.html')
