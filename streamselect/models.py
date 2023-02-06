@@ -19,6 +19,7 @@ class UserBasicInfo(models.Model):
     address = models.CharField(max_length=100)
     district = models.CharField(max_length=100)
     state = models.CharField(max_length=100)
+    city = models.CharField(max_length=100)
     pin = models.IntegerField()
     area = models.CharField(max_length=100)
     board = models.CharField(max_length=100)
@@ -37,6 +38,7 @@ class UserBasicInfo(models.Model):
             'address': self.address,
             'district': self.district,
             'state': self.state,
+            'city': self.city,
             'pin': self.pin,
             'area': self.area,
             'board': self.board,

@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <meta name="google-signin-client_id" content="134719943065-fj2tnq0a0afejo6v2hnmhrqka3tg2pn7.apps.googleusercontent.com">
@@ -76,7 +77,7 @@
                             <h6 class="collapse-header">User Profile</h6>
                             <a class="collapse-item" href="{% url 'profile' %}">Student Info</a>
                              <!--<a class="collapse-item" href="login.html">Edit Profile</a>-->
-                             <a class="collapse-item" href="login.html">Change Password</a>
+                             <a class="collapse-item" href="{% url 'password_change' %}">Change Password</a>
                            </div>
                     </div>
                 </li>
@@ -198,7 +199,7 @@
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Edit Profile
                                 </a>-->
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="{% url 'password_change' %}">
                                     <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Change Password
                                 </a>

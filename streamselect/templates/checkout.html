@@ -1,7 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-</head>
-  <body>
+{% extends "base_internal.html" %}
+{% load static %}
+{% block content %}
+{% if user.is_authenticated %}
     <div class="card">
       <h1 class="title">Payment</h1>
       <small class="muted">To get the result, Pay ₹10 to get the result</small>
@@ -10,7 +10,6 @@
         <button class="btn" id="pay-btn">Go to Payment</button>
       </div>
     </div>
-  </body>
 
   <!-- Razorpay's Javascript code. -->
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
@@ -43,4 +42,5 @@
       e.preventDefault();
     };
   </script>
-</html>
+{% endif %}
+{% endblock %}

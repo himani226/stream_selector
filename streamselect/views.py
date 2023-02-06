@@ -1,3 +1,5 @@
+import re
+
 import razorpay as razorpay
 import six
 from django.contrib.auth.decorators import login_required
@@ -5,6 +7,7 @@ from django.contrib.auth.forms import PasswordResetForm, UserCreationForm
 from django.contrib.auth.models import User
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.contrib.sites.shortcuts import get_current_site
+from django.core.exceptions import ValidationError, ObjectDoesNotExist
 from django.core.mail import EmailMessage
 from django.forms import forms
 from django.http import HttpResponse, HttpResponseBadRequest
@@ -15,6 +18,7 @@ from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.db.models.query_utils import Q
+from django.utils.safestring import mark_safe
 from django.views.decorators.csrf import csrf_exempt
 from datetime import datetime
 from stream_selector import settings
@@ -50,6 +54,10 @@ def register(request):
 
         if not username.isalnum():
             messages.error(request, " User name should only contain letters and numbers")
+            return redirect('register')
+
+        if not re.fullmatch(r'[A-Za-z0-9@#$%^&+=]{8,}', pass1):
+            messages.error(request,"Password Must contain atleast one letter, one number,one special character. Minimum length should be 8 characters")
             return redirect('register')
 
         if (pass1 != pass2):
@@ -104,10 +112,10 @@ def profile(request):
         gender = request.POST['gender']
         category = request.POST['category']
         address = request.POST['address']
-        state = request.POST['stt']
+        state = request.POST['state']
         district = request.POST['district']
-        #city = request.POST['city']
-        #pin = request.POST['pin']
+        city = request.POST['city']
+        pin = request.POST['pin']
         area = request.POST['area']
         board = request.POST['board']
         school = request.POST['school']
@@ -115,9 +123,10 @@ def profile(request):
         anumber = request.POST['anumber']
         #photo = request.FILES['image']
         if name == "" and fathername == "" and mothername == "" and dob == "" and gender == "" and category == "" and \
-                address == "" and area == "" and board == "" and school == "" and mobile == "" and anumber == "":
+                address == "" and state=="" and city=="" and district =="" and pin=="" and area == "" and board == "" and school == "" and mobile == "" and anumber == "":
             messages.error(request, "Kindly fill the fields")
             return redirect("profile")
+
         user=request.user
         if request.user.is_authenticated:
             profilemodel = UserBasicInfo()
@@ -130,16 +139,14 @@ def profile(request):
             profilemodel.address = address
             profilemodel.state = state
             profilemodel.district = district
+            profilemodel.city = city
+            profilemodel.pin = pin
             profilemodel.area = area
             profilemodel.board = board
             profilemodel.school_name = school
             profilemodel.mobile_num = mobile
             profilemodel.parents_num = anumber
             profilemodel.user_id = user.id
-
-            
-
-
             profilemodel.save()
 
             #profilemodel = UserBasicInfo.objects.filter(full_name=name).first()
@@ -161,52 +168,54 @@ def profile(request):
 @login_required
 def stream_test(request):
     user = request.user
-    uid = UserBasicInfo.objects.get(user_id=user.id)
-    if uid != user.id:
+    try:
+        uid = UserBasicInfo.objects.get(user_id=user.id)
+
         if request.method == 'POST':
-                role = request.POST['role']
-                nature = request.POST['nature']
-                com_skills = request.POST['com_skills']
-                development_course = request.POST['development_course']
-                exam_attempts = request.POST['exam_attempts']
-                health_issues = request.POST['health_issues']
-                drugs = request.POST['drugs']
-                school_type = request.POST['school_type']
-                attendance = request.POST['attendance']
-                scholarship = request.POST['scholarship']
+            role = request.POST['role_model']
+            nature = request.POST['nature']
+            com_skills = request.POST['comm_skill']
+            development_course = request.POST['dev_course']
+            exam_attempts = request.POST['attempt']
+            health_issues = request.POST['health']
+            drugs = request.POST['drugs']
+            school_type = request.POST['school_type']
+            attendance = request.POST['attendance']
+            scholarship = request.POST['scholarship']
 
-                if role == "" and nature == "" and com_skills == "" and development_course == "" and exam_attempts == "" and health_issues == "" and \
-                        drugs == "" and school_type == "" and attendance == "" and scholarship == "":
-                    messages.error(request, "Kindly fill the fields")
-                    return redirect("streamtest")
-                if request.user.is_authenticated:
-                    firstmodel = SectionFirst()
-                    firstmodel.role = role
-                    firstmodel.nature = nature
-                    firstmodel.com_skills = com_skills
-                    firstmodel.development_course = development_course
-                    firstmodel.exam_attempts = exam_attempts
-                    firstmodel.health_issues = health_issues
-                    firstmodel.drugs = drugs
-                    firstmodel.school_type = school_type
-                    firstmodel.attendance = attendance
-                    firstmodel.scholarship = scholarship
-                    firstmodel.user_id = user.id
-                    firstmodel.save()
+            if role == "" and nature == "" and com_skills == "" and development_course == "" and exam_attempts == "" and health_issues == "" and \
+                    drugs == "" and school_type == "" and attendance == "" and scholarship == "":
+                messages.error(request, "Kindly fill the fields")
+                return redirect("streamtest")
+            if request.user.is_authenticated:
+                firstmodel = SectionFirst()
+                firstmodel.role = role
+                firstmodel.nature = nature
+                firstmodel.com_skills = com_skills
+                firstmodel.development_course = development_course
+                firstmodel.exam_attempts = exam_attempts
+                firstmodel.health_issues = health_issues
+                firstmodel.drugs = drugs
+                firstmodel.school_type = school_type
+                firstmodel.attendance = attendance
+                firstmodel.scholarship = scholarship
+                firstmodel.user_id = user.id
+                firstmodel.save()
 
-                    # check errors
+                # check errors
 
-                    #success message redirect to result page
-                    messages.success(request, f'Your data has been added.')
-                    return redirect('checkout')
-                else:
-                    messages.error(request, f'Some error in the form.')
-                    return redirect('checkout')
-        else:
-            return render(request, 'stream_test.html')
-    else:
-        messages.error(request, f'Pending....Fill this form first before giving the exam.')
-        return redirect("profile")
+                # success message redirect to result page
+                messages.success(request, f'Your data has been added.')
+                return redirect('checkout')
+            else:
+                messages.error(request, f'Some error in the form.')
+                return redirect('checkout')
+    except UserBasicInfo.DoesNotExist:
+        messages.error(request, f'You forgot to fill Student Information form. Kindly fill it first. ')
+        return redirect('profile')
+
+    return render(request, 'stream_test.html')
+
 
 
 @login_required
@@ -379,3 +388,7 @@ def payment_handler(request):
         return HttpResponseBadRequest()
 
 
+def error_404_view(request, exception):
+    # we add the path to the the 404.html file
+    # here. The name of our HTML file is 404.html
+    return render(request, '404.html')
