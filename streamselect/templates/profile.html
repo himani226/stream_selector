@@ -64,14 +64,10 @@
                                 </div>
                             </div>
                             <div class="row mt-2">
-                            <!--<div class="col-md-6"><label class="labels">Are you differently abled?</label>
-                                <select class="form-select form-control" id="disablity">
-              <option selected="selected">Select</option>
-                                <option>Yes</option>
-                                <option>No</option>
-                                 </select>
-                            </div>-->
-                                <div class="col-md-6"><label class="labels">Address</label><input type="text" class="form-control" name="address" placeholder="Address" value=""></div>
+                                <div class="col-md-6"><label class="labels">School Name</label><input type="text" name="school" class="form-control" value="" placeholder="School Name"></div>
+                                <div class="col-md-6"><label class="labels">Board</label><input type="text" name="board" class="form-control" placeholder="Board Name" value=""></div>
+                            </div>
+                            <div class="row mt-2">
                                 <div class="col-md-6"><label class="labels">Area</label>
                                     <select class="form-select form-control" name="area" id="area">
                                         <option selected="selected">Select Area</option>
@@ -79,14 +75,68 @@
                                         <option>Rural</option>
                                     </select>
                                 </div>
-                            </div>
-                            <div class="row mt-2">
-                                <div class="col-md-6"><label class="labels">Board</label><input type="text" name="board" class="form-control" placeholder="Board Name" value=""></div>
-                                <div class="col-md-6"><label class="labels">School Name</label><input type="text" name="school" class="form-control" value="" placeholder="School Name"></div>
-                            </div>
-                            <div class="row mt-2">
                                 <div class="col-md-6"><label class="labels">Mobile No.</label><input type="text" class="form-control" name="number" placeholder="Mobile" value=""></div>
-                                <div class="col-md-6"><label class="labels">Parents No.</label><input type="text" class="form-control" name="anumber" value="" placeholder="Parents number"></div>
+
+                                 </div>
+                            <div class="row mt-2">
+                                 <div class="col-md-6"><label class="labels">Parents No.</label><input type="text" class="form-control" name="anumber" value="" placeholder="Parents number"></div>
+                                <div class="col-md-6"><label class="labels">PIN Code</label><input type="text" class="form-control" placeholder="PIN" value=""></div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-md-12"><label class="labels">Address</label><input type="text" class="form-control" name="address" placeholder="Address" value=""></div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-md-6"><label class="labels">State</label>
+                                    <select class="form-select form-control" name="state" id="inputState">
+                                        <option value="SelectState">Select State</option>
+                                        <option value="Andra Pradesh">Andra Pradesh</option>
+                                        <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                                        <option value="Assam">Assam</option>
+                                        <option value="Bihar">Bihar</option>
+                                        <option value="Chhattisgarh">Chhattisgarh</option>
+                                        <option value="Goa">Goa</option>
+                                        <option value="Gujarat">Gujarat</option>
+                                        <option value="Haryana">Haryana</option>
+                                        <option value="Himachal Pradesh">Himachal Pradesh</option>
+                                        <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+                                        <option value="Jharkhand">Jharkhand</option>
+                                        <option value="Karnataka">Karnataka</option>
+                                        <option value="Kerala">Kerala</option>
+                                        <option value="Madya Pradesh">Madya Pradesh</option>
+                                        <option value="Maharashtra">Maharashtra</option>
+                                        <option value="Manipur">Manipur</option>
+                                        <option value="Meghalaya">Meghalaya</option>
+                                        <option value="Mizoram">Mizoram</option>
+                                        <option value="Nagaland">Nagaland</option>
+                                        <option value="Orissa">Orissa</option>
+                                        <option value="Punjab">Punjab</option>
+                                        <option value="Rajasthan">Rajasthan</option>
+                                        <option value="Sikkim">Sikkim</option>
+                                        <option value="Tamil Nadu">Tamil Nadu</option>
+                                        <option value="Telangana">Telangana</option>
+                                        <option value="Tripura">Tripura</option>
+                                        <option value="Uttaranchal">Uttaranchal</option>
+                                        <option value="Uttar Pradesh">Uttar Pradesh</option>
+                                        <option value="West Bengal">West Bengal</option>
+                                        <option disabled style="background-color:#aaa; color:#fff">UNION Territories</option>
+                                        <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+                                        <option value="Chandigarh">Chandigarh</option>
+                                        <option value="Dadar and Nagar Haveli">Dadar and Nagar Haveli</option>
+                                        <option value="Daman and Diu">Daman and Diu</option>
+                                        <option value="Delhi">Delhi</option>
+                                        <option value="Lakshadeep">Lakshadeep</option>
+                                        <option value="Pondicherry">Pondicherry</option>
+                                    </select>
+                                </div><!--<select class="form-select form-control" id="district">
+                                        <option selected="selected">Select District</option>
+                                        <option>Jalandhar</option>
+                                        <option>Mohali</option>
+                                    </select>-->
+                                <div class="col-md-6"><label class="labels">District</label>
+                                    <select class="form-select form-control" name="district" id="inputDistrict">
+                                        <option value="">-- Select District -- </option>
+                                    </select>
+                                </div>
                             </div>
                         <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="submit">Save Profile</button> <button class="btn btn-danger profile-button" type="reset">Clear</button></div>
                     </form>
@@ -97,5 +147,6 @@
         </div>
     </div>
 </div>
+
 {% endif %}
 {% endblock %}

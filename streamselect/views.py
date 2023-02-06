@@ -104,6 +104,10 @@ def profile(request):
         gender = request.POST['gender']
         category = request.POST['category']
         address = request.POST['address']
+        state = request.POST['stt']
+        district = request.POST['district']
+        #city = request.POST['city']
+        #pin = request.POST['pin']
         area = request.POST['area']
         board = request.POST['board']
         school = request.POST['school']
@@ -124,12 +128,18 @@ def profile(request):
             profilemodel.gender = gender
             profilemodel.category = category
             profilemodel.address = address
+            profilemodel.state = state
+            profilemodel.district = district
             profilemodel.area = area
             profilemodel.board = board
             profilemodel.school_name = school
             profilemodel.mobile_num = mobile
             profilemodel.parents_num = anumber
             profilemodel.user_id = user.id
+
+            
+
+
             profilemodel.save()
 
             #profilemodel = UserBasicInfo.objects.filter(full_name=name).first()

@@ -17,6 +17,9 @@ class UserBasicInfo(models.Model):
     gender = models.CharField(max_length=100)
     category = models.CharField(max_length=100)
     address = models.CharField(max_length=100)
+    district = models.CharField(max_length=100)
+    state = models.CharField(max_length=100)
+    pin = models.IntegerField()
     area = models.CharField(max_length=100)
     board = models.CharField(max_length=100)
     school_name = models.CharField(max_length=100)
@@ -32,6 +35,9 @@ class UserBasicInfo(models.Model):
             'gender': self.gender,
             'category': self.category,
             'address': self.address,
+            'district': self.district,
+            'state': self.state,
+            'pin': self.pin,
             'area': self.area,
             'board': self.board,
             'school_name': self.school_name,
