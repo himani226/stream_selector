@@ -206,16 +206,95 @@ def stream_test(request):
 
                 # success message redirect to result page
                 messages.success(request, f'Your data has been added.')
-                return redirect('checkout')
+                return redirect('stream_second')
             else:
                 messages.error(request, f'Some error in the form.')
-                return redirect('checkout')
+                return redirect('stream_test')
     except UserBasicInfo.DoesNotExist:
         messages.error(request, f'You forgot to fill Student Information form. Kindly fill it first. ')
         return redirect('profile')
 
     return render(request, 'stream_test.html')
 
+
+@login_required
+def section_second(request):
+    user = request.user
+    try:
+        uid = SectionFirst.objects.get(user_id=user.id)
+        if request.method == 'POST':
+            role = request.POST['role_model']
+            nature = request.POST['nature']
+            com_skills = request.POST['comm_skill']
+            development_course = request.POST['dev_course']
+            exam_attempts = request.POST['attempt']
+            health_issues = request.POST['health']
+            drugs = request.POST['drugs']
+            school_type = request.POST['school_type']
+            attendance = request.POST['attendance']
+            scholarship = request.POST['scholarship']
+
+            if role == "" and nature == "" and com_skills == "" and development_course == "" and exam_attempts == "" and health_issues == "" and \
+                    drugs == "" and school_type == "" and attendance == "" and scholarship == "":
+                messages.error(request, "Kindly fill the fields")
+                return redirect("streamtest")
+            if request.user.is_authenticated:
+                firstmodel = SectionFirst()
+                firstmodel.role = role
+                firstmodel.nature = nature
+                firstmodel.com_skills = com_skills
+                firstmodel.development_course = development_course
+                firstmodel.exam_attempts = exam_attempts
+                firstmodel.health_issues = health_issues
+                firstmodel.drugs = drugs
+                firstmodel.school_type = school_type
+                firstmodel.attendance = attendance
+                firstmodel.scholarship = scholarship
+                firstmodel.user_id = user.id
+                firstmodel.save()
+
+                # check errors
+                # success message redirect to result page
+                messages.success(request, f'Your data has been added.')
+                return redirect('stream_three')
+            else:
+                messages.error(request, f'Some error in the form.')
+                return redirect('sectionstwo')
+    except SectionFirst.DoesNotExist:
+        messages.error(request, f'You forgot to answer the Section First. Answer that first')
+        return redirect('stream_test')
+
+    return render(request, 'sectiontwo.html')
+
+
+def section_three(request):
+
+    render(request, 'sectionthree.html')
+
+
+def section_four(request):
+    render(request, 'sectionfour.html')
+
+
+def section_five(request):
+    render(request, 'sectionfive.html')
+
+def section_six(request):
+    render(request, 'sectionsix.html')
+
+
+def section_seven(request):
+    render(request, 'sectionseven.html')
+
+def section_eight(request):
+    render(request, 'sectioneight.html')
+
+
+def section_nine(request):
+    render(request, 'sectionnine.html')
+
+def section_ten(request):
+    render(request, 'sectionten.html')
 
 
 @login_required
