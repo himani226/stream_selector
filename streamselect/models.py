@@ -212,5 +212,5 @@ class SectionTen(models.Model):
 
 class PaymentCheck(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    order_id = models.UUIDField(default=uuid.uuid4, unique=True, db_index=True, editable=False)
+    order_id = models.CharField(max_length=100)
     payment_status = models.CharField(max_length=100)

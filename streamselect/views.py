@@ -23,13 +23,24 @@ from django.views.decorators.csrf import csrf_exempt
 from datetime import datetime
 from stream_selector import settings
 from .forms import ProfileForm, SetPasswordForm
-from .models import UserBasicInfo,PaymentCheck, SectionFirst
+from .models import UserBasicInfo,PaymentCheck, SectionFirst, SectionSecond
 
 from django_xhtml2pdf.utils import pdf_decorator
 
-@pdf_decorator(pdfname='test_result.pdf')
+
 def result(request):
-    return render(request, 'result.html')
+    if request.user.is_authenticated:
+        user=request.user
+        userdetail = UserBasicInfo.objects.get(user_id=user.id)
+    return render(request, 'result.html',{'user_detail':userdetail})
+
+
+@pdf_decorator(pdfname='Psychometric_Test_Result.pdf')
+def generate_report(request):
+    if request.user.is_authenticated:
+        user=request.user
+        userdetail = UserBasicInfo.objects.get(user_id=user.id)
+    return render(request, 'result.html',{'user_detail':userdetail})
 
 
 @login_required()
@@ -206,7 +217,7 @@ def stream_test(request):
 
                 # success message redirect to result page
                 messages.success(request, f'Your data has been added.')
-                return redirect('stream_second')
+                return redirect('section_second')
             else:
                 messages.error(request, f'Some error in the form.')
                 return redirect('stream_test')
@@ -221,80 +232,82 @@ def stream_test(request):
 def section_second(request):
     user = request.user
     try:
-        uid = SectionFirst.objects.get(user_id=user.id)
+        #uid = SectionFirst.objects.get(user_id=user.id)
         if request.method == 'POST':
-            role = request.POST['role_model']
-            nature = request.POST['nature']
-            com_skills = request.POST['comm_skill']
-            development_course = request.POST['dev_course']
-            exam_attempts = request.POST['attempt']
-            health_issues = request.POST['health']
-            drugs = request.POST['drugs']
-            school_type = request.POST['school_type']
-            attendance = request.POST['attendance']
-            scholarship = request.POST['scholarship']
+            nineth_marks = request.POST['nineth_marks']
+            math_nineth_marks = request.POST['math_nineth_marks']
+            sci_nineth_marks = request.POST['sci_nineth_marks']
+            tenth_marks = request.POST['tenth_marks']
+            math_tenth_marks = request.POST['math_tenth_marks']
+            sci_tenth_marks = request.POST['sci_tenth_marks']
+            math_olympiad = request.POST['math_olympiad']
+            sci_olympiad = request.POST['sci_olympiad']
+            sci_workshop = request.POST['sci_workshop']
+            most_preferred_sub = request.POST['most_preferred_sub']
+            least_preferred_sub = request.POST['least_preferred_sub']
 
-            if role == "" and nature == "" and com_skills == "" and development_course == "" and exam_attempts == "" and health_issues == "" and \
-                    drugs == "" and school_type == "" and attendance == "" and scholarship == "":
+            if nineth_marks == "" and math_nineth_marks == "" and sci_nineth_marks == "" and tenth_marks == "" and math_tenth_marks == "" and sci_tenth_marks == "" and \
+                    math_olympiad == "" and sci_olympiad == "" and sci_workshop == "" and most_preferred_sub == "" and least_preferred_sub =="" :
                 messages.error(request, "Kindly fill the fields")
                 return redirect("streamtest")
             if request.user.is_authenticated:
-                firstmodel = SectionFirst()
-                firstmodel.role = role
-                firstmodel.nature = nature
-                firstmodel.com_skills = com_skills
-                firstmodel.development_course = development_course
-                firstmodel.exam_attempts = exam_attempts
-                firstmodel.health_issues = health_issues
-                firstmodel.drugs = drugs
-                firstmodel.school_type = school_type
-                firstmodel.attendance = attendance
-                firstmodel.scholarship = scholarship
-                firstmodel.user_id = user.id
-                firstmodel.save()
+                secondmodel = SectionSecond()
+                secondmodel.nineth_marks = nineth_marks
+                secondmodel.nineth_marks_math = math_nineth_marks
+                secondmodel.nineth_marks_science = sci_nineth_marks
+                secondmodel.tenth_marks = tenth_marks
+                secondmodel.tenth_marks_math = math_tenth_marks
+                secondmodel.tenth_marks_science = sci_tenth_marks
+                secondmodel.math_olampaid = math_olympiad
+                secondmodel.sci_olampaid = sci_olympiad
+                secondmodel.workshop = sci_workshop
+                secondmodel.most_perfered_sub = most_preferred_sub
+                secondmodel.least_perfered_sub = least_preferred_sub
+                secondmodel.user_id = user.id
+                secondmodel.save()
 
                 # check errors
                 # success message redirect to result page
                 messages.success(request, f'Your data has been added.')
-                return redirect('stream_three')
+                return redirect('result')
             else:
                 messages.error(request, f'Some error in the form.')
-                return redirect('sectionstwo')
+                return redirect('section_second')
     except SectionFirst.DoesNotExist:
         messages.error(request, f'You forgot to answer the Section First. Answer that first')
         return redirect('stream_test')
 
-    return render(request, 'sectiontwo.html')
+    return render(request, 'section_second.html')
 
 
 def section_three(request):
 
-    render(request, 'sectionthree.html')
+    render(request, 'section_three.html')
 
 
 def section_four(request):
-    render(request, 'sectionfour.html')
+    render(request, 'section_four.html')
 
 
 def section_five(request):
-    render(request, 'sectionfive.html')
+    render(request, 'section_five.html')
 
 def section_six(request):
-    render(request, 'sectionsix.html')
+    render(request, 'section_six.html')
 
 
 def section_seven(request):
-    render(request, 'sectionseven.html')
+    render(request, 'section_seven.html')
 
 def section_eight(request):
-    render(request, 'sectioneight.html')
+    render(request, 'section_eight.html')
 
 
 def section_nine(request):
-    render(request, 'sectionnine.html')
+    render(request, 'section_nine.html')
 
 def section_ten(request):
-    render(request, 'sectionten.html')
+    render(request, 'section_ten.html')
 
 
 @login_required
