@@ -1,5 +1,6 @@
 import re
-
+from django.views.generic.base import View
+#from wkhtmltopdf.views import PDFTemplateResponse
 import razorpay as razorpay
 import six
 from django.contrib.auth.decorators import login_required
@@ -10,7 +11,7 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.core.exceptions import ValidationError, ObjectDoesNotExist
 from django.core.mail import EmailMessage
 from django.forms import forms
-from django.http import HttpResponse, HttpResponseBadRequest
+from django.http import HttpResponse, HttpResponseBadRequest, request
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, get_user_model
 from django.contrib import messages
@@ -27,6 +28,8 @@ from .models import UserBasicInfo,PaymentCheck, SectionFirst, SectionSecond
 
 from django_xhtml2pdf.utils import pdf_decorator
 
+from .utility.utility import html_to_pdf
+
 
 def result(request):
     if request.user.is_authenticated:
@@ -35,12 +38,49 @@ def result(request):
     return render(request, 'result.html',{'user_detail':userdetail})
 
 
-@pdf_decorator(pdfname='Psychometric_Test_Result.pdf')
+# Creating a class based view
+class generate_report(View):
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            user=request.user
+            userdetail = UserBasicInfo.objects.get(user_id=user.id)
+            open('result.html', "w").write(render_to_string('result.html', {'user_detail': userdetail}))
+
+            # Converting the HTML template into a PDF file
+            pdf = html_to_pdf('result.html')
+
+            # rendering the template
+        return HttpResponse(pdf, content_type='application/pdf')
+
+'''@pdf_decorator(pdfname='Psychometric_Test_Result.pdf')
 def generate_report(request):
     if request.user.is_authenticated:
         user=request.user
         userdetail = UserBasicInfo.objects.get(user_id=user.id)
-    return render(request, 'result.html',{'user_detail':userdetail})
+    return render(request, 'result.html',{'user_detail':userdetail})'''
+
+'''class MyPDFView(View):
+    template = 'result.html'  # the template
+
+    def get(self, request):
+        if request.user.is_authenticated:
+            user = request.user
+            userdetail = UserBasicInfo.objects.get(user_id=user.id)
+        data = {"user_detail": userdetail}  # data that has to be renderd to pdf templete
+
+        response = PDFTemplateResponse(request=request,
+                                       template=self.template,
+                                       filename="hello.pdf",
+                                       context=data,
+                                       show_content_in_browser=False,
+                                       cmd_options={'margin-top': 10,
+                                                    "zoom": 1,
+                                                    "viewport-size": "1366 x 513",
+                                                    'javascript-delay': 1000,
+                                                    'footer-center': '[page]/[topage]',
+                                                    "no-stop-slow-scripts": True},
+                                       )
+        return response'''
 
 
 @login_required()

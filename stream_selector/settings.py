@@ -25,7 +25,7 @@ SECRET_KEY = '&l+$q3n(771w-e%k&4pf&-1dzbz&ep1sz!=6qk)d+1n)5k(drj'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost','127.0.0.1','10.228.11.20']
+ALLOWED_HOSTS = ['localhost','127.0.0.1','10.228.11.20','*']
 
 
 # Application definition
@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'streamselect', #added
     'social_django', #added
     'crispy_forms', #added
+    #'django-wkhtmltopdf', #added
 ]
 
 MIDDLEWARE = [
@@ -168,3 +169,15 @@ EMAIL_HOST_PASSWORD="31vich@r15"
 ####Added for payment integration##########
 RAZOR_KEY_ID = 'rzp_test_xJDj49JpzsGOu1'
 RAZOR_KEY_SECRET = 'QOhUjDdHktvYBf5ub3RS9UVm'
+
+#### added ###
+X_FRAME_OPTIONS = 'ALLOW-FROM http://127.0.0.1:8000/'
+
+#### added ######
+'''WKHTMLTOPDF_CMD_OPTIONS = {
+'quiet': True,
+}
+if os.name != 'nt':
+    WKHTMLTOPDF_CMD = '/usr/local/bin/wkhtmltopdf'
+else:
+    WKHTMLTOPDF_DEBUG = True'''
