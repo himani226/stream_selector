@@ -1,5 +1,6 @@
 import re
 from django.views.generic.base import View
+#import wkhtmltopdf
 #from wkhtmltopdf.views import PDFTemplateResponse
 import razorpay as razorpay
 import six
@@ -26,10 +27,7 @@ from stream_selector import settings
 from .forms import ProfileForm, SetPasswordForm
 from .models import UserBasicInfo,PaymentCheck, SectionFirst, SectionSecond
 
-from django_xhtml2pdf.utils import pdf_decorator
-
-from .utility.utility import html_to_pdf
-
+#from django_xhtml2pdf.utils import pdf_decorator
 
 def result(request):
     if request.user.is_authenticated:
@@ -39,7 +37,7 @@ def result(request):
 
 
 # Creating a class based view
-class generate_report(View):
+'''class generate_report(View):
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             user=request.user
@@ -50,7 +48,7 @@ class generate_report(View):
             pdf = html_to_pdf('result.html')
 
             # rendering the template
-        return HttpResponse(pdf, content_type='application/pdf')
+        return HttpResponse(pdf, content_type='application/pdf')'''
 
 '''@pdf_decorator(pdfname='Psychometric_Test_Result.pdf')
 def generate_report(request):
@@ -104,12 +102,12 @@ def register(request):
             return redirect('register')
 
         if not username.isalnum():
-            messages.error(request, " User name should only contain letters and numbers")
+            messages.error(request, " User name should contain letters and numbers")
             return redirect('register')
 
-        if not re.fullmatch(r'[A-Za-z0-9@#$%^&+=]{8,}', pass1):
+        '''if not re.fullmatch(r'[A-Za-z0-9@#$%^&+=]{8,}', pass1):
             messages.error(request,"Password Must contain atleast one letter, one number,one special character. Minimum length should be 8 characters")
-            return redirect('register')
+            return redirect('register')'''
 
         if (pass1 != pass2):
             messages.error(request, " Passwords do not match")
@@ -207,7 +205,7 @@ def profile(request):
             #userimage.user_image_ext = photo.name.split('.')[-1]
             #userimage.save()
 
-            messages.success(request, f'Your data has been added.')
+            messages.success(request, f'Your data has been added. Now you can take Stream Selection test')
             return redirect('profile')
         else:
             messages.error(request, f'There is some error in your form. Kindly check and fill it again.')
@@ -256,7 +254,7 @@ def stream_test(request):
                 # check errors
 
                 # success message redirect to result page
-                messages.success(request, f'Your data has been added.')
+                messages.success(request, f'Your data has been recorded. Continue with next section')
                 return redirect('section_second')
             else:
                 messages.error(request, f'Some error in the form.')
