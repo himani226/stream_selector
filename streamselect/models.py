@@ -24,6 +24,7 @@ class UserBasicInfo(models.Model):
     area = models.CharField(max_length=100)
     board = models.CharField(max_length=100)
     school_name = models.CharField(max_length=100)
+    school_type = models.CharField(max_length=100)
     mobile_num = models.CharField(max_length=12)
     parents_num = models.CharField(max_length=12)
 
@@ -43,6 +44,7 @@ class UserBasicInfo(models.Model):
             'area': self.area,
             'board': self.board,
             'school_name': self.school_name,
+            'school_type': self.school_type ,
             'mobile_num': self.mobile_num,
             'phone_num': self.parents_num,
             # 'user_profile_image': UserImage.objects.filter(agent=self).user_image
@@ -59,26 +61,13 @@ class UserBasicInfo(models.Model):
     user_image_ext = models.CharField(max_length=20, blank=True)'''
 
 
+
 class SectionFirst(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    role_model = models.CharField(max_length=100)
-    nature = models.CharField(max_length=100)
-    com_skills = models.CharField(max_length=100)
-    development_course = models.CharField(max_length=100)
-    exam_attempts = models.CharField(max_length=100)
-    health_issues = models.CharField(max_length=100)
-    drugs = models.CharField(max_length=100)
-    school_type = models.CharField(max_length=100)
-    attendance = models.CharField(max_length=100)
-    scholarship = models.CharField(max_length=100)
-
-
-class SectionSecond(models.Model):
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     nineth_marks = models.CharField(max_length=100)
-    tenth_marks = models.CharField(max_length=100)
     nineth_marks_math = models.CharField(max_length=100)
     nineth_marks_science = models.CharField(max_length=100)
+    tenth_marks = models.CharField(max_length=100)
     tenth_marks_math = models.CharField(max_length=100)
     tenth_marks_science = models.CharField(max_length=100)
     math_olampaid = models.CharField(max_length=100)
@@ -88,31 +77,36 @@ class SectionSecond(models.Model):
     least_perfered_sub = models.CharField(max_length=100)
 
 
-class SectionThird(models.Model):
+class SectionSecond(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    edu_gap = models.CharField(max_length=100)
-    curricular = models.CharField(max_length=100)
-    performance_level = models.CharField(max_length=100)
-    time_spent = models.CharField(max_length=100)
     study_method = models.CharField(max_length=100)
     study_environment = models.CharField(max_length=100)
+    study_time_spent = models.CharField(max_length=100)
     games_time = models.CharField(max_length=100)
     screen_time = models.CharField(max_length=100)
+    role_model = models.CharField(max_length=100)
+    attempts = models.CharField(max_length=100)
+    attendance = models.CharField(max_length=100)
+    scholarship = models.CharField(max_length=100)
+    edu_gap = models.CharField(max_length=100)
 
 
-class SectionFour(models.Model):
+
+class SectionThird(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    curricular = models.CharField(max_length=100)
+    performance_level = models.CharField(max_length=100)
     father_qual = models.CharField(max_length=100)
     mother_qual = models.CharField(max_length=100)
     sibling_qual = models.CharField(max_length=100)
     father_job = models.CharField(max_length=100)
     mother_job = models.CharField(max_length=100)
     sibling_job = models.CharField(max_length=100)
-    teacher_review = models.CharField(max_length=100)
     annual_income = models.CharField(max_length=100)
 
 
-class SectionFive(models.Model):
+
+class SectionFour(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     math = models.CharField(max_length=100)
     physics = models.CharField(max_length=100)
@@ -121,13 +115,23 @@ class SectionFive(models.Model):
     history = models.CharField(max_length=100)
     geography = models.CharField(max_length=100)
     commerce = models.CharField(max_length=100)
+    accounts = models.CharField(max_length=100)
+    statistics = models.CharField(max_length=100)
+    language = models.CharField(max_length=100)
+
+
+class SectionFive(models.Model):
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     political_science = models.CharField(max_length=100)
     home_science = models.CharField(max_length=100)
     environment_science = models.CharField(max_length=100)
     physical_edu = models.CharField(max_length=100)
     computers = models.CharField(max_length=100)
-    hindi = models.CharField(max_length=100)
-    english = models.CharField(max_length=100)
+    typewriting = models.CharField(max_length=100)
+    stenography = models.CharField(max_length=100)
+    beautician = models.CharField(max_length=100)
+    library_asst = models.CharField(max_length=100)
+    secretarial_roles = models.CharField(max_length=100)
 
 
 class SectionSix(models.Model):

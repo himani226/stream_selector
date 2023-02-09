@@ -3,6 +3,10 @@
 {% block title %}HOME{% endblock %} 
 {% block content %}
     {% if user.is_authenticated %}
+            {% if user.is_superuser %}
+                <td class="text-center"><span class="btn btn-success">Hello Superuser {{user.username}}</span></td>
+            {% else %}
+
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
@@ -200,5 +204,6 @@
 
             </div>
             <!-- End of Main Content -->
-{% endif %}
+             {% endif %}
+    {% endif %}
 {% endblock %}

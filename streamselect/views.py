@@ -26,9 +26,10 @@ from datetime import datetime
 from stream_selector import settings
 from .forms import ProfileForm, SetPasswordForm
 from .models import UserBasicInfo,PaymentCheck, SectionFirst, SectionSecond
-
+from html2image import Html2Image
 #from django_xhtml2pdf.utils import pdf_decorator
 
+@login_required(login_url='login/')
 def result(request):
     if request.user.is_authenticated:
         user=request.user
@@ -81,8 +82,14 @@ def generate_report(request):
         return response'''
 
 
-@login_required()
+@login_required(login_url='login/')
 def home(request):
+    if request.user.is_authenticated:
+        if request.user.is_supersuer:
+            users = UserBasicInfo.objects.all().count()
+            return render(request,'home_admin.html',{'users':users})
+        else:
+            return render(request, 'home.html')
     return render(request, 'home.html')
 
 
@@ -151,7 +158,8 @@ def user_login(request):
     else:
         return render(request, 'login.html')
 
-@login_required
+
+@login_required(login_url='login/')
 def profile(request):
     if request.method == 'POST':
         name = request.POST['sname']
@@ -168,11 +176,12 @@ def profile(request):
         area = request.POST['area']
         board = request.POST['board']
         school = request.POST['school']
+        school_type = request.POST['school_type']
         mobile = request.POST['number']
         anumber = request.POST['anumber']
         #photo = request.FILES['image']
         if name == "" and fathername == "" and mothername == "" and dob == "" and gender == "" and category == "" and \
-                address == "" and state=="" and city=="" and district =="" and pin=="" and area == "" and board == "" and school == "" and mobile == "" and anumber == "":
+                school_type == "" and state=="" and city=="" and district =="" and pin=="" and area == "" and board == "" and school == "" and mobile == "" and anumber == "":
             messages.error(request, "Kindly fill the fields")
             return redirect("profile")
 
@@ -193,6 +202,7 @@ def profile(request):
             profilemodel.area = area
             profilemodel.board = board
             profilemodel.school_name = school
+            profilemodel.school_type = school_type
             profilemodel.mobile_num = mobile
             profilemodel.parents_num = anumber
             profilemodel.user_id = user.id
@@ -214,7 +224,7 @@ def profile(request):
         return render(request, 'profile.html')
 
 
-@login_required
+@login_required(login_url='login/')
 def stream_test(request):
     user = request.user
     try:
@@ -266,7 +276,7 @@ def stream_test(request):
     return render(request, 'stream_test.html')
 
 
-@login_required
+@login_required(login_url='login/')
 def section_second(request):
     user = request.user
     try:
@@ -317,7 +327,7 @@ def section_second(request):
 
     return render(request, 'section_second.html')
 
-
+@login_required(login_url='login/')
 def section_three(request):
 
     render(request, 'section_three.html')
