@@ -1,7 +1,7 @@
 import re
 from django.views.generic.base import View
-#import wkhtmltopdf
-#from wkhtmltopdf.views import PDFTemplateResponse
+# import wkhtmltopdf
+# from wkhtmltopdf.views import PDFTemplateResponse
 import razorpay as razorpay
 import six
 from django.contrib.auth.decorators import login_required
@@ -25,16 +25,17 @@ from django.views.decorators.csrf import csrf_exempt
 from datetime import datetime
 from stream_selector import settings
 from .forms import ProfileForm, SetPasswordForm
-from .models import UserBasicInfo,PaymentCheck, SectionFirst, SectionSecond
-from html2image import Html2Image
-#from django_xhtml2pdf.utils import pdf_decorator
+from .models import UserBasicInfo, PaymentCheck, SectionFirst, SectionSecond
+
+
+# from django_xhtml2pdf.utils import pdf_decorator
 
 @login_required(login_url='login/')
 def result(request):
     if request.user.is_authenticated:
-        user=request.user
+        user = request.user
         userdetail = UserBasicInfo.objects.get(user_id=user.id)
-    return render(request, 'result.html',{'user_detail':userdetail})
+    return render(request, 'result.html', {'user_detail': userdetail})
 
 
 # Creating a class based view
@@ -85,12 +86,8 @@ def generate_report(request):
 @login_required(login_url='login/')
 def home(request):
     if request.user.is_authenticated:
-        if request.user.is_supersuer:
-            users = UserBasicInfo.objects.all().count()
-            return render(request,'home_admin.html',{'users':users})
-        else:
-            return render(request, 'home.html')
-    return render(request, 'home.html')
+        users = UserBasicInfo.objects.all().count()
+        return render(request, 'home.html', {'users': users})
 
 
 def register(request):
@@ -112,9 +109,9 @@ def register(request):
             messages.error(request, " User name should contain letters and numbers")
             return redirect('register')
 
-        '''if not re.fullmatch(r'[A-Za-z0-9@#$%^&+=]{8,}', pass1):
+        if not re.fullmatch(r'[A-Za-z0-9@#$%^&+=]{8,}', pass1):
             messages.error(request,"Password Must contain atleast one letter, one number,one special character. Minimum length should be 8 characters")
-            return redirect('register')'''
+            return redirect('register')
 
         if (pass1 != pass2):
             messages.error(request, " Passwords do not match")
@@ -127,8 +124,8 @@ def register(request):
         # Create the user
         if not (User.objects.filter(username=username).exists() or User.objects.filter(email=email).exists()):
             myuser = User.objects.create_user(username, email, pass1)
-            myuser.first_name=fname
-            myuser.last_name=lname
+            myuser.first_name = fname
+            myuser.last_name = lname
             myuser.save()
             messages.success(request, " Your account has been successfully created")
             return redirect('home')
@@ -179,19 +176,19 @@ def profile(request):
         school_type = request.POST['school_type']
         mobile = request.POST['number']
         anumber = request.POST['anumber']
-        #photo = request.FILES['image']
+        # photo = request.FILES['image']
         if name == "" and fathername == "" and mothername == "" and dob == "" and gender == "" and category == "" and \
-                school_type == "" and state=="" and city=="" and district =="" and pin=="" and area == "" and board == "" and school == "" and mobile == "" and anumber == "":
+                school_type == "" and state == "" and city == "" and district == "" and pin == "" and area == "" and board == "" and school == "" and mobile == "" and anumber == "":
             messages.error(request, "Kindly fill the fields")
             return redirect("profile")
 
-        user=request.user
+        user = request.user
         if request.user.is_authenticated:
             profilemodel = UserBasicInfo()
             profilemodel.full_name = name
             profilemodel.father_name = fathername
             profilemodel.mother_name = mothername
-            profilemodel.dob = datetime.strptime(dob,"%Y-%m-%d")
+            profilemodel.dob = datetime.strptime(dob, "%Y-%m-%d")
             profilemodel.gender = gender
             profilemodel.category = category
             profilemodel.address = address
@@ -208,12 +205,12 @@ def profile(request):
             profilemodel.user_id = user.id
             profilemodel.save()
 
-            #profilemodel = UserBasicInfo.objects.filter(full_name=name).first()
-            #userimage = UserImage()
-            #userimage.name = profilemodel
-            #userimage.user_image = photo
-            #userimage.user_image_ext = photo.name.split('.')[-1]
-            #userimage.save()
+            # profilemodel = UserBasicInfo.objects.filter(full_name=name).first()
+            # userimage = UserImage()
+            # userimage.name = profilemodel
+            # userimage.user_image = photo
+            # userimage.user_image_ext = photo.name.split('.')[-1]
+            # userimage.save()
 
             messages.success(request, f'Your data has been added. Now you can take Stream Selection test')
             return redirect('profile')
@@ -280,7 +277,7 @@ def stream_test(request):
 def section_second(request):
     user = request.user
     try:
-        #uid = SectionFirst.objects.get(user_id=user.id)
+        # uid = SectionFirst.objects.get(user_id=user.id)
         if request.method == 'POST':
             nineth_marks = request.POST['nineth_marks']
             math_nineth_marks = request.POST['math_nineth_marks']
@@ -295,7 +292,7 @@ def section_second(request):
             least_preferred_sub = request.POST['least_preferred_sub']
 
             if nineth_marks == "" and math_nineth_marks == "" and sci_nineth_marks == "" and tenth_marks == "" and math_tenth_marks == "" and sci_tenth_marks == "" and \
-                    math_olympiad == "" and sci_olympiad == "" and sci_workshop == "" and most_preferred_sub == "" and least_preferred_sub =="" :
+                    math_olympiad == "" and sci_olympiad == "" and sci_workshop == "" and most_preferred_sub == "" and least_preferred_sub == "":
                 messages.error(request, "Kindly fill the fields")
                 return redirect("streamtest")
             if request.user.is_authenticated:
@@ -327,9 +324,9 @@ def section_second(request):
 
     return render(request, 'section_second.html')
 
+
 @login_required(login_url='login/')
 def section_three(request):
-
     render(request, 'section_three.html')
 
 
@@ -340,6 +337,7 @@ def section_four(request):
 def section_five(request):
     render(request, 'section_five.html')
 
+
 def section_six(request):
     render(request, 'section_six.html')
 
@@ -347,12 +345,14 @@ def section_six(request):
 def section_seven(request):
     render(request, 'section_seven.html')
 
+
 def section_eight(request):
     render(request, 'section_eight.html')
 
 
 def section_nine(request):
     render(request, 'section_nine.html')
+
 
 def section_ten(request):
     render(request, 'section_ten.html')
@@ -471,10 +471,10 @@ def checkout(request):
 
     return render(request, 'checkout.html', context=context)
 
+
 # authorize razorpay client with API Keys.
 razorpay_client = razorpay.Client(
     auth=(settings.RAZOR_KEY_ID, settings.RAZOR_KEY_SECRET))
-
 
 
 # we need to csrf_exempt this url as
@@ -484,7 +484,7 @@ razorpay_client = razorpay.Client(
 def payment_handler(request):
     # only accept POST request.
     if request.method == "POST":
-        user=request.user
+        user = request.user
         try:
             # get the required parameters from post request.
             payment_id = request.POST.get('razorpay_payment_id', '')
