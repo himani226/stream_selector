@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'streamselect', #added
     'social_django', #added
-    'crispy_forms', #added
     #'django-wkhtmltopdf', #added
 ]
 

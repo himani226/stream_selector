@@ -25,7 +25,7 @@ from django.views.decorators.csrf import csrf_exempt
 from datetime import datetime
 from stream_selector import settings
 from .forms import ProfileForm, SetPasswordForm
-from .models import UserBasicInfo, PaymentCheck, SectionFirst, SectionSecond
+from .models import UserBasicInfo, PaymentCheck, SectionFirst, SectionSecond, SectionFive
 
 
 # from django_xhtml2pdf.utils import pdf_decorator
@@ -87,7 +87,12 @@ def generate_report(request):
 def home(request):
     if request.user.is_authenticated:
         users = UserBasicInfo.objects.all().count()
-        return render(request, 'home.html', {'users': users})
+        candidate = SectionFive.objects.all().count()
+        payment = PaymentCheck.objects.all().count()
+        return render(request, 'home.html', {'users': users,
+                                             'candidate':candidate,
+                                             'payment' : payment
+                                             })
 
 
 def register(request):
@@ -314,7 +319,7 @@ def section_second(request):
                 # check errors
                 # success message redirect to result page
                 messages.success(request, f'Your data has been added.')
-                return redirect('result')
+                return redirect('section_three')
             else:
                 messages.error(request, f'Some error in the form.')
                 return redirect('section_second')
@@ -327,6 +332,51 @@ def section_second(request):
 
 @login_required(login_url='login/')
 def section_three(request):
+    user = request.user
+    try:
+        # uid = SectionFirst.objects.get(user_id=user.id)
+        if request.method == 'POST':
+            study_method = request.POST['study_method']
+            study_environment = request.POST['study_environment']
+            study_time_spent = request.POST['study_time_spent']
+            games_time = request.POST['games_time']
+            screen_time = request.POST['screen_time']
+            role_model = request.POST['role_model']
+            attempts = request.POST['attempts']
+            attendance = request.POST['attendance']
+            scholarship = request.POST['scholarship']
+            edu_gap = request.POST['edu_gap']
+
+            if study_method == "" and study_environment == "" and study_time_spent == "" and games_time == "" and screen_time == "" and \
+                    role_model == "" and attempts == "" and attendance == "" and edu_gap == "" and scholarship == "":
+                messages.error(request, "Kindly fill the fields")
+                return redirect("section_three")
+            if request.user.is_authenticated:
+                thirdmodel = SectionSecond()
+                secondmodel.study_method = study_method
+                secondmodel.study_environment = study_environment
+                secondmodel.study_time_spent = study_time_spent
+                secondmodel.games_time = games_time
+                secondmodel.screen_time = screen_time
+                secondmodel.role_model = role_model
+                secondmodel.attempts = attempts
+                secondmodel.attendance = attendance
+                secondmodel.scholarship = scholarship
+                secondmodel.edu_gap = edu_gap
+                secondmodel.user_id = user.id
+                secondmodel.save()
+
+                # check errors
+                # success message redirect to result page
+                messages.success(request, f'Your data has been added.')
+                return redirect('result')
+            else:
+                messages.error(request, f'Some error in the form.')
+                return redirect('section_three')
+    except SectionFirst.DoesNotExist:
+        messages.error(request, f'You forgot to answer the Section First. Answer that first')
+        return redirect('stream_test')
+
     render(request, 'section_three.html')
 
 
