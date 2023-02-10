@@ -1,10 +1,282 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "base_internal.html" %}
+{% load static %}
+{% block content %}
+{% if user.is_authenticated %}
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Stream Selection Test</h1>
+    <!--<a href="#" class="d-none d-sm-inline-block btn btn-danger shadow-sm"><i
+            class="fas fa-file-alt fa-sm text-white-50"></i>  Edit Profile</a>-->
+    </div>
+<!-- Content Row -->
+    <hr>
+    </br>
+    <div class="row">
+    <!-- profile -->
+        <div class="col-md-12 mb-4">
+            <div class="container rounded bg-white mt-3 mb-3">
+                <div class="row">
+                   <form method="POST" enctype="multipart/form-data">
+                       {% for message in messages  %}
+                            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" style="color:red" role="alert">
+                                <strong>Message : </strong> {{ message }}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                       {% endfor %}
+                       {% csrf_token %}
+                       <div class="col-md-12 ">
+                            <div class="p-3 py-5">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <h4 >Section 5 - Your Hobbies and Family Background</h4>
+                                </div>
+                                <hr>
+                                <div class="mt-3 text-lg text-primary"> Q.1 Any extra curricular activity </div>
+                                <div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="curricular" value="option1">
+                                        <label class="form-check-label">Sports</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="curricular" value="option2">
+                                        <label class="form-check-label">Singing/Dancing</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="curricular" value="option3">
+                                        <label class="form-check-label">Media/Journalism</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="curricular" value="option4">
+                                        <label class="form-check-label">Special Creativity (Painting s, Poetry, sketching, etc)</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="curricular" value="option4">
+                                        <label class="form-check-label">Not Applicable</label>
+                                    </div>
+                                </div>
+                                <div class="mt-3 text-lg text-primary"> Q.2 Level of performance in above activity</div>
+                                <div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="performance_level" value="option1">
+                                        <label class="form-check-label">Zonal</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="performance_level" value="option2">
+                                        <label class="form-check-label" >District</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="performance_level" value="option3">
+                                        <label class="form-check-label" >State</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="performance_level" value="option4">
+                                        <label class="form-check-label" >National</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="performance_level" value="option4">
+                                        <label class="form-check-label">International</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="performance_level" value="option4">
+                                        <label class="form-check-label">Not Applicable</label>
+                                    </div>
+                                </div>
+                                <div class="mt-3 text-lg text-primary"> Q.3 Father Qualification </div>
+                                <div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input"  type="radio" name="father_qual" value="Doctarate">
+                                        <label class="form-check-label">Doctarate</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="father_qual" value="Post-Graduate">
+                                        <label class="form-check-label">Post-Graduate</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input"  type="radio" name="father_qual" value="Graduate">
+                                        <label class="form-check-label">Graduate</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="father_qual" value="Matic Pass">
+                                        <label class="form-check-label">Matic Pass</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="father_qual" value="Other">
+                                        <label class="form-check-label">Other</label>
+                                    </div>
+                                </div>
+                                <div class="mt-3 text-lg text-primary"> Q.4 Mother Qualification </div>
+                                <div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input"  type="radio" name="mother_qual" value="Doctarate">
+                                        <label class="form-check-label">Doctarate</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="mother_qual" value="Post-Graduate">
+                                        <label class="form-check-label">Post-Graduate</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input"  type="radio" name="mother_qual" value="Graduate">
+                                        <label class="form-check-label">Graduate</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="mother_qual" value="Matic Pass">
+                                        <label class="form-check-label">Matic Pass</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="mother_qual" value="Other">
+                                        <label class="form-check-label">Other</label>
+                                    </div>
+                                </div>
+                                <div class="mt-3 text-lg text-primary"> Q.5 Sibling Qualification </div>
+                                <div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input"  type="radio" name="sibiling_qual" value="Doctarate">
+                                        <label class="form-check-label">Doctarate</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="sibiling_qual" value="Post-Graduate">
+                                        <label class="form-check-label">Post-Graduate</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input"  type="radio" name="sibiling_qual" value="Graduate">
+                                        <label class="form-check-label">Graduate</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="sibiling_qual" value="Matic Pass">
+                                        <label class="form-check-label">Matic Pass</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="sibiling_qual" value="Other">
+                                        <label class="form-check-label">Other</label>
+                                    </div>
+                                </div>
+                                <div class="mt-3 text-lg text-primary"> Q.6 Father Job Profile </div>
+                                <div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input"  type="radio" name="father_job" value="Government officer">
+                                        <label class="form-check-label">Government officer</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="mother_qual" value="Private job">
+                                        <label class="form-check-label">Private job</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input"  type="radio" name="mother_qual" value="Business">
+                                        <label class="form-check-label">Business</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="mother_qual" value="Engineer">
+                                        <label class="form-check-label">Engineer</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="mother_qual" value="Doctor">
+                                        <label class="form-check-label">Doctor</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="mother_qual" value="Lawyer">
+                                        <label class="form-check-label">Lawyer</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="mother_qual" value="Others">
+                                        <label class="form-check-label">Others</label>
+                                    </div>
+                                </div>
+                                <div class="mt-3 text-lg text-primary"> Q.7 Father Job Profile </div>
+                                <div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input"  type="radio" name="mother_job" value="Government officer">
+                                        <label class="form-check-label">Government officer</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="mother_job" value="Private job">
+                                        <label class="form-check-label">Private job</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input"  type="radio" name="mother_job" value="Business">
+                                        <label class="form-check-label">Business</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="mother_job" value="Engineer">
+                                        <label class="form-check-label">Engineer</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="mother_job" value="Doctor">
+                                        <label class="form-check-label">Doctor</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="mother_job" value="Lawyer">
+                                        <label class="form-check-label">Lawyer</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="mother_job" value="Others">
+                                        <label class="form-check-label">Others</label>
+                                    </div>
+                                </div>
+                                <div class="mt-3 text-lg text-primary"> Q.8 Sibling Job Profile </div>
+                                <div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input"  type="radio" name="sibling_job" value="Government officer">
+                                        <label class="form-check-label">Government officer</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="sibling_job" value="Private job">
+                                        <label class="form-check-label">Private job</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input"  type="radio" name="sibling_job" value="Business">
+                                        <label class="form-check-label">Business</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="sibling_job" value="Engineer">
+                                        <label class="form-check-label">Engineer</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="sibling_job" value="Doctor">
+                                        <label class="form-check-label">Doctor</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="sibling_job" value="Lawyer">
+                                        <label class="form-check-label">Lawyer</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="sibling_job" value="Others">
+                                        <label class="form-check-label">Looking for job</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="sibling_job" value="Others">
+                                        <label class="form-check-label">Others</label>
+                                    </div>
+                                </div>
+                                <div class="mt-3 text-lg text-primary"> Q.9 Annnual Income </div>
+                                <div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input"  type="radio" name="annual_income" value="Less than 1 lak">
+                                        <label class="form-check-label">Less than 1 lakh</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="annual_income" value="Less than 2.5 lakh">
+                                        <label class="form-check-label">Less than 2.5 lakh</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input"  type="radio" name="annual_income" value="Less than 5 lakh">
+                                        <label class="form-check-label">Less than 5 lakh</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="annual_income" value="More than 5 lakh">
+                                        <label class="form-check-label">More than 5 lakh</label>
+                                    </div>
+                                </div>
 
-</body>
-</html>
+                                <div class="mt-5 "><button class="btn btn-primary profile-button" type="submit">Next Section</button> <button class="btn btn-danger profile-button" type="button">Clear</button></div>
+                            </div>
+                       </div>
+                   </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

@@ -27,6 +27,7 @@ class UserBasicInfo(models.Model):
     school_type = models.CharField(max_length=100)
     mobile_num = models.CharField(max_length=12)
     parents_num = models.CharField(max_length=12)
+    check_alerts = models.CharField(max_length=12)
 
     def embed(self, mode="view"):
         return {
@@ -47,6 +48,7 @@ class UserBasicInfo(models.Model):
             'school_type': self.school_type ,
             'mobile_num': self.mobile_num,
             'phone_num': self.parents_num,
+            'check_alerts': self.check_alerts,
             # 'user_profile_image': UserImage.objects.filter(agent=self).user_image
         }
 
@@ -92,21 +94,7 @@ class SectionSecond(models.Model):
 
 
 
-class SectionThird(models.Model):
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    curricular = models.CharField(max_length=100)
-    performance_level = models.CharField(max_length=100)
-    father_qual = models.CharField(max_length=100)
-    mother_qual = models.CharField(max_length=100)
-    sibling_qual = models.CharField(max_length=100)
-    father_job = models.CharField(max_length=100)
-    mother_job = models.CharField(max_length=100)
-    sibling_job = models.CharField(max_length=100)
-    annual_income = models.CharField(max_length=100)
-
-
-
-class SectionFour(models.Model):
+class SectionThree(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     math = models.CharField(max_length=100)
     physics = models.CharField(max_length=100)
@@ -120,7 +108,7 @@ class SectionFour(models.Model):
     language = models.CharField(max_length=100)
 
 
-class SectionFive(models.Model):
+class SectionFour(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     political_science = models.CharField(max_length=100)
     home_science = models.CharField(max_length=100)
@@ -132,6 +120,19 @@ class SectionFive(models.Model):
     beautician = models.CharField(max_length=100)
     library_asst = models.CharField(max_length=100)
     secretarial_roles = models.CharField(max_length=100)
+
+
+class SectionFive(models.Model):
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    curricular = models.CharField(max_length=100)
+    performance_level = models.CharField(max_length=100)
+    father_qual = models.CharField(max_length=100)
+    mother_qual = models.CharField(max_length=100)
+    sibling_qual = models.CharField(max_length=100)
+    father_job = models.CharField(max_length=100)
+    mother_job = models.CharField(max_length=100)
+    sibling_job = models.CharField(max_length=100)
+    annual_income = models.CharField(max_length=100)
 
 
 class SectionSix(models.Model):

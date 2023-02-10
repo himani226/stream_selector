@@ -1,10 +1,196 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
+{% extends "base_internal.html" %}
+{% load static %}
+{% block content %}
+{% if user.is_authenticated %}
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Stream Selection Test</h1>
+    <!--<a href="#" class="d-none d-sm-inline-block btn btn-danger shadow-sm"><i
+            class="fas fa-file-alt fa-sm text-white-50"></i>  Edit Profile</a>-->
+    </div>
+<!-- Content Row -->
+    <hr>
+    </br>
+    <div class="row">
+    <!-- profile -->
+        <div class="col-md-12 mb-4">
+            <div class="container rounded bg-white mt-3 mb-3">
+                <div class="row">
+                   <form method="POST" enctype="multipart/form-data">
+                       {% for message in messages  %}
+                            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" style="color:red" role="alert">
+                                <strong>Message : </strong> {{ message }}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                       {% endfor %}
+                       {% csrf_token %}
+                       <div class="col-md-12 ">
+                            <div class="p-3 py-5">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <h4>Section 4 - What do you think about these Subjects</h4>
+                                </div>
+                                <hr>
+				                <div class="mt-3 text-lg text-primary"> Q.1 Do you like Political Science </div>
+                                <div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="political_science" value="yes">
+                                        <label class="form-check-label" >Yes</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="political_science" value="no">
+                                        <label class="form-check-label" >No</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="political_science" value="maybe">
+                                        <label class="form-check-label" >May be</label>
+                                    </div>
+                                </div>
+                                <div class="mt-3 text-lg text-primary"> Q.2 Do you like Home Science </div>
+                                <div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="home_science" value="yes">
+                                        <label class="form-check-label">Yes</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="home_science" value="no">
+                                        <label class="form-check-label">No</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="home_science" value="maybe">
+                                        <label class="form-check-label">May be</label>
+                                    </div>
+                                </div>
+                                <div class="mt-3 text-lg text-primary"> Q.3 Do you like Environmental Science </div>
+                                <div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="environment_science" value="yes">
+                                        <label class="form-check-label">Yes</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="environment_science" value="no">
+                                        <label class="form-check-label">No</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="environment_science" value="maybe">
+                                        <label class="form-check-label">May be</label>
+                                    </div>
+                                </div>
+                                <div class="mt-3 text-lg text-primary"> Q.4 Do you like Physical Education </div>
+                                <div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="physical_edu" value="yes">
+                                        <label class="form-check-label">Yes</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="physical_edu" value="no">
+                                        <label class="form-check-label">No</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="physical_edu" value="maybe">
+                                        <label class="form-check-label">May be</label>
+                                    </div>
+                                </div>
+                                <div class="mt-3 text-lg text-primary"> Q.5 Do you like Computers </div>
+                                <div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="computer" value="yes">
+                                        <label class="form-check-label">Yes</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="computer" value="no">
+                                        <label class="form-check-label">No</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="computer" value="maybe">
+                                        <label class="form-check-label">May be</label>
+                                    </div>
+                                </div>
+                                <div class="mt-3 text-lg text-primary"> Q.6 Are you interested in Typewriting </div>
+                                <div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="typewriting" value="yes">
+                                        <label class="form-check-label">Yes</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="typewriting" value="no">
+                                        <label class="form-check-label">No</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="typewriting" value="maybe">
+                                        <label class="form-check-label">May be</label>
+                                    </div>
+                                </div>
+                                <div class="mt-3 text-lg text-primary"> Q.7 Are you interested in Stenography </div>
+                                <div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="commerce" value="yes">
+                                        <label class="form-check-label">Yes</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="commerce" value="no">
+                                        <label class="form-check-label">No</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="commerce" value="maybe">
+                                        <label class="form-check-label">May be</label>
+                                    </div>
+                                </div>
+                                <div class="mt-3 text-lg text-primary"> Q.8 Are you interested in the Beautician course </div>
+                                <div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="accounts" value="yes">
+                                        <label class="form-check-label">Yes</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="accounts" value="no">
+                                        <label class="form-check-label">No</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="accounts" value="maybe">
+                                        <label class="form-check-label">May be</label>
+                                    </div>
+                                </div>
+                                <div class="mt-3 text-lg text-primary"> Q.9 Are you interested in Library Assistant </div>
+                                <div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="statistics" value="yes">
+                                        <label class="form-check-label">Yes</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="statistics" value="no">
+                                        <label class="form-check-label">No</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="statistics" value="maybe">
+                                        <label class="form-check-label">May be</label>
+                                    </div>
+                                </div>
+                                <div class="mt-3 text-lg text-primary"> Q.10 Are you interested in Secretarial Roles </div>
+                                <div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="language" value="yes">
+                                        <label class="form-check-label">Yes</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="language" value="no">
+                                        <label class="form-check-label">No</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="language" value="maybe">
+                                        <label class="form-check-label">May be</label>
+                                    </div>
+                                </div>
+                                <div class="mt-5 "><button class="btn btn-primary profile-button" type="submit">Next Section</button> <button class="btn btn-danger profile-button" type="button">Clear</button></div>
+                            </div>
+                       </div>
+                   </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
