@@ -37,18 +37,16 @@ def result(request):
         userdetail = UserBasicInfo.objects.get(user_id=user.id)
         first = SectionFirst.objects.get(user_id=user.id)
         second = SectionSecond.objects.get(user_id=user.id)
-        third = SectionThird.objects.get(user_id=user.id)
+        third = SectionThree.objects.get(user_id=user.id)
         four = SectionFour.objects.get(user_id=user.id)
-        five = SectionFive.objects.get(user_id=user.id)
-
-        test_result = ""
-
-        if four.math == "Yes" and second.study_time_spent == "4 Hour" and  nineth_marks_math == "Between 80%-90%" :
-            test_result = "You can opt Sciences in Non-Medical"
-
+        five = SectionFive.objects.filter(user_id=user.id).first()
+        print(first)
     return render(request, 'result.html', {'user_detail': userdetail,
-                                           'test_result': test_result,
-
+                                           'first': first,
+                                           'second': second,
+                                           'third': third,
+                                           'four': four,
+                                           'five': five,
                                            })
 
 
@@ -59,9 +57,13 @@ def home(request):
         candidate = SectionFive.objects.all().count()
         payment = PaymentCheck.objects.all().count()
         return render(request, 'home.html', {'users': users,
-                                             'candidate':candidate,
-                                             'payment' : payment
+                                             'candidate': candidate,
+                                             'payment': payment
                                              })
+
+
+def index(request):
+    return render(request, "index.html")
 
 
 def register(request):
@@ -84,7 +86,8 @@ def register(request):
             return redirect('register')
 
         if not re.fullmatch(r'[A-Za-z0-9@#$%^&+=]{8,}', pass1):
-            messages.error(request,"Password Must contain atleast one letter, one number,one special character. Minimum length should be 8 characters")
+            messages.error(request,
+                           "Password Must contain atleast one letter, one number,one special character. Minimum length should be 8 characters")
             return redirect('register')
 
         if (pass1 != pass2):
@@ -160,7 +163,6 @@ def profile(request):
             messages.error(request, " Both numbers should be different")
             return redirect('profile')
 
-
         user = request.user
         if request.user.is_authenticated:
             profilemodel = UserBasicInfo()
@@ -201,52 +203,55 @@ def profile(request):
         return render(request, 'profile.html')
 
 
-
 @login_required(login_url='login/')
 def section_first(request):
     user = request.user
     try:
         uid = UserBasicInfo.objects.get(user_id=user.id)
-        if request.method == 'POST':
-            nineth_marks = request.POST['nineth_marks']
-            math_nineth_marks = request.POST['math_nineth_marks']
-            sci_nineth_marks = request.POST['sci_nineth_marks']
-            tenth_marks = request.POST['tenth_marks']
-            math_tenth_marks = request.POST['math_tenth_marks']
-            sci_tenth_marks = request.POST['sci_tenth_marks']
-            math_olympiad = request.POST['math_olympiad']
-            sci_olympiad = request.POST['sci_olympiad']
-            sci_workshop = request.POST['sci_workshop']
-            most_preferred_sub = request.POST['most_preferred_sub']
-            least_preferred_sub = request.POST['least_preferred_sub']
+        if not SectionFirst.objects.filter(user_id=user.id).exists():
+            if request.method == 'POST':
+                nineth_marks = request.POST['nineth_marks']
+                math_nineth_marks = request.POST['math_nineth_marks']
+                sci_nineth_marks = request.POST['sci_nineth_marks']
+                tenth_marks = request.POST['tenth_marks']
+                math_tenth_marks = request.POST['math_tenth_marks']
+                sci_tenth_marks = request.POST['sci_tenth_marks']
+                math_olympiad = request.POST['math_olympiad']
+                sci_olympiad = request.POST['sci_olympiad']
+                sci_workshop = request.POST['sci_workshop']
+                most_preferred_sub = request.POST['most_preferred_sub']
+                least_preferred_sub = request.POST['least_preferred_sub']
 
-            if nineth_marks == "" and math_nineth_marks == "" and sci_nineth_marks == "" and tenth_marks == "" and math_tenth_marks == "" and sci_tenth_marks == "" and \
-                    math_olympiad == "" and sci_olympiad == "" and sci_workshop == "" and most_preferred_sub == "" and least_preferred_sub == "":
-                messages.error(request, "Kindly fill the fields")
-                return redirect("section_first")
-            if request.user.is_authenticated:
-                firstmodel = SectionFirst()
-                firstmodel.nineth_marks = nineth_marks
-                firstmodel.nineth_marks_math = math_nineth_marks
-                firstmodel.nineth_marks_science = sci_nineth_marks
-                firstmodel.tenth_marks = tenth_marks
-                firstmodel.tenth_marks_math = math_tenth_marks
-                firstmodel.tenth_marks_science = sci_tenth_marks
-                firstmodel.math_olampaid = math_olympiad
-                firstmodel.sci_olampaid = sci_olympiad
-                firstmodel.workshop = sci_workshop
-                firstmodel.most_perfered_sub = most_preferred_sub
-                firstmodel.least_perfered_sub = least_preferred_sub
-                firstmodel.user_id = user.id
-                firstmodel.save()
+                if nineth_marks == "" and math_nineth_marks == "" and sci_nineth_marks == "" and tenth_marks == "" and math_tenth_marks == "" and sci_tenth_marks == "" and \
+                        math_olympiad == "" and sci_olympiad == "" and sci_workshop == "" and most_preferred_sub == "" and least_preferred_sub == "":
+                    messages.error(request, "Kindly fill the fields")
+                    return redirect("section_first")
+                if request.user.is_authenticated:
+                    firstmodel = SectionFirst()
+                    firstmodel.nineth_marks = nineth_marks
+                    firstmodel.nineth_marks_math = math_nineth_marks
+                    firstmodel.nineth_marks_science = sci_nineth_marks
+                    firstmodel.tenth_marks = tenth_marks
+                    firstmodel.tenth_marks_math = math_tenth_marks
+                    firstmodel.tenth_marks_science = sci_tenth_marks
+                    firstmodel.math_olampaid = math_olympiad
+                    firstmodel.sci_olampaid = sci_olympiad
+                    firstmodel.workshop = sci_workshop
+                    firstmodel.most_perfered_sub = most_preferred_sub
+                    firstmodel.least_perfered_sub = least_preferred_sub
+                    firstmodel.user_id = user.id
+                    firstmodel.save()
 
-                # check errors
-                # success message redirect to result page
-                messages.success(request, f'Your data has been added.')
-                return redirect('section_second')
-            else:
-                messages.error(request, f'Some error in the form.')
-                return redirect('section_first')
+                    # check errors
+                    # success message redirect to result page
+                    messages.success(request, f'Your data has been added.')
+                    return redirect('section_second')
+                else:
+                    messages.error(request, f'Some error in the form.')
+                    return redirect('section_first')
+        else:
+            messages.error(request, f'Already filled the Section 1.  Kindly fill section 2')
+            return redirect('section_second')
     except UserBasicInfo.DoesNotExist:
         messages.error(request, f'You forgot to fill Student Information form. Kindly fill it first.')
         return redirect('profile')
@@ -258,218 +263,233 @@ def section_first(request):
 def section_second(request):
     user = request.user
     try:
-        # uid = SectionFirst.objects.get(user_id=user.id)
-        if request.method == 'POST':
-            study_method = request.POST['study_method']
-            study_environment = request.POST['study_environment']
-            study_time_spent = request.POST['time_spent']
-            games_time = request.POST['games_time']
-            screen_time = request.POST['screen_time']
-            role_model = request.POST['role_model']
-            attempts = request.POST['attempts']
-            attendance = request.POST['attendance']
-            scholarship = request.POST['scholarship']
-            edu_gap = request.POST['edu_gap']
+        uid = UserBasicInfo.objects.get(user_id=user.id)
+        if not SectionSecond.objects.filter(user_id=user.id).exists():
+            if request.method == 'POST':
+                study_method = request.POST['study_method']
+                study_environment = request.POST['study_environment']
+                study_time_spent = request.POST['time_spent']
+                games_time = request.POST['games_time']
+                screen_time = request.POST['screen_time']
+                role_model = request.POST['role_model']
+                attempts = request.POST['attempts']
+                attendance = request.POST['attendance']
+                scholarship = request.POST['scholarship']
+                edu_gap = request.POST['edu_gap']
 
-            if study_method == "" and study_environment == "" and study_time_spent == "" and games_time == "" and screen_time == "" and \
-                    role_model == "" and attempts == "" and attendance == "" and edu_gap == "" and scholarship == "":
-                messages.error(request, "Kindly fill the fields")
-                return redirect("section_second")
-            if request.user.is_authenticated:
-                secondmodel = SectionSecond()
-                secondmodel.study_method = study_method
-                secondmodel.study_environment = study_environment
-                secondmodel.study_time_spent = study_time_spent
-                secondmodel.games_time = games_time
-                secondmodel.screen_time = screen_time
-                secondmodel.role_model = role_model
-                secondmodel.attempts = attempts
-                secondmodel.attendance = attendance
-                secondmodel.scholarship = scholarship
-                secondmodel.edu_gap = edu_gap
-                secondmodel.user_id = user.id
-                secondmodel.save()
+                if study_method == "" and study_environment == "" and study_time_spent == "" and games_time == "" and screen_time == "" and \
+                        role_model == "" and attempts == "" and attendance == "" and edu_gap == "" and scholarship == "":
+                    messages.error(request, "Kindly fill the fields")
+                    return redirect("section_second")
+                if request.user.is_authenticated:
+                    secondmodel = SectionSecond()
+                    secondmodel.study_method = study_method
+                    secondmodel.study_environment = study_environment
+                    secondmodel.study_time_spent = study_time_spent
+                    secondmodel.games_time = games_time
+                    secondmodel.screen_time = screen_time
+                    secondmodel.role_model = role_model
+                    secondmodel.attempts = attempts
+                    secondmodel.attendance = attendance
+                    secondmodel.scholarship = scholarship
+                    secondmodel.edu_gap = edu_gap
+                    secondmodel.user_id = user.id
+                    secondmodel.save()
 
-                # check errors
-                # success message redirect to result page
-                messages.success(request, f'Your data has been added.')
-                return redirect('section_three')
-            else:
-                messages.error(request, f'Some error in the form.')
-                return redirect('section_second')
-    except SectionFirst.DoesNotExist:
-        messages.error(request, f'You forgot to answer the Section First. Answer that first')
-        return redirect('section_first')
-
-    render(request, 'section_second.html')
+                    # check errors
+                    # success message redirect to result page
+                    messages.success(request, f'Your data has been added.')
+                    return redirect('section_three')
+                else:
+                    messages.error(request, f'Some error in the form.')
+                    return redirect('section_second')
+        else:
+            messages.error(request, f'Already filled the Section 2.  Kindly fill section 3')
+            return redirect('section_three')
+    except UserBasicInfo.DoesNotExist:
+        messages.error(request, f'You forgot to fill Student Information form. Kindly fill it first.')
+        return redirect('profile')
+    return render(request, 'section_second.html')
 
 
 @login_required(login_url='login/')
 def section_three(request):
     user = request.user
     try:
-        # uid = SectionFirst.objects.get(user_id=user.id)
-        if request.method == 'POST':
-            math = request.POST['math']
-            physics = request.POST['physics']
-            chemistry = request.POST['chemistry']
-            biology = request.POST['biology']
-            history = request.POST['history']
-            geography = request.POST['geography']
-            commerce = request.POST['commerce']
-            accounts = request.POST['accounts']
-            statistics = request.POST['statistics']
-            language = request.POST['language']
+        uid = UserBasicInfo.objects.get(user_id=user.id)
+        if not SectionThree.objects.filter(user_id=user.id).exists():
+            if request.method == 'POST':
+                math = request.POST['math']
+                physics = request.POST['physics']
+                chemistry = request.POST['chemistry']
+                biology = request.POST['biology']
+                history = request.POST['history']
+                geography = request.POST['geography']
+                commerce = request.POST['commerce']
+                accounts = request.POST['accounts']
+                statistics = request.POST['statistics']
+                language = request.POST['language']
 
-            if math == "" and history == "" and biology == "" and chemistry == "" and physics == "" and \
-                    statistics == "" and accounts == "" and commerce == "" and geography == "" and language == "":
-                messages.error(request, "Kindly fill the fields")
-                return redirect("section_four")
-            if request.user.is_authenticated:
-                thirdmodel = SectionThree()
-                thirdmodel.math = math
-                thirdmodel.history = history
-                thirdmodel.biology = biology
-                thirdmodel.physics = physics
-                thirdmodel.chemistry = chemistry
-                thirdmodel.geography = geography
-                thirdmodel.commerce = commerce
-                thirdmodel.accounts = accounts
-                thirdmodel.statistics = statistics
-                thirdmodel.language = language
-                thirdmodel.user_id = user.id
-                thirdmodel.save()
+                if math == "" and history == "" and biology == "" and chemistry == "" and physics == "" and \
+                        statistics == "" and accounts == "" and commerce == "" and geography == "" and language == "":
+                    messages.error(request, "Kindly fill the fields")
+                    return redirect("section_three")
+                if request.user.is_authenticated:
+                    thirdmodel = SectionThree()
+                    thirdmodel.math = math
+                    thirdmodel.history = history
+                    thirdmodel.biology = biology
+                    thirdmodel.physics = physics
+                    thirdmodel.chemistry = chemistry
+                    thirdmodel.geography = geography
+                    thirdmodel.commerce = commerce
+                    thirdmodel.accounts = accounts
+                    thirdmodel.statistics = statistics
+                    thirdmodel.language = language
+                    thirdmodel.user_id = user.id
+                    thirdmodel.save()
 
-                # check errors
-                # success message redirect to result page
-                messages.success(request, f'Your data has been added.')
-                return redirect('section_four')
-            else:
-                messages.error(request, f'Some error in the form.')
-                return redirect('section_three')
-    except SectionFirst.DoesNotExist:
-        messages.error(request, f'You forgot to answer the Section First. Answer that first')
-        return redirect('section_first')
+                    # check errors
+                    # success message redirect to result page
+                    messages.success(request, f'Your data has been added.')
+                    return render(request, 'section_four.html')
+                else:
+                    messages.error(request, f'Some error in the form.')
+                    return render(request, 'section_three.html')
+        else:
+            messages.error(request, f'Already filled the Section 3.  Kindly fill section 4')
+            return redirect('section_four')
+    except UserBasicInfo.DoesNotExist:
+        messages.error(request, f'You forgot to fill Student Information form. Kindly fill it first.')
+        return redirect('profile')
 
-    render(request, 'section_three.html')
+    return render(request, 'section_three.html')
 
 
 @login_required(login_url='login/')
 def section_four(request):
     user = request.user
     try:
-        # uid = SectionFirst.objects.get(user_id=user.id)
-        if request.method == 'POST':
-            political_science = request.POST['political_science']
-            home_science = request.POST['home_science']
-            environment_science = request.POST['chemistry']
-            physical_edu = request.POST['biology']
-            computers = request.POST['history']
-            typewriting = request.POST['typewriting']
-            stenography = request.POST['stenography']
-            beautician = request.POST['beautician']
-            library_asst = request.POST['library_asst']
-            secretarial_roles = request.POST['secretarial_roles']
+        uid = UserBasicInfo.objects.get(user_id=user.id)
+        if not SectionFour.objects.filter(user_id=user.id).exists():
+            if request.method == 'POST':
+                political_science = request.POST['political_science']
+                home_science = request.POST['home_science']
+                environment_science = request.POST['environment_science']
+                physical_edu = request.POST['physical_edu']
+                computers = request.POST['computer']
+                typewriting = request.POST['typewriting']
+                stenography = request.POST['stenography']
+                beautician = request.POST['beautician']
+                library_asst = request.POST['library_asst']
+                secretarial_roles = request.POST['secretarial_roles']
+                if political_science == "" and home_science == "" and environment_science == "" and physical_edu == "" and computers == "" and \
+                        typewriting == "" and stenography == "" and beautician == "" and library_asst == "" and secretarial_roles == "":
+                    messages.error(request, "Kindly fill the fields")
+                    return redirect("section_four")
+                if request.user.is_authenticated:
+                    fourthmodel = SectionFour()
+                    fourthmodel.political_science = political_science
+                    fourthmodel.home_science = home_science
+                    fourthmodel.environment_science = environment_science
+                    fourthmodel.physical_edu = physical_edu
+                    fourthmodel.computers = computers
+                    fourthmodel.typewriting = typewriting
+                    fourthmodel.stenography = stenography
+                    fourthmodel.beautician = beautician
+                    fourthmodel.library_asst = library_asst
+                    fourthmodel.secretarial_roles = secretarial_roles
+                    fourthmodel.user_id = user.id
+                    fourthmodel.save()
 
-            if political_science == "" and home_science == "" and environment_science == "" and physical_edu == "" and computers == "" and \
-                    typewriting == "" and stenography == "" and beautician == "" and library_asst == "" and secretarial_roles == "":
-                messages.error(request, "Kindly fill the fields")
-                return redirect("section_four")
-            if request.user.is_authenticated:
-                fourthmodel = SectionFour()
-                fourthmodel.political_science = political_science
-                fourthmodel.home_science = home_science
-                fourthmodel.environment_science = environment_science
-                fourthmodel.physical_edu = physical_edu
-                fourthmodel.computers = computers
-                fourthmodel.typewriting = typewriting
-                fourthmodel.stenography = stenography
-                fourthmodel.beautician = beautician
-                fourthmodel.library_asst = library_asst
-                fourthmodel.secretarial_roles = secretarial_roles
-                fourthmodel.user_id = user.id
-                fourthmodel.save()
+                    # check errors
+                    # success message redirect to result page
+                    messages.success(request, f'proceed with next section.')
+                    return render(request, 'section_five.html')
 
-                # check errors
-                # success message redirect to result page
-                messages.success(request, f'You had given your test successfully. Now you can proceed with payment for result')
-                return redirect('section_five')
-            else:
-                messages.error(request, f'Some error in the form.')
-                return redirect('section_four')
-    except SectionFirst.DoesNotExist:
-        messages.error(request, f'You forgot to answer the Section First. Answer that first')
-        return redirect('section_first')
-
-    render(request, 'section_four.html')
-
+                else:
+                    messages.error(request, f'Some Errors')
+                    return redirect('section_four')
+        else:
+            messages.error(request, f'Already filled the Section 4.  Kindly fill section 5')
+            return redirect('section_five')
+    except UserBasicInfo.DoesNotExist:
+        messages.error(request, f'You forgot to fill Student Information form. Kindly fill it first.')
+        return redirect('profile')
+    return render(request, 'section_four.html')
 
 
 @login_required(login_url='login/')
 def section_five(request):
     user = request.user
     try:
-        # uid = SectionFirst.objects.get(user_id=user.id)
-        if request.method == 'POST':
-            curricular = request.POST['curricular']
-            performance_level = request.POST['performance_level']
-            father_qual = request.POST['father_qual']
-            mother_qual = request.POST['mother_qual']
-            sibling_qual = request.POST['sibling_qual']
-            father_job = request.POST['father_job']
-            mother_job = request.POST['mother_job']
-            sibling_job = request.POST['sibling_job']
-            annual_income = request.POST['annual_income']
+        uid = UserBasicInfo.objects.get(user_id=user.id)
+        if not SectionFive.objects.filter(user_id=user.id).exists():
+            if request.method == 'POST':
+                curricular = request.POST['curricular']
+                performance_level = request.POST['performance_level']
+                father_qual = request.POST['father_qual']
+                mother_qual = request.POST['mother_qual']
+                sibling_qual = request.POST['sibiling_qual']
+                father_job = request.POST['father_job']
+                mother_job = request.POST['mother_job']
+                sibling_job = request.POST['sibling_job']
+                annual_income = request.POST['annual_income']
 
-            if curricular == "" and performance_level == "" and father_qual == "" and mother_qual == "" and \
-                    sibling_qual == "" and father_job == "" and mother_job == "" and sibling_job == "" and annual_income == "":
-                messages.error(request, "Kindly fill the fields")
-                return redirect("section_five")
-            if request.user.is_authenticated:
-                fifthmodel = SectionFive()
-                fifthmodel.curricular = curricular
-                fifthmodel.performance_level = performance_level
-                fifthmodel.father_qual = father_qual
-                fifthmodel.mother_qual = mother_qual
-                fifthmodel.sibling_qual = sibling_qual
-                fifthmodel.father_job = father_job
-                fifthmodel.mother_job = mother_job
-                fifthmodel.sibling_job = sibling_job
-                fifthmodel.annual_income = annual_income
-                fifthmodel.user_id = user.id
-                fifthmodel.save()
+                if curricular == "" and performance_level == "" and father_qual == "" and mother_qual == "" and \
+                        sibling_qual == "" and father_job == "" and mother_job == "" and sibling_job == "" and annual_income == "":
+                    messages.error(request, "Kindly fill the fields")
+                    return redirect("section_five")
+                if request.user.is_authenticated:
+                    fifthmodel = SectionFive()
+                    fifthmodel.curricular = curricular
+                    fifthmodel.performance_level = performance_level
+                    fifthmodel.father_qual = father_qual
+                    fifthmodel.mother_qual = mother_qual
+                    fifthmodel.sibling_qual = sibling_qual
+                    fifthmodel.father_job = father_job
+                    fifthmodel.mother_job = mother_job
+                    fifthmodel.sibling_job = sibling_job
+                    fifthmodel.annual_income = annual_income
+                    fifthmodel.user_id = user.id
+                    fifthmodel.save()
 
-                # check errors
-                # success message redirect to result page
-                messages.success(request, f'Your data has been added.')
-                return redirect('result')
-            else:
-                messages.error(request, f'Some error in the form.')
-                return redirect('section_five')
-    except SectionFirst.DoesNotExist:
-        messages.error(request, f'You forgot to answer the Section First. Answer that first')
-        return redirect('section_first')
+                    # check errors
+                    # success message redirect to result page
+                    messages.success(request,
+                                     f'You had given your test successfully. Now you can proceed with payment for result')
+                    return redirect('result')
+                else:
+                    messages.error(request, f'Some error in the form.')
+                    return redirect('section_five')
+        else:
+            messages.error(request, f'Already given the test. Kindly check result')
+            return redirect('result')
+    except UserBasicInfo.DoesNotExist:
+        messages.error(request, f'You forgot to fill Student Information form. Kindly fill it first.')
+        return redirect('profile')
 
-    render(request, 'section_five.html')
-
+    return render(request, 'section_five.html')
 
 
 def section_six(request):
-    render(request, 'section_six.html')
+    return render(request, 'section_six.html')
 
 
 def section_seven(request):
-    render(request, 'section_seven.html')
+    return render(request, 'section_seven.html')
 
 
 def section_eight(request):
-    render(request, 'section_eight.html')
+    return render(request, 'section_eight.html')
+
 
 def section_nine(request):
-    render(request, 'section_nine.html')
+    return render(request, 'section_nine.html')
+
 
 def section_ten(request):
-    render(request, 'section_ten.html')
+    return render(request, 'section_ten.html')
 
 
 @login_required

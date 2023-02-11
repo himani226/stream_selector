@@ -1,29 +1,22 @@
 {% load static %}
 {% if user.is_authenticated %}
 <html lang="en">
-
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-
     <title>intelliTest - KAAMYAAB BANO</title>
-
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
-
     <link rel="stylesheet" href="{% static 'css/style.min.css' %}" />
     <!--<link rel="stylesheet" href="{% static 'css/style.css' %}" />-->
-
     <!-- Custom fonts for this template-->
     <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
 </head>
 
 <body class="bg-gray-100">
-
     <div class="container">
        <!-- <a href="#" class="d-none d-sm-inline-block btn btn-danger shadow-sm"><i
                                 class="fas fa-file-alt fa-sm text-white-50"></i> Generate Report PDF</a>-->
@@ -34,144 +27,242 @@
                     <div class="row">
                         <div class="col-lg-12 d-none d-lg-block">
                             <img src="{% static 'img/report-bg.jpg' %}" alt="logo">
-                        <hr>
-                        <div class="col-md-12 text-primary text-lg">
-                        <div class="col-md-2 float-left">
-                            Name:  </div>
-                        <div class="col-md-4 float-left">
-                            {{ user_detail.full_name }} </div>
-
-                        <div class="col-md-2 float-left">
-                            D.O.B:  </div>
-                        <div class="col-md-4 float-left">
-                            {{ user_detail.dob }}</div>
-                        </div>
-                        <div class="col-md-12 text-primary text-lg">
-                        <div class="col-md-2 float-left">
-                            Mobile:  </div>
-                        <div class="col-md-4 float-left">
-                            {{ user_detail.mobile_num }} </div>
-
-                        <div class="col-md-2 float-left">
-                            Email:  </div>
-                        <div class="col-md-4 float-left">
-                            {{ user.email }}</div>
-                        </div>
-                        <div class="col-md-12 text-primary text-lg">
-                        <div class="col-md-2 float-left">
-                            Father Name:  </div>
-                        <div class="col-md-4 float-left">
-                            {{ user_detail.father_name }} </div>
-
-                        <div class="col-md-2 float-left">
-                            Mother Name:  </div>
-                        <div class="col-md-4 float-left">
-                             {{ user_detail.mother_name }}</div>
-                        </div>
-                        </div>
+                            <hr>
+                            <div class="col-md-12 text-primary text-lg">
+                                <div class="col-md-2 float-left">Name:  </div>
+                                <div class="col-md-4 float-left">{{ user_detail.full_name }} </div>
+                                <div class="col-md-2 float-left">D.O.B:  </div>
+                                <div class="col-md-4 float-left">{{ user_detail.dob }}</div>
                             </div>
-                        <hr>
-                       <div class=" col-md-12">
-
-                           <div class="col-md-12">
-
-                           <h4 class="text-danger">Introduction</h4>
-                            <p>If you want your future to be successful, then first you have to plan for it. Stream selection after 10th determines your future and for this it is necessary to test your capabilities. Along with this, it should also be seen in which subject you can perform well. If you take a step once, then it becomes difficult to reverse it. That's why 10th is considered important for you. You can solve this problem only by psychometric test, this test can help you a lot in your 1st stream selection.</p>
-
+                            <div class="col-md-12 text-primary text-lg">
+                                <div class="col-md-2 float-left">Mobile:  </div>
+                                <div class="col-md-4 float-left">{{ user_detail.mobile_num }} </div>
+                                <div class="col-md-2 float-left">Email:  </div>
+                                <div class="col-md-4 float-left">{{ user.email }}</div>
+                            </div>
+                            <div class="col-md-12 text-primary text-lg">
+                                <div class="col-md-2 float-left">Father Name:  </div>
+                                <div class="col-md-4 float-left">{{ user_detail.father_name }} </div>
+                                <div class="col-md-2 float-left">Mother Name:</div>
+                                <div class="col-md-4 float-left">{{ user_detail.mother_name }}</div>
+                            </div>
                         </div>
-                      <div class="row">
-
-                            <!-- Area Chart -->
+                    </div>
+                    <hr>
+                    <div class="col-md-12">
+                        <h4 class="text-danger">Introduction</h4>
+                        <p>If you want your future to be successful, then first you have to plan for it. Stream selection after 10th determines your future and for this it is necessary to test your capabilities. Along with this, it should also be seen in which subject you can perform well. If you take a step once, then it becomes difficult to reverse it. That's why 10th is considered important for you. You can solve this problem only by psychometric test, this test can help you a lot in your 1st stream selection.</p>
+                    </div>
+                    <div class="row">
+                        {% if first.nineth_marks == 'Between_80%_90%' and third.math == 'yes' %}
+                        <div class = "col-md-12">
+                            <div class="col-md-12">
+                                <h4 class="text-danger">Student Review</h4>
+                                     <p>We are suggesting to opt Non-Medical Stream</p>
+                                <h4 class="text-danger">Which Stream to Choose?</h4>
+                                <p>If you want your future to be successful, then first you have to plan for it. Stream selection after 10th determines your future and for this it is necessary to test your capabilities. Along with this, it should also be seen in which subject you can perform well. If you take a step once, then it becomes difficult to reverse it. That's why 10th is considered important for you. You can solve this problem only by psychometric test, this test can help you a lot in your 1st stream selection.</p>
+                            </div>
+                        <!-- Area Chart -->
                             <div class="col-xl-8 col-lg-7">
+                                <!-- Card Header - Dropdown -->
                                 <div class="card shadow mb-4">
-                                    <!-- Card Header - Dropdown -->
-                                   <div class="card shadow mb-4">
                                     <div class="card-header py-3">
                                         <h6 class="m-0 font-weight-bold text-primary">Student Interest</h6>
                                     </div>
                                     <div class="card-body">
-                                        <h4 class="small font-weight-bold">Science (Non-Medical)<span
-                                                class="float-right">20%</span></h4>
+                                        <h4 class="small font-weight-bold">Science (Non-Medical)
+                                            <span class="float-right">80%</span>
+                                        </h4>
                                         <div class="progress mb-4">
-                                            <div class="progress-bar bg-danger" role="progressbar" style="width: 20%"
-                                                aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                        <h4 class="small font-weight-bold">Science (Medical)<span
-                                                class="float-right">40%</span></h4>
-                                        <div class="progress mb-4">
-                                            <div class="progress-bar bg-warning" role="progressbar" style="width: 40%"
-                                                aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                        <h4 class="small font-weight-bold">Arts<span
-                                                class="float-right">80%</span></h4>
-                                        <div class="progress mb-4">
-                                            <div class="progress-bar" role="progressbar" style="width: 60%"
-                                                aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                        <h4 class="small font-weight-bold">Commerce<span
-                                                class="float-right">80%</span></h4>
-                                        <div class="progress mb-4">
-                                            <div class="progress-bar bg-info" role="progressbar" style="width: 80%"
+                                            <div class="progress-bar bg-danger" role="progressbar" style="width: 80%"
                                                 aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
                                         </div>
-                                        </br>
-                                       </br>
-                                </div>
+                                        <h4 class="small font-weight-bold">Science (Medical)
+                                            <span class="float-right">60%</span></h4>
+                                        <div class="progress mb-4">
+                                            <div class="progress-bar bg-warning" role="progressbar" style="width: 60%"
+                                                aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        <h4 class="small font-weight-bold">Science (Both Medical and Non-Medical)
+                                            <span class="float-right">50%</span></h4>
+                                        <div class="progress mb-4">
+                                            <div class="progress-bar bg-danger" role="progressbar" style="width: 50%"
+                                                aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        <h4 class="small font-weight-bold">Arts
+                                            <span class="float-right">10%</span></h4>
+                                        <div class="progress mb-4">
+                                            <div class="progress-bar" role="progressbar" style="width: 10%"
+                                                aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        <h4 class="small font-weight-bold">Commerce
+                                            <span class="float-right">30%</span></h4>
+                                        <div class="progress mb-4">
+                                            <div class="progress-bar bg-info" role="progressbar" style="width: 30%"
+                                                aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        <h4 class="small font-weight-bold">Vocational Courses
+                                            <span class="float-right">5%</span></h4>
+                                        <div class="progress mb-4">
+                                            <div class="progress-bar bg-info" role="progressbar" style="width: 5%"
+                                                aria-valuenow="5" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        <h4 class="small font-weight-bold">Open Schooling
+                                            <span class="float-right">5%</span></h4>
+                                        <div class="progress mb-4">
+                                            <div class="progress-bar bg-info" role="progressbar" style="width: 5%"
+                                                aria-valuenow="5" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        </br></br>
                                     </div>
                                 </div>
-                                    <!-- Card Body -->
-
-
+                        </div>
+                            <div class="col-md-12">
+                            <h5 class="text-danger">Note:- display text here about test is not 100% authenticated </h5>
+                        </div>
+                        </div>
+                        {% elif first.nineth_marks == 'Between_80%_90%' and third.biology == 'yes' %}
+                        <div class = "col-md-12">
+                            <div class="col-md-12">
+                                <h4 class="text-danger">Student Review</h4>
+                                     <p>We are suggesting to opt Medical Stream</p>
+                                <h4 class="text-danger">Which Stream to Choose?</h4>
+                                <p>If you want your future to be successful, then first you have to plan for it. Stream selection after 10th determines your future and for this it is necessary to test your capabilities. Along with this, it should also be seen in which subject you can perform well. If you take a step once, then it becomes difficult to reverse it. That's why 10th is considered important for you. You can solve this problem only by psychometric test, this test can help you a lot in your 1st stream selection.</p>
                             </div>
-
-                            <!-- Pie Chart -->
-                            <!--<div class="col-xl-4 col-lg-5">
+                        <!-- Area Chart -->
+                            <div class="col-xl-8 col-lg-7">
+                                <!-- Card Header - Dropdown -->
                                 <div class="card shadow mb-4">
-                                    <!-- Card Header - Dropdown -->
-                                    <!--<div
-                                        class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                        <h6 class="m-0 font-weight-bold text-primary">Student Report</h6>
-                                        <div class="dropdown no-arrow">
-
-
-                                        </div>
+                                    <div class="card-header py-3">
+                                        <h6 class="m-0 font-weight-bold text-primary">Student Interest</h6>
                                     </div>
-                                    <!-- Card Body -->
-                                    <!--<div class="card-body">
-                                        <div class="chart-pie pt-4 pb-2">
-                                            <canvas id="myPieChart"></canvas>
+                                    <div class="card-body">
+                                        <h4 class="small font-weight-bold">Science (Medical)
+                                            <span class="float-right">80%</span>
+                                        </h4>
+                                        <div class="progress mb-4">
+                                            <div class="progress-bar bg-danger" role="progressbar" style="width: 80%"
+                                                aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
                                         </div>
-                                        <div class="mt-4 text-center small">
-                                            <span class="mr-2">
-                                                <i class="fas fa-circle text-primary"></i> Apptitude
-                                            </span>
-                                            <span class="mr-2">
-                                                <i class="fas fa-circle text-success"></i>Interest
-                                            </span>
-
+                                        <h4 class="small font-weight-bold">Science (Non-Medical)
+                                            <span class="float-right">60%</span></h4>
+                                        <div class="progress mb-4">
+                                            <div class="progress-bar bg-warning" role="progressbar" style="width: 60%"
+                                                aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
                                         </div>
+                                        <h4 class="small font-weight-bold">Science (Both Medical and Non-Medical)
+                                            <span class="float-right">50%</span></h4>
+                                        <div class="progress mb-4">
+                                            <div class="progress-bar bg-danger" role="progressbar" style="width: 50%"
+                                                aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        <h4 class="small font-weight-bold">Arts
+                                            <span class="float-right">10%</span></h4>
+                                        <div class="progress mb-4">
+                                            <div class="progress-bar" role="progressbar" style="width: 10%"
+                                                aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        <h4 class="small font-weight-bold">Commerce
+                                            <span class="float-right">30%</span></h4>
+                                        <div class="progress mb-4">
+                                            <div class="progress-bar bg-info" role="progressbar" style="width: 30%"
+                                                aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        <h4 class="small font-weight-bold">Vocational Courses
+                                            <span class="float-right">5%</span></h4>
+                                        <div class="progress mb-4">
+                                            <div class="progress-bar bg-info" role="progressbar" style="width: 5%"
+                                                aria-valuenow="5" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        <h4 class="small font-weight-bold">Open Schooling
+                                            <span class="float-right">5%</span></h4>
+                                        <div class="progress mb-4">
+                                            <div class="progress-bar bg-info" role="progressbar" style="width: 5%"
+                                                aria-valuenow="5" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        </br></br>
                                     </div>
                                 </div>
+                        </div>
+                            <div class="col-md-12">
+                            <h5 class="text-danger">Note:- display text here about test is not 100% authenticated </h5>
+                        </div>
+                        </div>
+                        {% elif first.nineth_marks == 'Between_70%_80%' and third.history == 'yes' %}
+                        <div class = "col-md-12">
+                            <div class="col-md-12">
+                                <h4 class="text-danger">Student Review</h4>
+                                     <p>We are suggesting to opt Medical Stream</p>
+                                <h4 class="text-danger">Which Stream to Choose?</h4>
+                                <p>If you want your future to be successful, then first you have to plan for it. Stream selection after 10th determines your future and for this it is necessary to test your capabilities. Along with this, it should also be seen in which subject you can perform well. If you take a step once, then it becomes difficult to reverse it. That's why 10th is considered important for you. You can solve this problem only by psychometric test, this test can help you a lot in your 1st stream selection.</p>
                             </div>
-                        </div>-->
-                    <div class="col-md-12">
-
-                           <h4 class="text-danger">Student Review</h4>
-                            <p>{% if test_result %} {{test_result}} {% endif %}</p>
-                        <h4 class="text-danger">Which Stream to Choose?</h4>
-                            <p>If you want your future to be successful, then first you have to plan for it. Stream selection after 10th determines your future and for this it is necessary to test your capabilities. Along with this, it should also be seen in which subject you can perform well. If you take a step once, then it becomes difficult to reverse it. That's why 10th is considered important for you. You can solve this problem only by psychometric test, this test can help you a lot in your 1st stream selection.</p>
-                        <div><h5 class="text-danger">Note:- display text here about test is not 100% authenticated </h5></div>
-                </div>
-
-
+                        <!-- Area Chart -->
+                            <div class="col-xl-8 col-lg-7">
+                                <!-- Card Header - Dropdown -->
+                                <div class="card shadow mb-4">
+                                    <div class="card-header py-3">
+                                        <h6 class="m-0 font-weight-bold text-primary">Student Interest</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <h4 class="small font-weight-bold">Arts
+                                            <span class="float-right">80%</span>
+                                        </h4>
+                                        <div class="progress mb-4">
+                                            <div class="progress-bar bg-danger" role="progressbar" style="width: 80%"
+                                                aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        <h4 class="small font-weight-bold">Commerce
+                                            <span class="float-right">60%</span></h4>
+                                        <div class="progress mb-4">
+                                            <div class="progress-bar bg-warning" role="progressbar" style="width: 60%"
+                                                aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        <h4 class="small font-weight-bold">Vocational Courses
+                                            <span class="float-right">40%</span></h4>
+                                        <div class="progress mb-4">
+                                            <div class="progress-bar bg-danger" role="progressbar" style="width: 40%"
+                                                aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        <h4 class="small font-weight-bold">Science (Non-Medical)
+                                            <span class="float-right">30%</span></h4>
+                                        <div class="progress mb-4">
+                                            <div class="progress-bar" role="progressbar" style="width: 10%"
+                                                aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        <h4 class="small font-weight-bold">Science (Medical)
+                                            <span class="float-right">30%</span></h4>
+                                        <div class="progress mb-4">
+                                            <div class="progress-bar bg-info" role="progressbar" style="width: 30%"
+                                                aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        <h4 class="small font-weight-bold">Science (Both Medical and Non-Medical)
+                                            <span class="float-right">5%</span></h4>
+                                        <div class="progress mb-4">
+                                            <div class="progress-bar bg-info" role="progressbar" style="width: 5%"
+                                                aria-valuenow="5" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        <h4 class="small font-weight-bold">Open Schooling
+                                            <span class="float-right">10%</span></h4>
+                                        <div class="progress mb-4">
+                                            <div class="progress-bar bg-info" role="progressbar" style="width: 5%"
+                                                aria-valuenow="5" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        </br></br>
+                                    </div>
+                                </div>
+                        </div>
+                            <div class="col-md-12">
+                            <h5 class="text-danger">Note:- display text here about test is not 100% authenticated </h5>
+                        </div>
+                        </div>
                     </div>
-
-            <img src="{% static 'img/report-bg_footer.jpg' %}" alt="footer">
                 </div>
+                    <img src="{% static 'img/report-bg_footer.jpg' %}" alt="footer">
             </div>
         </div>
-        {% endif %}
     </div>
+        {% endif %}
+        {% endif %}
 
     <!-- Bootstrap core JavaScript-->
     <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>

@@ -1,0 +1,335 @@
+{% load static %}
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>intelliTest - KAAMYAAB BANO</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="{% static 'landingPage/assets/img/favicon.ico' %}" rel="icon">
+  <link href="{% static 'landingPage/assets/img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="{% static 'landingPage/assets/vendor/aos/aos.css' %}" rel="stylesheet">
+  <link href="{% static 'landingPage/assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'landingPage/assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+  <link href="{% static 'landingPage/assets/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+  <link href="{% static 'landingPage/assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+  <link href="{% static 'landingPage/assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="{% static 'landingPage/assets/css/style.css' %}" rel="stylesheet">
+
+ 
+</head>
+
+<body>
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top  header-transparent ">
+    <div class="container d-flex align-items-center justify-content-between">
+
+      <div class="logo">
+       
+       <a href="{% url 'index' %}"><img src="{% static 'landingPage/assets/img/logo.png' %}" alt="" class="img-fluid"></a>
+      </div>
+
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
+          <li><a class="nav-link scrollto" href="#features"> Why IntelliTest?</a></li>
+          <li><a class="nav-link scrollto" href="#testimonials">Testimonials</a></li>
+          <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+          <li><a class="getstarted scrollto" href="{% url 'login' %}">LOGIN</a></li>
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+
+    </div>
+  </header><!-- End Header -->
+
+  <!-- ======= Hero Section ======= -->
+  <section id="hero" class="d-flex align-items-center">
+
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 d-lg-flex flex-lg-column justify-content-center align-items-stretch pt-5 pt-lg-0 order-2 order-lg-1" data-aos="fade-up">
+          <div>
+            <h1>IntelliTest<br>Kaamyaab Bano</h1>
+            <h2>Worry about which stream to choose after class 10th <br> Try Intellitest - The all in one solution for Students </h2>
+            <a href="{% url 'login' %}" class="download-btn"><i class="bx bxl-edge"></i>TRY NOW </a>
+            
+          </div>
+        </div>
+        <div class="col-lg-6 d-lg-flex flex-lg-column align-items-stretch order-1 order-lg-2 hero-img" data-aos="fade-up">
+          <img src="{% static 'landingPage/assets/img/hero-img.png' %}" class="img-fluid" alt="">
+        </div>
+      </div>
+    </div>
+
+  </section><!-- End Hero -->
+
+  <main id="main">
+
+    <!-- ======= App Features Section ======= -->
+    <section id="features" class="features">
+      <div class="container">
+
+        <div class="section-title">
+          <h2>Stream Selection Confusion in India</h2>
+          <p>Why class 10th students in India remains confused in stream selection after class 10th?<br> 
+Class 10th students in India remain confused in stream selection after class 10th due to several factors.
+</p>
+        </div>
+
+        <div class="row no-gutters">
+          <div class="col-xl-7 d-flex align-items-stretch order-2 order-lg-1">
+            <div class="content d-flex flex-column justify-content-center">
+              <div class="row">
+                <div class="col-md-6 icon-box" data-aos="fade-up">
+                  <i class="bx bx-receipt"></i>
+                  <h4>Lack of Awareness</h4>
+                  <p>Students often lack complete information about the various streams available and the career opportunities they offer. </p>
+                </div>
+                <div class="col-md-6 icon-box" data-aos="fade-up" data-aos-delay="100">
+                  <i class="bx bx-user-pin"></i>
+                  <h4>Peer Pressure</h4>
+                  <p>Students may choose a stream based on what their friends are choosing,
+instead of their own interests and aptitude.
+</p>
+                </div>
+                <div class="col-md-6 icon-box" data-aos="fade-up" data-aos-delay="200">
+                  <i class="bx bx-user-check"></i>
+                  <h4>Family Expectations</h4>
+                  <p>Family members may have certain expectations and push the
+student towards a particular stream, without considering the student's interests. 
+</p>
+                </div>
+                <div class="col-md-6 icon-box" data-aos="fade-up" data-aos-delay="300">
+                  <i class="bx bx-shocked"></i>
+                  <h4>Misconceptions</h4>
+                  <p>Students may have misconceptions about certain streams and may choose them without fully understanding the implications. </p>
+                </div>
+                <div class="col-md-6 icon-box" data-aos="fade-up" data-aos-delay="400">
+                  <i class="bx bx-id-card"></i>
+                  <h4>High Stakes</h4>
+                  <p>The stream selected after class 10th has long-term implications and students may feel pressured to make the right decision.</p>
+                </div>
+               
+              </div>
+            </div>
+          </div>
+          <div class="image col-xl-5 d-flex align-items-stretch justify-content-center order-1 order-lg-2" data-aos="fade-left" data-aos-delay="100">
+            <img src="{% static 'landingPage/assets/img/features.svg' %}" class="img-fluid" alt="">
+          </div>
+        </div>
+
+      </div>
+    </section><!-- End App Features Section -->
+
+    <!-- ======= Details Section ======= -->
+    <section id="details" class="details">
+      <div class="container">
+
+        <div class="row content">
+          <div class="col-md-4" data-aos="fade-right">
+            <img src="{% static 'landingPage/assets/img/details-1.png' %}" class="img-fluid" alt="">
+          </div>
+          <div class="col-md-8 pt-4" data-aos="fade-up">
+            <h3>Why IntelliTest is Important?</h3>
+            <p class="fst-italic">
+              It is important for students to receive proper guidance and counselling to help them make an informed decision about their future. 
+            </p>
+            
+            <p>
+              In India, the choice of stream after Class 10th is crucial as it determines the future educational and career path of a student. The stream selected after Class 10th sets the foundation for further studies and affects the opportunities available for higher education and employment.<br> <br> 
+				Thus, it is important to assess a student's interests, strengths, and aptitude to ensure that they choose a stream that is best suited to their abilities and aspirations. Testing helps to identify a student's potential and guide them in making an informed decision about their future.
+            </p>
+          </div>
+        </div>
+
+   
+
+      </div>
+    </section><!-- End Details Section -->
+
+   
+
+    <!-- ======= Testimonials Section ======= -->
+    <section id="testimonials" class="testimonials section-bg">
+      <div class="container" data-aos="fade-up">
+
+        <div class="section-title">
+          <h2>Testimonials</h2>
+          <p>"We believe that our customers are the best people to speak about their experiences with IntelliTest. <br>Here are a few testimonials from satisfied clients."</p>
+        </div>
+
+        <div class="testimonials-slider swiper" data-aos="fade-up" data-aos-delay="100">
+          <div class="swiper-wrapper">
+
+            <div class="swiper-slide">
+              <div class="testimonial-item">
+                <img src="{% static 'landingPage/assets/img/testimonials/testimonials-1.jpg' %}" class="testimonial-img" alt="">
+                <h3>Balwinder Singh</h3>
+                <h4>Parents</h4>
+                <p>
+                  <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                "Our son was struggling in school, and we weren't sure what was holding him back. After taking a psychometric test, we were amazed at the detailed insights it provided. It helped us understand our son's strengths and weaknesses, and gave us the tools we needed to help him succeed. We are so grateful for this test and would highly recommend it to any parent with concerns about their child's academic performance."
+                  <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+                </p>
+              </div>
+            </div>
+
+            <div class="swiper-slide">
+              <div class="testimonial-item">
+                <img src="{% static 'landingPage/assets/img/testimonials/testimonials-3.jpg' %}" class="testimonial-img" alt="">
+                <h3>Rajni Sharma</h3>
+                <h4>Parents</h4>
+                <p>
+                  <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                "Our daughter is an incredibly bright student, but she was feeling overwhelmed and unmotivated. After taking a psychometric test, she learned that she has a strong interest in creative and artistic pursuits. With this information, she was able to redirect her focus and reignite her passion for learning. We can't thank the IntelliTest enough for helping our daughter find her path."
+                  <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+                </p>
+              </div>
+            </div>
+
+            <div class="swiper-slide">
+              <div class="testimonial-item">
+                <img src="{% static 'landingPage/assets/img/testimonials/testimonials-5.jpg' %}" class="testimonial-img" alt="">
+                <h3>Kabir Singh</h3>
+                <h4>Parents</h4>
+                <p>
+                  <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                 "As a parent, it can be difficult to know what's best for your child. A psychometric test gave us a clear picture of our son's abilities and potential, which helped us make informed decisions about his education and future. We were impressed with the accuracy of the results and the support we received from the testing team. We highly recommend this test to any parent looking for guidance and clarity."
+                  <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+                </p>
+              </div>
+            </div>
+
+            
+
+          </div>
+          <div class="swiper-pagination"></div>
+        </div>
+
+      </div>
+    </section><!-- End Testimonials Section -->
+
+  
+   
+    <!-- ======= Contact Section ======= -->
+    <section id="contact" class="contact">
+      <div class="container" data-aos="fade-up">
+
+        <div class="section-title">
+          <h2>Contact</h2>
+          <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
+        </div>
+
+        <div class="row">
+
+          <div class="col-lg-6">
+            <div class="row">
+              <div class="col-lg-6 info">
+                <i class="bx bx-map"></i>
+                <h4>Address</h4>
+                <p>SCF 28 top floor,<br>Sector 15, Panchkula, Haryana</p>
+              </div>
+              <div class="col-lg-6 info">
+                <i class="bx bx-phone"></i>
+                <h4>Call Us</h4>
+                <p>+91 98152 19741<br>+91 98152 19741</p>
+              </div>
+              <div class="col-lg-6 info">
+                <i class="bx bx-envelope"></i>
+                <h4>Email Us</h4>
+                <p>contact@opsinghclasses.com<br>info@opsinghclasses.com</p>
+              </div>
+              <div class="col-lg-6 info">
+                <i class="bx bx-time-five"></i>
+                <h4>Working Hours</h4>
+                <p>Mon - Fri: 9AM to 5PM<br>Sat: 9AM to 1PM</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <form action="forms/contact.php" method="post" role="form" class="php-email-form" data-aos="fade-up">
+              <div class="form-group">
+                <input placeholder="Your Name" type="text" name="name" class="form-control" id="name" required>
+              </div>
+              <div class="form-group mt-3">
+                <input placeholder="Your Email" type="email" class="form-control" name="email" id="email" required>
+              </div>
+              <div class="form-group mt-3">
+                <input placeholder="Subject" type="text" class="form-control" name="subject" id="subject" required>
+              </div>
+              <div class="form-group mt-3">
+                <textarea placeholder="Message" class="form-control" name="message" rows="5" required></textarea>
+              </div>
+              <div class="my-3">
+                <div class="loading">Loading</div>
+                <div class="error-message"></div>
+                <div class="sent-message">Your message has been sent. Thank you!</div>
+              </div>
+              <div class="text-center"><button type="submit">Send Message</button></div>
+            </form>
+          </div>
+
+        </div>
+
+      </div>
+    </section><!-- End Contact Section -->
+
+  </main><!-- End #main -->
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer">
+
+   
+
+    
+      <div class="container footer-top">
+       
+    <div class="container pb-2">
+      <div class="copyright pt-4">
+        &copy; Copyright <strong><span>intelliTest</span></strong>. All Rights Reserved
+      </div>
+      <div class="credits">
+        
+      
+               <div class="social-links mt-3">
+              <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
+              <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
+              <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
+             
+          </div>
+
+        </div>
+   
+      </div>
+    </div>
+  </footer><!-- End Footer -->
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="{% static 'landingPage/assets/vendor/aos/aos.js' %}"></script>
+  <script src="{% static 'landingPage/assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'landingPage/assets/vendor/glightbox/js/glightbox.min.js' %}"></script>
+  <script src="{% static 'landingPage/assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
+  <script src="{% static 'landingPage/assets/vendor/php-email-form/validate.js' %}"></script>
+
+  <!-- Template Main JS File -->
+  <script src="{% static 'landingPage/assets/js/main.js' %}"></script>
+
+</body>
+
+</html>

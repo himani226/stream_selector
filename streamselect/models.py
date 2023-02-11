@@ -45,7 +45,7 @@ class UserBasicInfo(models.Model):
             'area': self.area,
             'board': self.board,
             'school_name': self.school_name,
-            'school_type': self.school_type ,
+            'school_type': self.school_type,
             'mobile_num': self.mobile_num,
             'phone_num': self.parents_num,
             'check_alerts': self.check_alerts,
@@ -61,7 +61,6 @@ class UserBasicInfo(models.Model):
     name = models.ForeignKey(UserBasicInfo, on_delete=models.CASCADE, null=True)
     user_image = models.ImageField(upload_to='user_profile_image', null=True)
     user_image_ext = models.CharField(max_length=20, blank=True)'''
-
 
 
 class SectionFirst(models.Model):
@@ -91,7 +90,6 @@ class SectionSecond(models.Model):
     attendance = models.CharField(max_length=100)
     scholarship = models.CharField(max_length=100)
     edu_gap = models.CharField(max_length=100)
-
 
 
 class SectionThree(models.Model):

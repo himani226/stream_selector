@@ -6,7 +6,9 @@ from django.contrib.auth import views as auth_views
 import streamselect.views as stream_views
 
 urlpatterns = [
-    path('', stream_views.home, name='home'),
+    path('', stream_views.index, name='index'),
+    path('index/', stream_views.index, name='index'),
+    path('home/', stream_views.home, name='home'),
     path('login/', stream_views.user_login, name='login'),
     path('register/', stream_views.register, name='register'),
     path('profile/', stream_views.profile, name='profile'),
