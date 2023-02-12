@@ -40,15 +40,82 @@ def result(request):
         third = SectionThree.objects.get(user_id=user.id)
         four = SectionFour.objects.get(user_id=user.id)
         five = SectionFive.objects.filter(user_id=user.id).first()
-        print(first)
-    return render(request, 'result.html', {'user_detail': userdetail,
-                                           'first': first,
-                                           'second': second,
-                                           'third': third,
-                                           'four': four,
-                                           'five': five,
-                                           })
 
+        # condition for checking Non-Medical stream
+        if first.nineth_marks == 'Between_80%_90%' or first.nineth_marks == 'More_than_90%' and \
+            first.nineth_marks_math ==  'Between_80%_90%' or first.nineth_marks_math == 'More_than_90%' and \
+            first.nineth_marks_science ==  'Between_80%_90%' or first.nineth_marks_science == 'More_than_90%' and \
+            first.tenth_marks == 'Between_80%_90%' or first.tenth_marks == 'More_than_90%' or \
+            first.tenth_marks == 'awaited' and first.tenth_marks_math == 'Between_80%_90%' or \
+            first.tenth_marks_math == 'More_than_90%' or first.tenth_marks_math == 'Result_awaited' and \
+            first.tenth_marks_science == 'Between_80%_90%' or first.tenth_marks_science == 'More_than_90%' or \
+            first.tenth_marks_science == 'awaited' and first.most_perfered_sub == 'math' and second.study_time_spent == '4hr' and \
+            second.games_time == '1hr' and second.screen_time == 'Less_than_1 hr' and second.attempts == 'not_applicable' and \
+            second.edu_gap == 'no' and five.father_qual == 'doctorate' or five.father_qual == 'post_graduate' or five.father_qual == 'graduate' and \
+            five.mother_qual == 'doctorate' or five.mother_qual == 'post_graduate' or five.mother_qual == 'graduate' and \
+            five.annual_income == 'More_than_5_lakh' and third.math == 'yes' or third.physics == 'yes' or third.chemistry == 'yes' :
+            return render(request, 'result_non_medical.html', {'user_detail': userdetail})
+
+        # condition for checking Medical stream
+        elif first.nineth_marks == 'Between_80%_90%' or first.nineth_marks == 'More_than_90%' and \
+            first.nineth_marks_math ==  'Between_80%_90%' or first.nineth_marks_math == 'More_than_90%' and \
+            first.nineth_marks_science ==  'Between_80%_90%' or first.nineth_marks_science == 'More_than_90%' and \
+            first.tenth_marks == 'Between_80%_90%' or first.tenth_marks == 'More_than_90%' or \
+            first.tenth_marks == 'awaited' and first.tenth_marks_math == 'Between_80%_90%' or \
+            first.tenth_marks_math == 'More_than_90%' or first.tenth_marks_math == 'awaited' and \
+            first.tenth_marks_science == 'Between_80%_90%' or first.tenth_marks_science == 'More_than_90%' or \
+            first.tenth_marks_science == 'awaited' and first.most_perfered_sub == 'math' and second.study_time_spent == '4hr' and \
+            second.games_time == '1hr' and second.screen_time == 'Less_than_1 hr' and second.attempts == 'na' and \
+            second.edu_gap == 'no' and five.father_qual == 'doctorate' or five.father_qual == 'post_graduate' or five.father_qual == 'graduate' and \
+            five.mother_qual == 'doctorate' or five.mother_qual == 'post_graduate' or five.mother_qual == 'graduate' and \
+            five.annual_income == 'More_than_5_lakh' and third.biology == 'yes' and third.math == 'no' or third.physics == 'yes' or third.chemistry == 'yes' :
+            return render(request, 'result_medical.html', {'user_detail': userdetail})
+
+        # condition for checking Non-Medical and Medical stream
+        elif first.nineth_marks == 'More_than_90%' and first.nineth_marks_math == 'More_than_90%' and \
+            first.nineth_marks_science == 'More_than_90%' and first.tenth_marks == 'More_than_90%' or \
+            first.tenth_marks == 'awaited' and first.tenth_marks_math == 'More_than_90%' or first.tenth_marks_math == 'awaited' \
+            and first.tenth_marks_science == 'More_than_90%' or first.tenth_marks_science == 'Result_awaited' and \
+            first.most_perfered_sub == 'math' or first.most_perfered_sub == 'science'  and second.study_time_spent == '4hr' and \
+            second.games_time == '1hr' and second.screen_time == '1hr' and second.attempts == 'na' and \
+            second.edu_gap == 'no' and five.father_qual == 'doctorate' or five.father_qual == 'post_graduate' or five.father_qual == 'graduate' and \
+            five.mother_qual == 'doctorate' or five.mother_qual == 'post_graduate' or five.mother_qual == 'graduate' and \
+            five.annual_income == 'More_than_5_lakh' and third.math == 'yes' and third.biology == 'yes' and \
+            third.math == 'no' or third.physics == 'yes' or third.chemistry == 'yes' :
+            return render(request, 'result_both.html', {'user_detail': userdetail})
+
+        # condition for checking Arts stream
+        elif first.nineth_marks == 'Between_70%_80%' or first.nineth_marks == 'Less_than_60 %' and \
+            first.tenth_marks == 'Between_70%_60%' or first.tenth_marks == 'Less_than_60%' or first.tenth_marks == 'awaited' \
+            and first.most_perfered_sub == 'social_science' and second.study_time_spent == '3hr' and second.games_time == '3hr' and \
+            second.screen_time == '2hr' and second.attempts == 'na' and second.edu_gap == 'no' or second.edu_gap == 'yes' and \
+            third.history == 'yes' or third.geography == 'yes' and four.political_science == 'yes':
+            return render(request, 'result_arts.html', {'user_detail': userdetail})
+
+        # condition for checking Commerce stream
+        elif first.nineth_marks == 'Between_70%_80%' or first.nineth_marks == 'Less_than_60%' and \
+            first.nineth_marks_math == 'Between_70%_80%' or first.nineth_marks_math == 'Less_than_80%' and \
+            first.tenth_marks == 'Between_70%_60%' or first.tenth_marks == 'Less_than_60%' or first.tenth_marks == 'awaited' \
+            and first.most_perfered_sub == 'math' and second.study_time_spent == '3hr' or second.study_time_spent == '2hr' and \
+            second.games_time == '3hr' and second.screen_time == '2hr' or second.screen_time == '3hr' and third.commerce == 'yes' or \
+            third.accounts == 'yes' or third.statistics == 'yes':
+            return render(request, 'result_commerce.html', {'user_detail': userdetail})
+
+        elif first.nineth_marks == 'Less_than_60%' and first.tenth_marks == 'Less_than_60%' or first.tenth_marks == 'awaited' and \
+            second.study_time_spent == '2hr' and second.games_time == '3hr' and second.screen_time == '2hr' and four.typewriting == 'yes' or \
+            four.stenography == 'yes' or four.beautician == 'yes' or four.library_asst=='yes' or four.secretarial_roles == 'yes':
+            return render(request, 'result_vocational.html', {'user_detail': userdetail})
+
+        elif first.nineth_marks == 'Between_70%_60%' or first.nineth_marks == 'Less_than_60%' and first.tenth_marks == 'Between_70%_60%' or \
+            first.tenth_marks == 'Less_than_60%' or first.tenth_marks == 'awaited' and first.most_perfered_sub == 'math' or first.most_perfered_sub == 'science' and \
+            second.study_time_spent == '3hr' or second.study_time_spent == '2hr' and second.games_time == '3hr' and second.screen_time == '2hr' \
+            and third.math == 'yes' or four.computer == 'yes' or third.accounts == 'yes' or third.statistics == 'yes':
+            return render(request, 'result_vocational.html', {'user_detail': userdetail})
+
+        else:
+            return render(request, 'home.html', {'user_detail': userdetail})
+
+    return render(request, 'home.html')
 
 @login_required(login_url='login/')
 def home(request):
@@ -583,8 +650,10 @@ def password_reset_confirm(request, uidb64, token):
 
 @login_required
 def checkout(request):
+    user = request.user
+
     currency = 'INR'
-    amount = 1000  # Rs. 10
+    amount = 10000  # Rs. 100
 
     # Create a Razorpay Order
     razorpay_order = razorpay_client.order.create(dict(amount=amount,
@@ -634,7 +703,7 @@ def payment_handler(request):
             result = razorpay_client.utility.verify_payment_signature(
                 params_dict)
             if result is not None:
-                amount = 10000  # Rs. 10
+                amount = 10000  # Rs. 100
                 try:
 
                     # capture the payemt

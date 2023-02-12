@@ -47,7 +47,7 @@
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
     <filter-actions connection-id="7abf524a-1549-4c40-999e-730451fd2ce7" dataset="main.streamselect_userbasicinfo" active-filter-id="EMPTY_FILTER" />
-    <filter-actions connection-id="7abf524a-1549-4c40-999e-730451fd2ce7" dataset="main.auth_user" active-filter-id="" />
+    <filter-actions connection-id="7abf524a-1549-4c40-999e-730451fd2ce7" dataset="main.auth_user" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="7abf524a-1549-4c40-999e-730451fd2ce7" dataset="main.streamselect_sectionsecond" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="7abf524a-1549-4c40-999e-730451fd2ce7" dataset="main.streamselect_sectionfirst" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="49036c56-7174-4acb-89d2-71c3e53b6a50" dataset="main.streamselect_userbasicinfo" active-filter-id="EMPTY_FILTER" />

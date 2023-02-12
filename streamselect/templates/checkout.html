@@ -2,8 +2,6 @@
 {% load static %}
 {% block content %}
 {% if user.is_authenticated %}
-<div class="card">
-  <h1 class="title">Payment</h1>
   {% for message in messages  %}
     <div class="alert alert-{{ message.tags }} alert-dismissible fade show" style="color:red" role="alert">
       <strong>Message : </strong> {{ message }}
@@ -12,13 +10,128 @@
       </button>
     </div>
   {% endfor %}
+<div class="container-fluid">
 
-      <small class="muted">To get the result, Pay ₹10 to get the result</small>
-      <div class="btn_container">
-        <!-- Payment Button -->
-        <button class="btn" id="pay-btn">Go to Payment</button>
+                    <!-- Page Heading -->
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">IntelliTest Fee Payment</h1>
+
+                    </div>
+
+                    <!-- Content Row -->
+					<hr>
+					 <br>
+                    <div class="row">
+
+                        <!-- profile -->
+                        <div class="col-md-12 mb-4">
+
+                        <div class="container rounded bg-white mt-3 mb-3">
+<div class="row">
+       <main>
+    <div class="py-5 text-center">
+      <img class="d-block mx-auto mb-4" src="{% static '/img/logo.svg' %}" alt="" width="200" >
+      <h2 class="text-danger">Fee Payment Confirmation</h2>
+      <p class="lead"> Please Check the below information before the payment. <br>We value your trust and strive to provide a safe and secure payment experience for all of our customers.</p>
+    </div>
+
+    <div class="row g-5">
+        <div class="col-md-5 col-lg-4 order-md-last">
+          <h4 class="d-flex justify-content-between align-items-center mb-3">
+            <span class="text-primary">Your cart</span>
+            <!--<span class="badge bg-primary rounded-pill">1</span>-->
+          </h4>
+          <ul class="list-group mb-3">
+            <li class="list-group-item d-flex justify-content-between lh-sm">
+              <div>
+                <h6 class="my-0">Intellitest Fee</h6>
+                <!--<small class="text-muted">Stream Selection Test Fee </small>-->
+              </div>
+              <span class="text-muted">₹100</span>
+            </li>
+
+            <!--<li class="list-group-item d-flex justify-content-between bg-light">
+              <div class="text-success">
+                <h6 class="my-0">Promo code</h6>
+                <small>OFFER50</small>
+              </div>
+              <span class="text-success">−₹50</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between">
+              <span>Total (₹)</span>
+              <strong>₹50</strong>
+            </li>-->
+        </ul>
+
+        <!--<form class="card p-2">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Promo code">  &nbsp;
+            <button type="submit" class="btn btn-success">Redeem</button>
+          </div>
+
+        </form>-->
+		  <br>
+      </div>
+      <div class="col-md-7 col-lg-8">
+        <h4 class="mb-3 text-primary">User Information</h4>
+        <form class="needs-validation" novalidate>
+          <div class="row g-3">
+            <div class="col-sm-6">
+              <label for="firstName" class="form-label">First Name</label>
+              <input type="text" class="form-control" id="firstName" placeholder="{{user.first_name}}" readonly required>
+              <div class="invalid-feedback">
+                Valid first name is required.
+              </div>
+            </div>
+
+            <div class="col-sm-6">
+              <label for="lastName" class="form-label">Last Name</label>
+              <input type="text" class="form-control" id="lastName" placeholder="{{user.last_name}}" readonly required>
+              <div class="invalid-feedback">
+                Valid last name is required.
+              </div>
+            </div>
+
+            <div class="col-12 mt-2">
+              <label for="username" class="form-label">eMail</label>
+              <div class="input-group has-validation">
+
+                <input type="text" class="form-control" id="username" placeholder="{{user.email}}" readonly required>
+              <div class="invalid-feedback">
+                  Your username is required.
+                </div>
+              </div>
+            </div>
+
+
+
+          </div>
+
+
+
+
+
+
+          <hr class="my-4">
+
+          <button class="w-100 btn btn-primary btn-lg" id="pay-btn" type="submit">Continue to Payment </button>
+        </form>
+		  <br>
       </div>
     </div>
+  </main>
+    </div>
+</div>
+</div>
+</div>
+
+
+                    </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+
 
   <!-- Razorpay's Javascript code. -->
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
