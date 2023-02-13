@@ -1,0 +1,169 @@
+{% load static %}
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>intelliTest - KAAMYAAB BANO</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.5/pdfmake.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.5/vfs_fonts.min.js"></script>
+
+    <!-- Custom fonts for this template-->
+    <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="{% static 'css/style.min.css' %}" rel="stylesheet">
+
+</head>
+{% if user.is_authenticated %}
+{% if user_detail %}
+<body class="bg-gray-100">
+	<a href="#" id="btn-generate" class="d-none d-sm-inline-block btn btn-danger shadow-sm"><i class="fas fa-file-alt fa-sm text-white-50"></i>  Generate PDF Report</a>
+	<a href="{% url 'home' %}" class="d-none d-sm-inline-block btn btn-primary shadow-sm">  Back to Dashboard</a>
+
+    <div class="container">
+
+		<div id="pdf-content" class="card o-hidden border-0 shadow-lg my-5">
+            <div class="card-body p-0">
+                <!-- Nested Row within Card Body -->
+                <div class="row">
+                    <div class="col-lg-12 d-none d-lg-block">
+						<img src="{% static 'img/report-bg.jpg' %}" id="image-preview" alt="logo">
+					<hr>
+					<div class="col-md-12 text-primary text-lg">
+					<div class="col-md-2 float-left">
+						Name:  </div>
+					<div class="col-md-4 float-left">
+						{{user_detail.full_name}} </div>
+
+					<div class="col-md-2 float-left">
+						D.O.B:  </div>
+					<div class="col-md-4 float-left">
+						{{user_detail.dob}} </div>
+					</div>
+					<div class="col-md-12 text-primary text-lg">
+					<div class="col-md-2 float-left">
+						Mobile:  </div>
+					<div class="col-md-4 float-left">
+						{{user_detail.mobile_num}} </div>
+
+					<div class="col-md-2 float-left">
+						Email:  </div>
+					<div class="col-md-4 float-left">
+						{{user.email}} </div>
+					</div>
+					<div class="col-md-12 text-primary text-lg">
+					<div class="col-md-2 float-left">
+						Father Name:  </div>
+					<div class="col-md-4 float-left">
+						{{user_detail.father_name}} </div>
+
+					<div class="col-md-2 float-left">
+						Mother Name:  </div>
+					<div class="col-md-4 float-left">
+						{{user_detail.mother_name }} </div>
+					</div>
+					</div>
+						</div>
+					<hr>
+                   <div class=" col-md-12">
+
+					   <div class="col-md-12">
+
+					   <h4 class="text-danger">Introduction</h4>
+						<p>If you want your future to be successful, then first you have to plan for it. Stream selection after 10th determines your future and for this it is necessary to test your capabilities. Along with this, it should also be seen in which subject you can perform well. If you take a step once, then it becomes difficult to reverse it. That's why 10th is considered important for you. You can solve this problem only by psychometric test, this test can help you a lot in your 1st stream selection.</p>
+
+					</div>
+					 {% block content %}
+					   {% endblock %}
+
+		<img src="{% static 'img/report-bg_footer.jpg '%}" id="image-preview-footer" alt="footer">
+            </div>
+        </div>
+	</div>
+    </div>
+{% endif %}
+{% endif %}
+    <!-- Bootstrap core JavaScript-->
+    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="{% static 'js/sb-admin-2.min.js' %}"></script>
+
+ <!-- Page level plugins -->
+    <script src="{% static 'vendor/chart.js/Chart.min.js' %}"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="{% static 'js/demo/chart-area-demo.js' %}"></script>
+    <script src="{% static 'js/demo/chart-pie-demo.js' %}"></script>
+
+	<!--<script>
+		var buttonElement = document.querySelector("#btn-generate");
+		buttonElement.addEventListener('click', function() {
+			var pdfContent = document.getElementById("pdf-content").innerHTML;
+			var pdfImage = getDataUrl(document.querySelector("#image-preview"));
+			var windowObject = window.open();
+
+			windowObject.document.write(pdfContent,pdfImage);
+
+			windowObject.print();
+			windowObject.close();
+		});
+		function getDataUrl(imgSource) {
+           const canvas = document.createElement('canvas');
+           const context = canvas.getContext('2d');
+           canvas.width = imgSource.width;
+           canvas.height = imgSource.height;
+           context.drawImage(imgSource, 0, 0);
+           return canvas.toDataURL('image/jpeg');
+        }
+	</script>-->
+
+
+	<script>
+		var buttonElement = document.querySelector("#btn-generate");
+		buttonElement.addEventListener('click', function() {
+			var pdfContent = document.querySelector("#pdf-content").innerText;
+            var pdfImage = getDataUrl(document.querySelector("#image-preview"));
+            var pdfImage1 = getDataUrl(document.querySelector("#image-preview-footer"));
+            var docDefinition = {
+            	content: [
+            		{
+            			image: pdfImage
+            		},
+            		{
+            			text: pdfContent,
+            		},
+            		{
+            			image: pdfImage1
+            		}
+            	],
+            };
+            pdfMake.createPdf(docDefinition).open();
+		});
+
+		function getDataUrl(imgSource) {
+           const canvas = document.createElement('canvas');
+           const context = canvas.getContext('2d');
+           canvas.width = imgSource.width;
+           canvas.height = imgSource.height;
+           context.drawImage(imgSource, 0, 0);
+           return canvas.toDataURL('image/jpeg');
+        }
+	</script>
+
+</body>
+
+</html>
