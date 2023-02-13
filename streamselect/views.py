@@ -39,80 +39,108 @@ def result(request):
         second = SectionSecond.objects.get(user_id=user.id)
         third = SectionThree.objects.get(user_id=user.id)
         four = SectionFour.objects.get(user_id=user.id)
+        five = SectionFive.objects.get(user_id=user.id)
 
         # condition for checking Non-Medical stream
-        if  first.user_id == userdetail.user_id and second.user_id == userdetail.user_id and third.user_id == userdetail.user_id and \
-            four.user_id == userdetail.user_id  and first.nineth_marks == 'Between_80%_90%' or first.nineth_marks == 'More_than_90%' and \
-            first.nineth_marks_math ==  'Between_80%_90%' or first.nineth_marks_math == 'More_than_90%' and \
-            first.nineth_marks_science ==  'Between_80%_90%' or first.nineth_marks_science == 'More_than_90%' and \
-            first.tenth_marks == 'Between_80%_90%' or first.tenth_marks == 'More_than_90%' or \
-            first.tenth_marks == 'awaited' and first.tenth_marks_math == 'Between_80%_90%' or \
-            first.tenth_marks_math == 'More_than_90%' or first.tenth_marks_math == 'Result_awaited' and \
-            first.tenth_marks_science == 'Between_80%_90%' or first.tenth_marks_science == 'More_than_90%' or \
-            first.tenth_marks_science == 'awaited' and first.most_perfered_sub == 'math' and second.study_time_spent == '4hr' and \
-            second.games_time == '1hr' and second.screen_time == 'Less_than_1 hr' and second.attempts == 'na' and \
-            second.edu_gap == 'no' and third.math == 'yes' or third.physics == 'yes' or third.chemistry == 'yes' :
+        if  (first.nineth_marks == 'Between_80%_90%' or first.nineth_marks == 'More_than_90%') and \
+            (first.nineth_marks_math == 'Between_80%_90%' or first.nineth_marks_math == 'More_than_90%') and \
+            (first.nineth_marks_science ==  'Between_70%_80%' or first.nineth_marks_science ==  'Between_80%_90%' or first.nineth_marks_science == 'More_than_90%') and \
+            (first.tenth_marks == 'Between_80%_90%' or first.tenth_marks == 'More_than_90%' or first.tenth_marks == 'awaited') and \
+            (first.tenth_marks_math == 'Between_80%_90%' or first.tenth_marks_math == 'awaited' or first.tenth_marks_math == 'More_than_90%') and \
+            (first.tenth_marks_science ==  'Between_70%_80%' or first.tenth_marks_science == 'More_than_90%' or first.tenth_marks_science == 'awaited' or first.tenth_marks_science == 'Between_80%_90%') and \
+            first.most_perfered_sub == 'math' and \
+            second.games_time == '1hr' and \
+            second.screen_time == '1hr' and \
+            second.attempts == 'na'  and \
+            (second.study_time_spent == '4hr' or second.study_time_spent == 'more') and \
+            second.edu_gap == 'no' and \
+            (third.math == 'yes' or third.physics == 'yes' or third.chemistry == 'yes') and \
+            five.annual_income == 'More_than_5' :
             return render(request, 'result_non_medical.html', {'user_detail': userdetail})
 
         # condition for checking Medical stream
-        elif first.user_id == userdetail.user_id and second.user_id == userdetail.user_id and third.user_id == userdetail.user_id and \
-            four.user_id == userdetail.user_id  and first.nineth_marks == 'Between_80%_90%' or first.nineth_marks == 'More_than_90%' and \
-            first.nineth_marks_math ==  'Between_80%_90%' or first.nineth_marks_math == 'More_than_90%' and \
-            first.nineth_marks_science ==  'Between_80%_90%' or first.nineth_marks_science == 'More_than_90%' and \
-            first.tenth_marks == 'Between_80%_90%' or first.tenth_marks == 'More_than_90%' or \
-            first.tenth_marks == 'awaited' and first.tenth_marks_math == 'Between_80%_90%' or \
-            first.tenth_marks_math == 'More_than_90%' or first.tenth_marks_math == 'awaited' and \
-            first.tenth_marks_science == 'Between_80%_90%' or first.tenth_marks_science == 'More_than_90%' or \
-            first.tenth_marks_science == 'awaited' and first.most_perfered_sub == 'math' and second.study_time_spent == '4hr' and \
-            second.games_time == '1hr' and second.screen_time == 'Less_than_1 hr' and second.attempts == 'na' and \
-            second.edu_gap == 'no' and third.biology == 'yes' and third.math == 'no' or third.physics == 'yes' or third.chemistry == 'yes' :
+        elif (first.nineth_marks == 'Between_80%_90%' or first.nineth_marks == 'More_than_90%') and\
+            (first.nineth_marks_math == 'Between_80%_90%' or first.nineth_marks_math == 'More_than_90%' or first.nineth_marks_math == 'Between_70%_80%') and\
+            (first.nineth_marks_science == 'Between_80%_90%' or first.nineth_marks_science == 'More_than_90%') and \
+            (first.tenth_marks == 'Between_80%_90%' or first.tenth_marks == 'More_than_90%' or first.tenth_marks == 'awaited') and\
+            (first.tenth_marks_math == 'Between_80%_90%' or first.tenth_marks_math == 'awaited' or first.tenth_marks_math == 'More_than_90%' or first.tenth_marks_math == 'Between_70%_80%') and \
+            (first.tenth_marks_science == 'More_than_90%' or first.tenth_marks_science == 'awaited' or first.tenth_marks_science == 'Between_80%_90%') and \
+            first.most_perfered_sub == 'science' and \
+            (second.games_time == '1hr' or second.games_time == '2hr') and \
+            (second.screen_time == '1hr' or second.screen_time == '2hr') and \
+            (second.attempts == 'na' or second.attempts == '1') and \
+            (second.study_time_spent == '4hr' or second.study_time_spent == 'more') and \
+            second.edu_gap == 'no' and \
+            third.biology == 'yes' and \
+            five.annual_income == 'More_than_5':
             return render(request, 'result_medical.html', {'user_detail': userdetail})
 
         # condition for checking Non-Medical and Medical stream
-        elif first.user_id == userdetail.user_id and second.user_id == userdetail.user_id and third.user_id == userdetail.user_id and \
-            four.user_id == userdetail.user_id  and first.nineth_marks == 'More_than_90%' and first.nineth_marks_math == 'More_than_90%' and \
-            first.nineth_marks_science == 'More_than_90%' and first.tenth_marks == 'More_than_90%' or \
-            first.tenth_marks == 'awaited' and first.tenth_marks_math == 'More_than_90%' or first.tenth_marks_math == 'awaited' \
-            and first.tenth_marks_science == 'More_than_90%' or first.tenth_marks_science == 'Result_awaited' and \
-            first.most_perfered_sub == 'math' or first.most_perfered_sub == 'science'  and second.study_time_spent == '4hr' and \
-            second.games_time == '1hr' and second.screen_time == '1hr' and second.attempts == 'na' and \
-            second.edu_gap == 'no' and third.math == 'yes' and third.biology == 'yes' and \
-            third.math == 'no' or third.physics == 'yes' or third.chemistry == 'yes' :
+        elif first.nineth_marks == 'More_than_90%' and \
+            first.nineth_marks_math == 'More_than_90%' and \
+            first.nineth_marks_science == 'More_than_90%' and \
+            first.tenth_marks == 'More_than_90%' and \
+            first.tenth_marks_math == 'More_than_90%' and \
+            first.tenth_marks_science == 'More_than_90%' and \
+            (first.most_perfered_sub == 'math' or first.most_perfered_sub == 'science') and \
+            second.study_time_spent == 'more' and \
+            second.games_time == '1hr' and \
+            second.screen_time == '1hr' and \
+            second.attempts == 'na' and \
+            second.edu_gap == 'no' and \
+            third.math == 'yes' and \
+            third.biology == 'yes' and \
+            five.annual_income == 'More_than_5':
             return render(request, 'result_both.html', {'user_detail': userdetail})
 
         # condition for checking Arts stream
-        elif first.nineth_marks == 'Between_70%_80%' or first.nineth_marks == 'Less_than_60%' and \
-            first.tenth_marks == 'Between_70%_60%' or first.tenth_marks == 'Less_than_60%' or first.tenth_marks == 'awaited' \
-            and first.most_perfered_sub == 'social_science' and second.study_time_spent == '3hr' and second.games_time == '3hr' and \
-            second.screen_time == '2hr' and second.attempts == 'na' and second.edu_gap == 'no' or second.edu_gap == 'yes' and \
-            third.history == 'yes' or third.geography == 'yes' and four.political_science == 'yes':
+        elif (first.nineth_marks == 'Between_70%_80%' or first.nineth_marks == 'Less_than_60%') and \
+            (first.tenth_marks == 'Between_70%_80%' or first.tenth_marks == 'Less_than_60%' or first.tenth_marks == 'awaited') and\
+            first.most_perfered_sub == 'social_science' and \
+            (second.study_time_spent == '1hr' or second.study_time_spent == '3hr') and\
+            (second.games_time == '3hr' or second.games_time == '1hr' or second.games_time == 'more') and \
+            (second.screen_time == '2hr' or second.screen_time == '1hr') and (second.attempts == 'na' or second.attempts == '1') and \
+            (third.history == 'yes' or four.political_science == 'yes'):
             return render(request, 'result_arts.html', {'user_detail': userdetail})
 
         # condition for checking Commerce stream
-        elif first.user_id == userdetail.user_id and second.user_id == userdetail.user_id and third.user_id == userdetail.user_id and \
-            four.user_id == userdetail.user_id  and first.nineth_marks == 'Between_70%_80%' or first.nineth_marks == 'Less_than_60%' and \
-            first.nineth_marks_math == 'Between_70%_80%' or first.nineth_marks_math == 'Less_than_60%' and \
-            first.tenth_marks == 'Between_70%_60%' or first.tenth_marks == 'Less_than_60%' or first.tenth_marks == 'awaited' \
-            and first.most_perfered_sub == 'math' and second.study_time_spent == '3hr' or second.study_time_spent == '2hr' and \
-            second.games_time == '3hr' and second.screen_time == '2hr' or second.screen_time == '3hr' and third.math == 'yes' and \
-                third.commerce == 'yes' or third.accounts == 'yes' or third.statistics == 'yes':
+        elif (first.nineth_marks == 'Between_70%_80%' or first.nineth_marks == 'Less_than_60%') and \
+            (first.nineth_marks_math == 'Between_70%_80%' or first.nineth_marks_math == 'Less_than_60%') and \
+            (first.tenth_marks == 'Between_70%_80%' or first.tenth_marks == 'Less_than_60%' or first.tenth_marks == 'awaited') and \
+            first.most_perfered_sub == 'math' and \
+            (second.study_time_spent == '3hr' or second.study_time_spent == '2hr') and \
+            second.games_time == '3hr' and \
+            (second.screen_time == '2hr' or second.screen_time == '3hr') and \
+            (third.commerce == 'yes' or third.accounts == 'yes' or third.statistics == 'yes'):
             return render(request, 'result_commerce.html', {'user_detail': userdetail})
 
-        elif first.user_id == userdetail.user_id and second.user_id == userdetail.user_id and third.user_id == userdetail.user_id and \
-            four.user_id == userdetail.user_id  and first.nineth_marks == 'Less_than_60%' and first.tenth_marks == 'Less_than_60%' or first.tenth_marks == 'awaited' and \
-            second.study_time_spent == '2hr' and second.games_time == '3hr' and second.screen_time == '2hr' and four.typewriting == 'yes' or \
-            four.stenography == 'yes' or four.beautician == 'yes' or four.library_asst=='yes' or four.secretarial_roles == 'yes':
+        # condition for checking Vocational Courses
+        elif (first.nineth_marks == 'Less_than_60%') and \
+            (first.nineth_marks_math == 'Less_than_60%') and \
+            (first.tenth_marks == 'Less_than_60%' or first.tenth_marks == 'awaited') and\
+            first.most_perfered_sub == 'math' and \
+            (second.study_time_spent == '3hr' or second.study_time_spent == '2hr') and \
+            second.games_time == '3hr' and \
+            (second.screen_time == '2hr' or second.screen_time == '3hr') and \
+            (four.typewriting == 'yes' or four.typewriting == 'maybe') and \
+            (four.stenography == 'yes' or four.stenography == 'maybe') and \
+            (four.beautician == 'yes' or four.beautician == 'maybe') and \
+            (four.library_asst =='yes' or four.library_asst =='maybe') and \
+            (four.secretarial_roles == 'yes' or four.secretarial_roles == 'maybe'):
             return render(request, 'result_vocational.html', {'user_detail': userdetail})
 
-        elif first.user_id == userdetail.user_id and second.user_id == userdetail.user_id and third.user_id == userdetail.user_id and \
-            four.user_id == userdetail.user_id  and first.nineth_marks == 'Between_70%_60%' or first.nineth_marks == 'Less_than_60%' and first.tenth_marks == 'Between_70%_60%' or \
-            first.tenth_marks == 'Less_than_60%' or first.tenth_marks == 'awaited' and first.most_perfered_sub == 'math' or first.most_perfered_sub == 'science' and \
-            second.study_time_spent == '3hr' or second.study_time_spent == '2hr' and second.games_time == '3hr' and second.screen_time == '2hr' \
-            and third.math == 'yes' or four.computer == 'yes' or third.accounts == 'yes' or third.statistics == 'yes':
+        # condition for checking Diploma stream
+        elif (first.nineth_marks == 'Between_70%_60%' or first.nineth_marks == 'Less_than_60%') and \
+            (first.tenth_marks == 'Between_70%_60%' or first.tenth_marks == 'Less_than_60%' or first.tenth_marks == 'awaited') and \
+            (first.most_perfered_sub == 'math' or first.most_perfered_sub == 'science') and \
+            (second.attempts == 'na' or second.attempts == '1') and \
+            (second.study_time_spent == '3hr' or second.study_time_spent == '2hr') and \
+            (second.games_time == '3hr' or second.screen_time == '2hr') and \
+            (third.math == 'yes' or four.computer == 'yes') and \
+            five.annual_income == 'Less_than_5':
             return render(request, 'result_diploma.html', {'user_detail': userdetail})
-
         else:
-            return render(request, 'home.html', {'user_detail': userdetail})
+            return render(request, 'no_result.html', {'user_detail': userdetail})
 
     return render(request, 'home.html')
 
@@ -486,9 +514,8 @@ def section_four(request):
 
                         # check errors
                         # success message redirect to result page
-                        messages.success(request, f'proceed with next section.')
+                        messages.success(request, f'Proceed with next section 5.')
                         return redirect('section_five')
-
                     else:
                         messages.error(request, f'Some Errors')
                         return redirect('section_four')
@@ -516,7 +543,7 @@ def section_five(request):
                     performance_level = request.POST['performance_level']
                     father_qual = request.POST['father_qual']
                     mother_qual = request.POST['mother_qual']
-                    sibling_qual = request.POST['sibiling_qual']
+                    sibling_qual = request.POST['sibling_qual']
                     father_job = request.POST['father_job']
                     mother_job = request.POST['mother_job']
                     sibling_job = request.POST['sibling_job']
@@ -542,17 +569,16 @@ def section_five(request):
 
                         # check errors
                         # success message redirect to result page
-                        messages.success(request,
-                                         f'You had given your test successfully. Now you can proceed with payment for result')
+                        messages.success(request,f'You had given your test successfully. Now you can proceed with payment for result')
                         return redirect('result')
                     else:
                         messages.error(request, f'Some error in the form.')
                         return redirect('section_five')
                 except MultiValueDictKeyError:
-                    messages.success(request, f'Already fill the section.')
+                    messages.success(request, f'You had given your test successfully. Now you can proceed with payment for result')
                     return redirect('result')
         else:
-            messages.error(request, f'Already given the test. Kindly check result')
+            messages.error(request, f'answer Already given the test. Kindly check result')
             return redirect('result')
     except UserBasicInfo.DoesNotExist:
         messages.error(request, f'You forgot to fill Student Information form. Kindly fill it first.')
