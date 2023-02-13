@@ -26,10 +26,10 @@ from datetime import datetime
 from stream_selector import settings
 from .forms import ProfileForm, SetPasswordForm
 from .models import UserBasicInfo, PaymentCheck, SectionFirst, SectionSecond, SectionThree, SectionFour, SectionFive
-
+from django.utils.datastructures import MultiValueDictKeyError
 
 # from django_xhtml2pdf.utils import pdf_decorator
-
+@csrf_exempt
 @login_required(login_url='login/')
 def result(request):
     if request.user.is_authenticated:
@@ -39,10 +39,10 @@ def result(request):
         second = SectionSecond.objects.get(user_id=user.id)
         third = SectionThree.objects.get(user_id=user.id)
         four = SectionFour.objects.get(user_id=user.id)
-        five = SectionFive.objects.filter(user_id=user.id).first()
 
         # condition for checking Non-Medical stream
-        if first.nineth_marks == 'Between_80%_90%' or first.nineth_marks == 'More_than_90%' and \
+        if  first.user_id == userdetail.user_id and second.user_id == userdetail.user_id and third.user_id == userdetail.user_id and \
+            four.user_id == userdetail.user_id  and first.nineth_marks == 'Between_80%_90%' or first.nineth_marks == 'More_than_90%' and \
             first.nineth_marks_math ==  'Between_80%_90%' or first.nineth_marks_math == 'More_than_90%' and \
             first.nineth_marks_science ==  'Between_80%_90%' or first.nineth_marks_science == 'More_than_90%' and \
             first.tenth_marks == 'Between_80%_90%' or first.tenth_marks == 'More_than_90%' or \
@@ -50,14 +50,13 @@ def result(request):
             first.tenth_marks_math == 'More_than_90%' or first.tenth_marks_math == 'Result_awaited' and \
             first.tenth_marks_science == 'Between_80%_90%' or first.tenth_marks_science == 'More_than_90%' or \
             first.tenth_marks_science == 'awaited' and first.most_perfered_sub == 'math' and second.study_time_spent == '4hr' and \
-            second.games_time == '1hr' and second.screen_time == 'Less_than_1 hr' and second.attempts == 'not_applicable' and \
-            second.edu_gap == 'no' and five.father_qual == 'doctorate' or five.father_qual == 'post_graduate' or five.father_qual == 'graduate' and \
-            five.mother_qual == 'doctorate' or five.mother_qual == 'post_graduate' or five.mother_qual == 'graduate' and \
-            five.annual_income == 'More_than_5_lakh' and third.math == 'yes' or third.physics == 'yes' or third.chemistry == 'yes' :
+            second.games_time == '1hr' and second.screen_time == 'Less_than_1 hr' and second.attempts == 'na' and \
+            second.edu_gap == 'no' and third.math == 'yes' or third.physics == 'yes' or third.chemistry == 'yes' :
             return render(request, 'result_non_medical.html', {'user_detail': userdetail})
 
         # condition for checking Medical stream
-        elif first.nineth_marks == 'Between_80%_90%' or first.nineth_marks == 'More_than_90%' and \
+        elif first.user_id == userdetail.user_id and second.user_id == userdetail.user_id and third.user_id == userdetail.user_id and \
+            four.user_id == userdetail.user_id  and first.nineth_marks == 'Between_80%_90%' or first.nineth_marks == 'More_than_90%' and \
             first.nineth_marks_math ==  'Between_80%_90%' or first.nineth_marks_math == 'More_than_90%' and \
             first.nineth_marks_science ==  'Between_80%_90%' or first.nineth_marks_science == 'More_than_90%' and \
             first.tenth_marks == 'Between_80%_90%' or first.tenth_marks == 'More_than_90%' or \
@@ -66,26 +65,23 @@ def result(request):
             first.tenth_marks_science == 'Between_80%_90%' or first.tenth_marks_science == 'More_than_90%' or \
             first.tenth_marks_science == 'awaited' and first.most_perfered_sub == 'math' and second.study_time_spent == '4hr' and \
             second.games_time == '1hr' and second.screen_time == 'Less_than_1 hr' and second.attempts == 'na' and \
-            second.edu_gap == 'no' and five.father_qual == 'doctorate' or five.father_qual == 'post_graduate' or five.father_qual == 'graduate' and \
-            five.mother_qual == 'doctorate' or five.mother_qual == 'post_graduate' or five.mother_qual == 'graduate' and \
-            five.annual_income == 'More_than_5_lakh' and third.biology == 'yes' and third.math == 'no' or third.physics == 'yes' or third.chemistry == 'yes' :
+            second.edu_gap == 'no' and third.biology == 'yes' and third.math == 'no' or third.physics == 'yes' or third.chemistry == 'yes' :
             return render(request, 'result_medical.html', {'user_detail': userdetail})
 
         # condition for checking Non-Medical and Medical stream
-        elif first.nineth_marks == 'More_than_90%' and first.nineth_marks_math == 'More_than_90%' and \
+        elif first.user_id == userdetail.user_id and second.user_id == userdetail.user_id and third.user_id == userdetail.user_id and \
+            four.user_id == userdetail.user_id  and first.nineth_marks == 'More_than_90%' and first.nineth_marks_math == 'More_than_90%' and \
             first.nineth_marks_science == 'More_than_90%' and first.tenth_marks == 'More_than_90%' or \
             first.tenth_marks == 'awaited' and first.tenth_marks_math == 'More_than_90%' or first.tenth_marks_math == 'awaited' \
             and first.tenth_marks_science == 'More_than_90%' or first.tenth_marks_science == 'Result_awaited' and \
             first.most_perfered_sub == 'math' or first.most_perfered_sub == 'science'  and second.study_time_spent == '4hr' and \
             second.games_time == '1hr' and second.screen_time == '1hr' and second.attempts == 'na' and \
-            second.edu_gap == 'no' and five.father_qual == 'doctorate' or five.father_qual == 'post_graduate' or five.father_qual == 'graduate' and \
-            five.mother_qual == 'doctorate' or five.mother_qual == 'post_graduate' or five.mother_qual == 'graduate' and \
-            five.annual_income == 'More_than_5_lakh' and third.math == 'yes' and third.biology == 'yes' and \
+            second.edu_gap == 'no' and third.math == 'yes' and third.biology == 'yes' and \
             third.math == 'no' or third.physics == 'yes' or third.chemistry == 'yes' :
             return render(request, 'result_both.html', {'user_detail': userdetail})
 
         # condition for checking Arts stream
-        elif first.nineth_marks == 'Between_70%_80%' or first.nineth_marks == 'Less_than_60 %' and \
+        elif first.nineth_marks == 'Between_70%_80%' or first.nineth_marks == 'Less_than_60%' and \
             first.tenth_marks == 'Between_70%_60%' or first.tenth_marks == 'Less_than_60%' or first.tenth_marks == 'awaited' \
             and first.most_perfered_sub == 'social_science' and second.study_time_spent == '3hr' and second.games_time == '3hr' and \
             second.screen_time == '2hr' and second.attempts == 'na' and second.edu_gap == 'no' or second.edu_gap == 'yes' and \
@@ -93,30 +89,35 @@ def result(request):
             return render(request, 'result_arts.html', {'user_detail': userdetail})
 
         # condition for checking Commerce stream
-        elif first.nineth_marks == 'Between_70%_80%' or first.nineth_marks == 'Less_than_60%' and \
-            first.nineth_marks_math == 'Between_70%_80%' or first.nineth_marks_math == 'Less_than_80%' and \
+        elif first.user_id == userdetail.user_id and second.user_id == userdetail.user_id and third.user_id == userdetail.user_id and \
+            four.user_id == userdetail.user_id  and first.nineth_marks == 'Between_70%_80%' or first.nineth_marks == 'Less_than_60%' and \
+            first.nineth_marks_math == 'Between_70%_80%' or first.nineth_marks_math == 'Less_than_60%' and \
             first.tenth_marks == 'Between_70%_60%' or first.tenth_marks == 'Less_than_60%' or first.tenth_marks == 'awaited' \
             and first.most_perfered_sub == 'math' and second.study_time_spent == '3hr' or second.study_time_spent == '2hr' and \
-            second.games_time == '3hr' and second.screen_time == '2hr' or second.screen_time == '3hr' and third.commerce == 'yes' or \
-            third.accounts == 'yes' or third.statistics == 'yes':
+            second.games_time == '3hr' and second.screen_time == '2hr' or second.screen_time == '3hr' and third.math == 'yes' and \
+                third.commerce == 'yes' or third.accounts == 'yes' or third.statistics == 'yes':
             return render(request, 'result_commerce.html', {'user_detail': userdetail})
 
-        elif first.nineth_marks == 'Less_than_60%' and first.tenth_marks == 'Less_than_60%' or first.tenth_marks == 'awaited' and \
+        elif first.user_id == userdetail.user_id and second.user_id == userdetail.user_id and third.user_id == userdetail.user_id and \
+            four.user_id == userdetail.user_id  and first.nineth_marks == 'Less_than_60%' and first.tenth_marks == 'Less_than_60%' or first.tenth_marks == 'awaited' and \
             second.study_time_spent == '2hr' and second.games_time == '3hr' and second.screen_time == '2hr' and four.typewriting == 'yes' or \
             four.stenography == 'yes' or four.beautician == 'yes' or four.library_asst=='yes' or four.secretarial_roles == 'yes':
             return render(request, 'result_vocational.html', {'user_detail': userdetail})
 
-        elif first.nineth_marks == 'Between_70%_60%' or first.nineth_marks == 'Less_than_60%' and first.tenth_marks == 'Between_70%_60%' or \
+        elif first.user_id == userdetail.user_id and second.user_id == userdetail.user_id and third.user_id == userdetail.user_id and \
+            four.user_id == userdetail.user_id  and first.nineth_marks == 'Between_70%_60%' or first.nineth_marks == 'Less_than_60%' and first.tenth_marks == 'Between_70%_60%' or \
             first.tenth_marks == 'Less_than_60%' or first.tenth_marks == 'awaited' and first.most_perfered_sub == 'math' or first.most_perfered_sub == 'science' and \
             second.study_time_spent == '3hr' or second.study_time_spent == '2hr' and second.games_time == '3hr' and second.screen_time == '2hr' \
             and third.math == 'yes' or four.computer == 'yes' or third.accounts == 'yes' or third.statistics == 'yes':
-            return render(request, 'result_vocational.html', {'user_detail': userdetail})
+            return render(request, 'result_diploma.html', {'user_detail': userdetail})
 
         else:
             return render(request, 'home.html', {'user_detail': userdetail})
 
     return render(request, 'home.html')
 
+
+@csrf_exempt
 @login_required(login_url='login/')
 def home(request):
     if request.user.is_authenticated:
@@ -132,7 +133,7 @@ def home(request):
 def index(request):
     return render(request, "index.html")
 
-
+@csrf_exempt
 def register(request):
     if request.method == "POST":
         # Get the post parameters
@@ -172,7 +173,7 @@ def register(request):
             myuser.last_name = lname
             myuser.save()
             messages.success(request, " Your account has been successfully created")
-            return redirect('home')
+            return redirect('login')
         else:
             messages.error(request, "Looks like a username with that email or password already exist")
             return redirect('register')
@@ -180,7 +181,7 @@ def register(request):
     else:
         return render(request, 'register.html')
 
-
+@csrf_exempt
 def user_login(request):
     if request.method == 'POST':
         username = request.POST['username']
@@ -200,6 +201,7 @@ def user_login(request):
         return render(request, 'login.html')
 
 
+@csrf_exempt
 @login_required(login_url='login/')
 def profile(request):
     if request.method == 'POST':
@@ -269,7 +271,7 @@ def profile(request):
     else:
         return render(request, 'profile.html')
 
-
+@csrf_exempt
 @login_required(login_url='login/')
 def section_first(request):
     user = request.user
@@ -277,45 +279,49 @@ def section_first(request):
         uid = UserBasicInfo.objects.get(user_id=user.id)
         if not SectionFirst.objects.filter(user_id=user.id).exists():
             if request.method == 'POST':
-                nineth_marks = request.POST['nineth_marks']
-                math_nineth_marks = request.POST['math_nineth_marks']
-                sci_nineth_marks = request.POST['sci_nineth_marks']
-                tenth_marks = request.POST['tenth_marks']
-                math_tenth_marks = request.POST['math_tenth_marks']
-                sci_tenth_marks = request.POST['sci_tenth_marks']
-                math_olympiad = request.POST['math_olympiad']
-                sci_olympiad = request.POST['sci_olympiad']
-                sci_workshop = request.POST['sci_workshop']
-                most_preferred_sub = request.POST['most_preferred_sub']
-                least_preferred_sub = request.POST['least_preferred_sub']
+                try:
+                    nineth_marks = request.POST['nineth_marks']
+                    math_nineth_marks = request.POST['math_nineth_marks']
+                    sci_nineth_marks = request.POST['sci_nineth_marks']
+                    tenth_marks = request.POST['tenth_marks']
+                    math_tenth_marks = request.POST['math_tenth_marks']
+                    sci_tenth_marks = request.POST['sci_tenth_marks']
+                    math_olympiad = request.POST['math_olympiad']
+                    sci_olympiad = request.POST['sci_olympiad']
+                    sci_workshop = request.POST['sci_workshop']
+                    most_preferred_sub = request.POST['most_preferred_sub']
+                    least_preferred_sub = request.POST['least_preferred_sub']
 
-                if nineth_marks == "" and math_nineth_marks == "" and sci_nineth_marks == "" and tenth_marks == "" and math_tenth_marks == "" and sci_tenth_marks == "" and \
-                        math_olympiad == "" and sci_olympiad == "" and sci_workshop == "" and most_preferred_sub == "" and least_preferred_sub == "":
-                    messages.error(request, "Kindly fill the fields")
-                    return redirect("section_first")
-                if request.user.is_authenticated:
-                    firstmodel = SectionFirst()
-                    firstmodel.nineth_marks = nineth_marks
-                    firstmodel.nineth_marks_math = math_nineth_marks
-                    firstmodel.nineth_marks_science = sci_nineth_marks
-                    firstmodel.tenth_marks = tenth_marks
-                    firstmodel.tenth_marks_math = math_tenth_marks
-                    firstmodel.tenth_marks_science = sci_tenth_marks
-                    firstmodel.math_olampaid = math_olympiad
-                    firstmodel.sci_olampaid = sci_olympiad
-                    firstmodel.workshop = sci_workshop
-                    firstmodel.most_perfered_sub = most_preferred_sub
-                    firstmodel.least_perfered_sub = least_preferred_sub
-                    firstmodel.user_id = user.id
-                    firstmodel.save()
+                    if nineth_marks == "" and math_nineth_marks == "" and sci_nineth_marks == "" and tenth_marks == "" and math_tenth_marks == "" and sci_tenth_marks == "" and \
+                            math_olympiad == "" and sci_olympiad == "" and sci_workshop == "" and most_preferred_sub == "" and least_preferred_sub == "":
+                        messages.error(request, "Kindly fill the fields")
+                        return redirect("section_first")
+                    if request.user.is_authenticated:
+                        firstmodel = SectionFirst()
+                        firstmodel.nineth_marks = nineth_marks
+                        firstmodel.nineth_marks_math = math_nineth_marks
+                        firstmodel.nineth_marks_science = sci_nineth_marks
+                        firstmodel.tenth_marks = tenth_marks
+                        firstmodel.tenth_marks_math = math_tenth_marks
+                        firstmodel.tenth_marks_science = sci_tenth_marks
+                        firstmodel.math_olampaid = math_olympiad
+                        firstmodel.sci_olampaid = sci_olympiad
+                        firstmodel.workshop = sci_workshop
+                        firstmodel.most_perfered_sub = most_preferred_sub
+                        firstmodel.least_perfered_sub = least_preferred_sub
+                        firstmodel.user_id = user.id
+                        firstmodel.save()
 
-                    # check errors
-                    # success message redirect to result page
-                    messages.success(request, f'Your data has been added.')
+                        # check errors
+                        # success message redirect to result page
+                        messages.success(request, f'Your data has been added.')
+                        return redirect('section_second')
+                    else:
+                        messages.error(request, f'Some error in the form.')
+                        return redirect('section_first')
+                except MultiValueDictKeyError:
+                    messages.success(request, f'Already filled the previous section.')
                     return redirect('section_second')
-                else:
-                    messages.error(request, f'Some error in the form.')
-                    return redirect('section_first')
         else:
             messages.error(request, f'Already filled the Section 1.  Kindly fill section 2')
             return redirect('section_second')
@@ -325,7 +331,7 @@ def section_first(request):
 
     return render(request, 'section_first.html')
 
-
+@csrf_exempt
 @login_required(login_url='login/')
 def section_second(request):
     user = request.user
@@ -333,43 +339,47 @@ def section_second(request):
         uid = UserBasicInfo.objects.get(user_id=user.id)
         if not SectionSecond.objects.filter(user_id=user.id).exists():
             if request.method == 'POST':
-                study_method = request.POST['study_method']
-                study_environment = request.POST['study_environment']
-                study_time_spent = request.POST['time_spent']
-                games_time = request.POST['games_time']
-                screen_time = request.POST['screen_time']
-                role_model = request.POST['role_model']
-                attempts = request.POST['attempts']
-                attendance = request.POST['attendance']
-                scholarship = request.POST['scholarship']
-                edu_gap = request.POST['edu_gap']
+                try:
+                    study_method = request.POST['study_method']
+                    study_environment = request.POST['study_environment']
+                    study_time_spent = request.POST['time_spent']
+                    games_time = request.POST['games_time']
+                    screen_time = request.POST['screen_time']
+                    role_model = request.POST['role_model']
+                    attempts = request.POST['attempts']
+                    attendance = request.POST['attendance']
+                    scholarship = request.POST['scholarship']
+                    edu_gap = request.POST['edu_gap']
 
-                if study_method == "" and study_environment == "" and study_time_spent == "" and games_time == "" and screen_time == "" and \
-                        role_model == "" and attempts == "" and attendance == "" and edu_gap == "" and scholarship == "":
-                    messages.error(request, "Kindly fill the fields")
-                    return redirect("section_second")
-                if request.user.is_authenticated:
-                    secondmodel = SectionSecond()
-                    secondmodel.study_method = study_method
-                    secondmodel.study_environment = study_environment
-                    secondmodel.study_time_spent = study_time_spent
-                    secondmodel.games_time = games_time
-                    secondmodel.screen_time = screen_time
-                    secondmodel.role_model = role_model
-                    secondmodel.attempts = attempts
-                    secondmodel.attendance = attendance
-                    secondmodel.scholarship = scholarship
-                    secondmodel.edu_gap = edu_gap
-                    secondmodel.user_id = user.id
-                    secondmodel.save()
+                    if study_method == "" and study_environment == "" and study_time_spent == "" and games_time == "" and screen_time == "" and \
+                            role_model == "" and attempts == "" and attendance == "" and edu_gap == "" and scholarship == "":
+                        messages.error(request, "Kindly fill the fields")
+                        return redirect("section_second")
+                    if request.user.is_authenticated:
+                        secondmodel = SectionSecond()
+                        secondmodel.study_method = study_method
+                        secondmodel.study_environment = study_environment
+                        secondmodel.study_time_spent = study_time_spent
+                        secondmodel.games_time = games_time
+                        secondmodel.screen_time = screen_time
+                        secondmodel.role_model = role_model
+                        secondmodel.attempts = attempts
+                        secondmodel.attendance = attendance
+                        secondmodel.scholarship = scholarship
+                        secondmodel.edu_gap = edu_gap
+                        secondmodel.user_id = user.id
+                        secondmodel.save()
 
-                    # check errors
-                    # success message redirect to result page
-                    messages.success(request, f'Your data has been added.')
+                        # check errors
+                        # success message redirect to result page
+                        messages.success(request, f'Your data has been added.')
+                        return redirect('section_three')
+                    else:
+                        messages.error(request, f'Some error in the form.')
+                        return redirect('section_second')
+                except MultiValueDictKeyError:
+                    messages.success(request, f'Already filled the previous section.')
                     return redirect('section_three')
-                else:
-                    messages.error(request, f'Some error in the form.')
-                    return redirect('section_second')
         else:
             messages.error(request, f'Already filled the Section 2.  Kindly fill section 3')
             return redirect('section_three')
@@ -378,7 +388,7 @@ def section_second(request):
         return redirect('profile')
     return render(request, 'section_second.html')
 
-
+@csrf_exempt
 @login_required(login_url='login/')
 def section_three(request):
     user = request.user
@@ -386,43 +396,47 @@ def section_three(request):
         uid = UserBasicInfo.objects.get(user_id=user.id)
         if not SectionThree.objects.filter(user_id=user.id).exists():
             if request.method == 'POST':
-                math = request.POST['math']
-                physics = request.POST['physics']
-                chemistry = request.POST['chemistry']
-                biology = request.POST['biology']
-                history = request.POST['history']
-                geography = request.POST['geography']
-                commerce = request.POST['commerce']
-                accounts = request.POST['accounts']
-                statistics = request.POST['statistics']
-                language = request.POST['language']
+                try:
+                    math = request.POST['math']
+                    physics = request.POST['physics']
+                    chemistry = request.POST['chemistry']
+                    biology = request.POST['biology']
+                    history = request.POST['history']
+                    geography = request.POST['geography']
+                    commerce = request.POST['commerce']
+                    accounts = request.POST['accounts']
+                    statistics = request.POST['statistics']
+                    language = request.POST['language']
 
-                if math == "" and history == "" and biology == "" and chemistry == "" and physics == "" and \
-                        statistics == "" and accounts == "" and commerce == "" and geography == "" and language == "":
-                    messages.error(request, "Kindly fill the fields")
-                    return redirect("section_three")
-                if request.user.is_authenticated:
-                    thirdmodel = SectionThree()
-                    thirdmodel.math = math
-                    thirdmodel.history = history
-                    thirdmodel.biology = biology
-                    thirdmodel.physics = physics
-                    thirdmodel.chemistry = chemistry
-                    thirdmodel.geography = geography
-                    thirdmodel.commerce = commerce
-                    thirdmodel.accounts = accounts
-                    thirdmodel.statistics = statistics
-                    thirdmodel.language = language
-                    thirdmodel.user_id = user.id
-                    thirdmodel.save()
+                    if math == "" and history == "" and biology == "" and chemistry == "" and physics == "" and \
+                            statistics == "" and accounts == "" and commerce == "" and geography == "" and language == "":
+                        messages.error(request, "Kindly fill the fields")
+                        return redirect("section_three")
+                    if request.user.is_authenticated:
+                        thirdmodel = SectionThree()
+                        thirdmodel.math = math
+                        thirdmodel.history = history
+                        thirdmodel.biology = biology
+                        thirdmodel.physics = physics
+                        thirdmodel.chemistry = chemistry
+                        thirdmodel.geography = geography
+                        thirdmodel.commerce = commerce
+                        thirdmodel.accounts = accounts
+                        thirdmodel.statistics = statistics
+                        thirdmodel.language = language
+                        thirdmodel.user_id = user.id
+                        thirdmodel.save()
 
-                    # check errors
-                    # success message redirect to result page
-                    messages.success(request, f'Your data has been added.')
-                    return render(request, 'section_four.html')
-                else:
-                    messages.error(request, f'Some error in the form.')
-                    return render(request, 'section_three.html')
+                        # check errors
+                        # success message redirect to result page
+                        messages.success(request, f'Your data has been added.')
+                        return redirect('section_four')
+                    else:
+                        messages.error(request, f'Some error in the form.')
+                        return redirect('section_three')
+                except MultiValueDictKeyError:
+                    messages.success(request, f'Already filled the previous section.')
+                    return redirect('section_four')
         else:
             messages.error(request, f'Already filled the Section 3.  Kindly fill section 4')
             return redirect('section_four')
@@ -432,7 +446,7 @@ def section_three(request):
 
     return render(request, 'section_three.html')
 
-
+@csrf_exempt
 @login_required(login_url='login/')
 def section_four(request):
     user = request.user
@@ -440,43 +454,47 @@ def section_four(request):
         uid = UserBasicInfo.objects.get(user_id=user.id)
         if not SectionFour.objects.filter(user_id=user.id).exists():
             if request.method == 'POST':
-                political_science = request.POST['political_science']
-                home_science = request.POST['home_science']
-                environment_science = request.POST['environment_science']
-                physical_edu = request.POST['physical_edu']
-                computers = request.POST['computer']
-                typewriting = request.POST['typewriting']
-                stenography = request.POST['stenography']
-                beautician = request.POST['beautician']
-                library_asst = request.POST['library_asst']
-                secretarial_roles = request.POST['secretarial_roles']
-                if political_science == "" and home_science == "" and environment_science == "" and physical_edu == "" and computers == "" and \
-                        typewriting == "" and stenography == "" and beautician == "" and library_asst == "" and secretarial_roles == "":
-                    messages.error(request, "Kindly fill the fields")
-                    return redirect("section_four")
-                if request.user.is_authenticated:
-                    fourthmodel = SectionFour()
-                    fourthmodel.political_science = political_science
-                    fourthmodel.home_science = home_science
-                    fourthmodel.environment_science = environment_science
-                    fourthmodel.physical_edu = physical_edu
-                    fourthmodel.computers = computers
-                    fourthmodel.typewriting = typewriting
-                    fourthmodel.stenography = stenography
-                    fourthmodel.beautician = beautician
-                    fourthmodel.library_asst = library_asst
-                    fourthmodel.secretarial_roles = secretarial_roles
-                    fourthmodel.user_id = user.id
-                    fourthmodel.save()
+                try:
+                    political_science = request.POST['political_science']
+                    home_science = request.POST['home_science']
+                    environment_science = request.POST['environment_science']
+                    physical_edu = request.POST['physical_edu']
+                    computers = request.POST['computer']
+                    typewriting = request.POST['typewriting']
+                    stenography = request.POST['stenography']
+                    beautician = request.POST['beautician']
+                    library_asst = request.POST['library_asst']
+                    secretarial_roles = request.POST['secretarial_roles']
+                    if political_science == "" and home_science == "" and environment_science == "" and physical_edu == "" and computers == "" and \
+                            typewriting == "" and stenography == "" and beautician == "" and library_asst == "" and secretarial_roles == "":
+                        messages.error(request, "Kindly fill the fields")
+                        return redirect("section_four")
+                    if request.user.is_authenticated:
+                        fourthmodel = SectionFour()
+                        fourthmodel.political_science = political_science
+                        fourthmodel.home_science = home_science
+                        fourthmodel.environment_science = environment_science
+                        fourthmodel.physical_edu = physical_edu
+                        fourthmodel.computers = computers
+                        fourthmodel.typewriting = typewriting
+                        fourthmodel.stenography = stenography
+                        fourthmodel.beautician = beautician
+                        fourthmodel.library_asst = library_asst
+                        fourthmodel.secretarial_roles = secretarial_roles
+                        fourthmodel.user_id = user.id
+                        fourthmodel.save()
 
-                    # check errors
-                    # success message redirect to result page
-                    messages.success(request, f'proceed with next section.')
-                    return render(request, 'section_five.html')
+                        # check errors
+                        # success message redirect to result page
+                        messages.success(request, f'proceed with next section.')
+                        return redirect('section_five')
 
-                else:
-                    messages.error(request, f'Some Errors')
-                    return redirect('section_four')
+                    else:
+                        messages.error(request, f'Some Errors')
+                        return redirect('section_four')
+                except MultiValueDictKeyError:
+                    messages.success(request, f'Already filled the previous section.')
+                    return redirect('section_five')
         else:
             messages.error(request, f'Already filled the Section 4.  Kindly fill section 5')
             return redirect('section_five')
@@ -485,7 +503,7 @@ def section_four(request):
         return redirect('profile')
     return render(request, 'section_four.html')
 
-
+@csrf_exempt
 @login_required(login_url='login/')
 def section_five(request):
     user = request.user
@@ -493,42 +511,46 @@ def section_five(request):
         uid = UserBasicInfo.objects.get(user_id=user.id)
         if not SectionFive.objects.filter(user_id=user.id).exists():
             if request.method == 'POST':
-                curricular = request.POST['curricular']
-                performance_level = request.POST['performance_level']
-                father_qual = request.POST['father_qual']
-                mother_qual = request.POST['mother_qual']
-                sibling_qual = request.POST['sibiling_qual']
-                father_job = request.POST['father_job']
-                mother_job = request.POST['mother_job']
-                sibling_job = request.POST['sibling_job']
-                annual_income = request.POST['annual_income']
+                try:
+                    curricular = request.POST['curricular']
+                    performance_level = request.POST['performance_level']
+                    father_qual = request.POST['father_qual']
+                    mother_qual = request.POST['mother_qual']
+                    sibling_qual = request.POST['sibiling_qual']
+                    father_job = request.POST['father_job']
+                    mother_job = request.POST['mother_job']
+                    sibling_job = request.POST['sibling_job']
+                    annual_income = request.POST['annual_income']
 
-                if curricular == "" and performance_level == "" and father_qual == "" and mother_qual == "" and \
-                        sibling_qual == "" and father_job == "" and mother_job == "" and sibling_job == "" and annual_income == "":
-                    messages.error(request, "Kindly fill the fields")
-                    return redirect("section_five")
-                if request.user.is_authenticated:
-                    fifthmodel = SectionFive()
-                    fifthmodel.curricular = curricular
-                    fifthmodel.performance_level = performance_level
-                    fifthmodel.father_qual = father_qual
-                    fifthmodel.mother_qual = mother_qual
-                    fifthmodel.sibling_qual = sibling_qual
-                    fifthmodel.father_job = father_job
-                    fifthmodel.mother_job = mother_job
-                    fifthmodel.sibling_job = sibling_job
-                    fifthmodel.annual_income = annual_income
-                    fifthmodel.user_id = user.id
-                    fifthmodel.save()
+                    if curricular == "" and performance_level == "" and father_qual == "" and mother_qual == "" and \
+                            sibling_qual == "" and father_job == "" and mother_job == "" and sibling_job == "" and annual_income == "":
+                        messages.error(request, "Kindly fill the fields")
+                        return redirect("section_five")
+                    if request.user.is_authenticated:
+                        fifthmodel = SectionFive()
+                        fifthmodel.curricular = curricular
+                        fifthmodel.performance_level = performance_level
+                        fifthmodel.father_qual = father_qual
+                        fifthmodel.mother_qual = mother_qual
+                        fifthmodel.sibling_qual = sibling_qual
+                        fifthmodel.father_job = father_job
+                        fifthmodel.mother_job = mother_job
+                        fifthmodel.sibling_job = sibling_job
+                        fifthmodel.annual_income = annual_income
+                        fifthmodel.user_id = user.id
+                        fifthmodel.save()
 
-                    # check errors
-                    # success message redirect to result page
-                    messages.success(request,
-                                     f'You had given your test successfully. Now you can proceed with payment for result')
+                        # check errors
+                        # success message redirect to result page
+                        messages.success(request,
+                                         f'You had given your test successfully. Now you can proceed with payment for result')
+                        return redirect('result')
+                    else:
+                        messages.error(request, f'Some error in the form.')
+                        return redirect('section_five')
+                except MultiValueDictKeyError:
+                    messages.success(request, f'Already fill the section.')
                     return redirect('result')
-                else:
-                    messages.error(request, f'Some error in the form.')
-                    return redirect('section_five')
         else:
             messages.error(request, f'Already given the test. Kindly check result')
             return redirect('result')
@@ -558,7 +580,7 @@ def section_nine(request):
 def section_ten(request):
     return render(request, 'section_ten.html')
 
-
+@csrf_exempt
 @login_required
 def password_change(request):
     user = request.user
@@ -583,7 +605,7 @@ class ActivationTokenGenerator(PasswordResetTokenGenerator):
 
 account_activation_token = ActivationTokenGenerator()
 
-
+@csrf_exempt
 def password_reset(request):
     if request.method == 'POST':
         form = PasswordResetForm(request.POST)
@@ -619,7 +641,7 @@ def password_reset(request):
     form = PasswordResetForm()
     return render(request, "password_reset.html", context={"form": form})
 
-
+@csrf_exempt
 def password_reset_confirm(request, uidb64, token):
     User = get_user_model()
     try:
@@ -647,7 +669,7 @@ def password_reset_confirm(request, uidb64, token):
     messages.error(request, 'Something went wrong, redirecting back to Homepage')
     return redirect("home")
 
-
+@csrf_exempt
 @login_required
 def checkout(request):
     user = request.user
@@ -730,7 +752,7 @@ def payment_handler(request):
         # if other than POST request is made.
         return HttpResponseBadRequest()
 
-
+@csrf_exempt
 def error_404_view(request, exception):
     # we add the path to the the 404.html file
     # here. The name of our HTML file is 404.html
