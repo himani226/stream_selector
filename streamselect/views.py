@@ -314,6 +314,12 @@ def profile(request):
     else:
         return render(request, 'profile.html')
 
+def view_profile(request):
+    uesr = request.user
+
+    profile = UserBasicInfo.objects.get(user_id = user.id)
+
+
 @csrf_exempt
 @login_required(login_url='login/')
 def section_first(request):
