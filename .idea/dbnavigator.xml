@@ -46,6 +46,7 @@
     <connection id="7abf524a-1549-4c40-999e-730451fd2ce7" />
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
+    <filter-actions connection-id="49036c56-7174-4acb-89d2-71c3e53b6a50" dataset="main.streamselect_userbasicinfo" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="7abf524a-1549-4c40-999e-730451fd2ce7" dataset="main.streamselect_sectionthree" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="7abf524a-1549-4c40-999e-730451fd2ce7" dataset="main.streamselect_userbasicinfo" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="7abf524a-1549-4c40-999e-730451fd2ce7" dataset="main.auth_user" active-filter-id="EMPTY_FILTER" />
@@ -53,7 +54,6 @@
     <filter-actions connection-id="7abf524a-1549-4c40-999e-730451fd2ce7" dataset="main.streamselect_sectionsecond" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="7abf524a-1549-4c40-999e-730451fd2ce7" dataset="main.streamselect_sectionfour" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="7abf524a-1549-4c40-999e-730451fd2ce7" dataset="main.streamselect_sectionfirst" active-filter-id="EMPTY_FILTER" />
-    <filter-actions connection-id="49036c56-7174-4acb-89d2-71c3e53b6a50" dataset="main.streamselect_userbasicinfo" active-filter-id="EMPTY_FILTER" />
   </component>
   <component name="DBNavigator.Project.EditorStateManager">
     <last-used-providers />
@@ -299,7 +299,6 @@
         <object-type name="FUNCTION" sorting-type="NAME" />
         <object-type name="PROCEDURE" sorting-type="NAME" />
         <object-type name="ARGUMENT" sorting-type="POSITION" />
-        <object-type name="TYPE ATTRIBUTE" sorting-type="POSITION" />
       </sorting>
       <default-editors>
         <object-type name="VIEW" editor-type="SELECTION" />

@@ -18,14 +18,17 @@
             <div class="container rounded bg-white mt-3 mb-3">
                 <div class="row">
                    <form method="POST" enctype="multipart/form-data">
-                       {% for message in messages  %}
-                            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" style="color:red" role="alert">
-                                <strong>Message : </strong> {{ message }}
+                       {% if messages %}
+                            <ul class="messages">
+                                {% for message in messages %}
+                                <li class="alert alert-{{ message.tags }} alert-dismissible fade show" style="color:red" role="alert" >{% if message.tags %} {{ message }} {% endif %}
                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                  <span aria-hidden="true">&times;</span>
+                                      <span aria-hidden="true">&times;</span>
                                 </button>
-                            </div>
-                       {% endfor %}
+                                </li>
+                                {% endfor %}
+                            </ul>
+                       {% endif %}
                        {% csrf_token %}
                        <div class="col-md-12 ">
                             <div class="p-3 py-5">
@@ -33,10 +36,10 @@
                                     <h4>Section 3 - Your Interest in Subjects</h4>
                                 </div>
                                 <hr>
-				                <div class="mt-3 text-lg text-primary"> Q.1 Do you like Maths </div>
+				                <div class="mt-3 text-lg text-primary required"> Q.1 Do you like Maths </div>
                                 <div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="math" value="yes">
+                                        <input class="form-check-input" type="radio" name="math" value="yes" required>
                                         <label class="form-check-label" >Yes</label>
                                     </div>
                                     <div class="form-check form-check-inline">
@@ -48,10 +51,10 @@
                                         <label class="form-check-label" >May be</label>
                                     </div>
                                 </div>
-                                <div class="mt-3 text-lg text-primary"> Q.2 Do you like Physics </div>
+                                <div class="mt-3 text-lg text-primary required"> Q.2 Do you like Physics </div>
                                 <div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="physics" value="yes">
+                                        <input class="form-check-input" type="radio" name="physics" value="yes" required>
                                         <label class="form-check-label">Yes</label>
                                     </div>
                                     <div class="form-check form-check-inline">
@@ -63,10 +66,10 @@
                                         <label class="form-check-label">May be</label>
                                     </div>
                                 </div>
-                                <div class="mt-3 text-lg text-primary"> Q.3 Do you like Chemistry </div>
+                                <div class="mt-3 text-lg text-primary required"> Q.3 Do you like Chemistry </div>
                                 <div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="chemistry" value="yes">
+                                        <input class="form-check-input" type="radio" name="chemistry" value="yes" required>
                                         <label class="form-check-label">Yes</label>
                                     </div>
                                     <div class="form-check form-check-inline">
@@ -78,10 +81,10 @@
                                         <label class="form-check-label">May be</label>
                                     </div>
                                 </div>
-                                <div class="mt-3 text-lg text-primary"> Q.4 Do you like Biology </div>
+                                <div class="mt-3 text-lg text-primary required"> Q.4 Do you like Biology </div>
                                 <div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="biology" value="yes">
+                                        <input class="form-check-input" type="radio" name="biology" value="yes" required>
                                         <label class="form-check-label">Yes</label>
                                     </div>
                                     <div class="form-check form-check-inline">
@@ -93,10 +96,10 @@
                                         <label class="form-check-label">May be</label>
                                     </div>
                                 </div>
-                                <div class="mt-3 text-lg text-primary"> Q.5 Do you like History </div>
+                                <div class="mt-3 text-lg text-primary required"> Q.5 Do you like History </div>
                                 <div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="history" value="yes">
+                                        <input class="form-check-input" type="radio" name="history" value="yes" required>
                                         <label class="form-check-label">Yes</label>
                                     </div>
                                     <div class="form-check form-check-inline">
@@ -108,10 +111,10 @@
                                         <label class="form-check-label">May be</label>
                                     </div>
                                 </div>
-                                <div class="mt-3 text-lg text-primary"> Q.6 Do you like Geography </div>
+                                <div class="mt-3 text-lg text-primary required"> Q.6 Do you like Geography </div>
                                 <div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="geography" value="yes">
+                                        <input class="form-check-input" type="radio" name="geography" value="yes" required>
                                         <label class="form-check-label">Yes</label>
                                     </div>
                                     <div class="form-check form-check-inline">
@@ -123,10 +126,10 @@
                                         <label class="form-check-label">May be</label>
                                     </div>
                                 </div>
-                                <div class="mt-3 text-lg text-primary"> Q.7 Do you like Commerce </div>
+                                <div class="mt-3 text-lg text-primary required"> Q.7 Do you like Commerce </div>
                                 <div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="commerce" value="yes">
+                                        <input class="form-check-input" type="radio" name="commerce" value="yes" required>
                                         <label class="form-check-label">Yes</label>
                                     </div>
                                     <div class="form-check form-check-inline">
@@ -138,10 +141,10 @@
                                         <label class="form-check-label">May be</label>
                                     </div>
                                 </div>
-                                <div class="mt-3 text-lg text-primary"> Q.8 Do you like Accounts </div>
+                                <div class="mt-3 text-lg text-primary required"> Q.8 Do you like Accounts </div>
                                 <div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="accounts" value="yes">
+                                        <input class="form-check-input" type="radio" name="accounts" value="yes" required>
                                         <label class="form-check-label">Yes</label>
                                     </div>
                                     <div class="form-check form-check-inline">
@@ -153,10 +156,10 @@
                                         <label class="form-check-label">May be</label>
                                     </div>
                                 </div>
-                                <div class="mt-3 text-lg text-primary"> Q.9 Do you like Statistics </div>
+                                <div class="mt-3 text-lg text-primary required"> Q.9 Do you like Statistics </div>
                                 <div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="statistics" value="yes">
+                                        <input class="form-check-input" type="radio" name="statistics" value="yes" required>
                                         <label class="form-check-label">Yes</label>
                                     </div>
                                     <div class="form-check form-check-inline">
@@ -168,10 +171,10 @@
                                         <label class="form-check-label">May be</label>
                                     </div>
                                 </div>
-                                <div class="mt-3 text-lg text-primary"> Q.10 Do you like Language </div>
+                                <div class="mt-3 text-lg text-primary required"> Q.10 Do you like Language </div>
                                 <div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="language" value="yes">
+                                        <input class="form-check-input" type="radio" name="language" value="yes" required>
                                         <label class="form-check-label">Yes</label>
                                     </div>
                                     <div class="form-check form-check-inline">

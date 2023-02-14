@@ -29,6 +29,9 @@ from .models import UserBasicInfo, PaymentCheck, SectionFirst, SectionSecond, Se
 from django.utils.datastructures import MultiValueDictKeyError
 
 # from django_xhtml2pdf.utils import pdf_decorator
+SpecialSym =['$', '@', '#', '%']
+
+
 @csrf_exempt
 @login_required(login_url='login/')
 def result(request):
@@ -177,18 +180,26 @@ def register(request):
             messages.error(request, " Username should more than 5 characters")
             return redirect('register')
 
-        if not username.isalnum():
-            messages.error(request, " User name should contain letters and numbers")
-            return redirect('register')
-
-        if not re.fullmatch(r'[A-Za-z0-9@#$%^&+=]{8,}', pass1):
-            messages.error(request,
-                           "Password Must contain atleast one letter, one number,one special character. Minimum length should be 8 characters")
-            return redirect('register')
-
         if (pass1 != pass2):
             messages.error(request, " Passwords do not match")
             return redirect('register')
+
+        if not any(char.isdigit() for char in pass1):
+            messages.error(request, "Password Must contain one number")
+            return redirect('register')
+
+        if not any(char.isupper() for char in pass1):
+            messages.error(request, "Password Must contain atleast one Capital letter")
+            return redirect('register')
+
+        if not any(char.islower() for char in pass1):
+            messages.error(request, "Password Must contain atleast one Small letter")
+            return redirect('register')
+
+        if not any(char in SpecialSym for char in pass1):
+            messages.error(request, "Password Must contain atleast one Special Character '$', '@', '#', '%'")
+            return redirect('register')
+
 
         if username == "" and pass1 == "" and email == "" and fname == "" and lname == "":
             messages.error(request, "Kindly fill the fields")
@@ -251,13 +262,17 @@ def profile(request):
         mobile = request.POST['number']
         anumber = request.POST['anumber']
         # photo = request.FILES['image']
-        if name == "" and fathername == "" and mothername == "" and dob == "" and gender == "" and category == "" and \
-                school_type == "" and state == "" and city == "" and district == "" and pin == "" and area == "" and board == "" and school == "" and mobile == "" and anumber == "":
+        if (name == "" and fathername == "" and mothername == "" and dob == "" and gender == "" and category == "" and \
+                school_type == "" and state == "" and city == "" and district == "" and pin == "" and area == "" and board == "" and school == "" and mobile == "" and anumber == ""):
             messages.error(request, "Kindly fill the fields")
             return redirect("profile")
 
         if (mobile == anumber):
             messages.error(request, " Both numbers should be different")
+            return redirect('profile')
+
+        if (UserBasicInfo.objects.filter(mobile_num=mobile).exists()):
+            messages.error(request, "Looks like a Mobile Number is already exist")
             return redirect('profile')
 
         user = request.user
@@ -291,8 +306,8 @@ def profile(request):
             # userimage.user_image_ext = photo.name.split('.')[-1]
             # userimage.save()
 
-            messages.success(request, f'Your data has been added. Now you can take Stream Selection test')
-            return redirect('profile')
+            messages.success(request, f'Your profile data has been added. Now you can take Stream Selection test')
+            return redirect('section_first')
         else:
             messages.error(request, f'There is some error in your form. Kindly check and fill it again.')
             return redirect('profile')
