@@ -58,7 +58,7 @@ def result(request):
             (second.study_time_spent == '4hr' or second.study_time_spent == 'more') and \
             second.edu_gap == 'no' and \
             (third.math == 'yes' or third.physics == 'yes' or third.chemistry == 'yes') and \
-            five.annual_income == 'More_than_5' :
+            (five.annual_income == 'Less_than_10' or five.annual_income == 'Less_than_10' or five.annual_income == 'More_than_10'):
             return render(request, 'result_non_medical.html', {'user_detail': userdetail})
 
         # condition for checking Medical stream
@@ -75,7 +75,7 @@ def result(request):
             (second.study_time_spent == '4hr' or second.study_time_spent == 'more') and \
             second.edu_gap == 'no' and \
             third.biology == 'yes' and \
-            five.annual_income == 'More_than_5':
+            (five.annual_income == 'Less_than_10' or five.annual_income == 'Less_than_10' or five.annual_income == 'More_than_10'):
             return render(request, 'result_medical.html', {'user_detail': userdetail})
 
         # condition for checking Non-Medical and Medical stream
@@ -93,7 +93,7 @@ def result(request):
             second.edu_gap == 'no' and \
             third.math == 'yes' and \
             third.biology == 'yes' and \
-            five.annual_income == 'More_than_5':
+            (five.annual_income == 'Less_than_10' or five.annual_income == 'Less_than_10' or five.annual_income == 'More_than_10'):
             return render(request, 'result_both.html', {'user_detail': userdetail})
 
         # condition for checking Arts stream
@@ -216,7 +216,6 @@ def register(request):
         else:
             messages.error(request, "Looks like a username with that email or password already exist")
             return redirect('register')
-        return render(request, 'register.html', context)
     else:
         return render(request, 'register.html')
 
@@ -243,81 +242,80 @@ def user_login(request):
 @csrf_exempt
 @login_required(login_url='login/')
 def profile(request):
-    if request.method == 'POST':
-        name = request.POST['sname']
-        fathername = request.POST['fathername']
-        mothername = request.POST['mothername']
-        dob = request.POST['dob']
-        gender = request.POST['gender']
-        category = request.POST['category']
-        address = request.POST['address']
-        state = request.POST['state']
-        district = request.POST['district']
-        city = request.POST['city']
-        pin = request.POST['pin']
-        area = request.POST['area']
-        board = request.POST['board']
-        school = request.POST['school']
-        school_type = request.POST['school_type']
-        mobile = request.POST['number']
-        anumber = request.POST['anumber']
-        # photo = request.FILES['image']
-        if (name == "" and fathername == "" and mothername == "" and dob == "" and gender == "" and category == "" and \
-                school_type == "" and state == "" and city == "" and district == "" and pin == "" and area == "" and board == "" and school == "" and mobile == "" and anumber == ""):
-            messages.error(request, "Kindly fill the fields")
-            return redirect("profile")
+    user = request.user
+    if not (UserBasicInfo.objects.filter(user_id=user.id).exists()):
+        if request.method == 'POST':
+            if request.user.is_authenticated:
+                name = request.POST['sname']
+                fathername = request.POST['fathername']
+                mothername = request.POST['mothername']
+                dob = request.POST['dob']
+                gender = request.POST['gender']
+                category = request.POST['category']
+                address = request.POST['address']
+                state = request.POST['state']
+                district = request.POST['district']
+                city = request.POST['city']
+                pin = request.POST['pin']
+                area = request.POST['area']
+                board = request.POST['board']
+                school = request.POST['school']
+                school_type = request.POST['school_type']
+                mobile = request.POST['number']
+                anumber = request.POST['anumber']
+                # photo = request.FILES['image']
+                if (name == "" and fathername == "" and mothername == "" and dob == "" and gender == "" and category == "" and \
+                        school_type == "" and state == "" and city == "" and district == "" and pin == "" and area == "" and board == "" and school == "" and mobile == "" and anumber == ""):
+                    messages.error(request, "Kindly fill the fields")
+                    return redirect("profile")
 
-        if (mobile == anumber):
-            messages.error(request, " Both numbers should be different")
-            return redirect('profile')
+                if (mobile == anumber):
+                    messages.error(request, " Both numbers should be different")
+                    return redirect('profile')
 
-        if (UserBasicInfo.objects.filter(mobile_num=mobile).exists()):
-            messages.error(request, "Looks like a Mobile Number is already exist")
-            return redirect('profile')
+                if (UserBasicInfo.objects.filter(mobile_num=mobile).exists()):
+                    messages.error(request, "Looks like a Mobile Number is already exist")
+                    return redirect('profile')
 
-        user = request.user
-        if request.user.is_authenticated:
-            profilemodel = UserBasicInfo()
-            profilemodel.full_name = name
-            profilemodel.father_name = fathername
-            profilemodel.mother_name = mothername
-            profilemodel.dob = datetime.strptime(dob, "%Y-%m-%d")
-            profilemodel.gender = gender
-            profilemodel.category = category
-            profilemodel.address = address
-            profilemodel.state = state
-            profilemodel.district = district
-            profilemodel.city = city
-            profilemodel.pin = pin
-            profilemodel.area = area
-            profilemodel.board = board
-            profilemodel.school_name = school
-            profilemodel.school_type = school_type
-            profilemodel.mobile_num = mobile
-            profilemodel.parents_num = anumber
-            profilemodel.user_id = user.id
-            profilemodel.check_alerts = "yes"
-            profilemodel.save()
+                user = request.user
+                profilemodel = UserBasicInfo()
+                profilemodel.full_name = name
+                profilemodel.father_name = fathername
+                profilemodel.mother_name = mothername
+                profilemodel.dob = datetime.strptime(dob, "%Y-%m-%d")
+                profilemodel.gender = gender
+                profilemodel.category = category
+                profilemodel.address = address
+                profilemodel.state = state
+                profilemodel.district = district
+                profilemodel.city = city
+                profilemodel.pin = pin
+                profilemodel.area = area
+                profilemodel.board = board
+                profilemodel.school_name = school
+                profilemodel.school_type = school_type
+                profilemodel.mobile_num = mobile
+                profilemodel.parents_num = anumber
+                profilemodel.user_id = user.id
+                profilemodel.check_alerts = "yes"
+                profilemodel.save()
 
-            # profilemodel = UserBasicInfo.objects.filter(full_name=name).first()
-            # userimage = UserImage()
-            # userimage.name = profilemodel
-            # userimage.user_image = photo
-            # userimage.user_image_ext = photo.name.split('.')[-1]
-            # userimage.save()
-
-            messages.success(request, f'Your profile data has been added. Now you can take Stream Selection test')
-            return redirect('section_first')
-        else:
-            messages.error(request, f'There is some error in your form. Kindly check and fill it again.')
-            return redirect('profile')
-    else:
+                # profilemodel = UserBasicInfo.objects.filter(full_name=name).first()
+                # userimage = UserImage()
+                # userimage.name = profilemodel
+                # userimage.user_image = photo
+                # userimage.user_image_ext = photo.name.split('.')[-1]
+                # userimage.save()
+                messages.success(request, f'Your profile data has been added. Now you can take Stream Selection test')
+                return redirect('section_first')
+            else:
+                messages.error(request, f'Some errors in the form')
+                return redirect('profile')
         return render(request, 'profile.html')
-
-def view_profile(request):
-    uesr = request.user
-
-    profile = UserBasicInfo.objects.get(user_id = user.id)
+    else:
+        user = request.user
+        userdetail = UserBasicInfo.objects.get(user_id=user.id)
+        return render(request, 'profile.html', {'user_detail': userdetail} )
 
 
 @csrf_exempt
