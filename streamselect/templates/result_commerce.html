@@ -1,11 +1,12 @@
 {% extends 'base_result.html' %}
 {% load static %}
 {% block content %}
+{% if first %}
 <div class="row">
     <div class = "col-md-12">
         <div class="col-md-12">
             <h4 class="text-danger">Student Review</h4>
-                 <p>As we can see you have a keen interest in subjects like Economics, Accountancy, and Business Studies, then they can opt for Commerce stream. This stream can lead to careers in finance, accounting, business management, and entrepreneurship.</p>
+                 <p>As we can see you have a keen interest in subjects like Economics, Accountancy, and Business Studies, and you got marks in nineth is {{first.nineth_marks}} and tenth {{first.tenth_marks}} then we think you can opt for Commerce stream. This stream can lead to careers in finance, accounting, business management, and entrepreneurship.</p>
             <h4 class="text-danger">Which Stream to Choose?</h4>
             <h5>Commerce</h5>
         </div>
@@ -64,9 +65,7 @@
                 </div>
             </div>
     </div>
-        <div class="col-md-12">
-        <h5 class="text-danger">Note:- display text here about test is not 100% authenticated </h5>
     </div>
     </div>
-    </div>
+{% endif %}
 {% endblock %}

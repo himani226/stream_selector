@@ -213,6 +213,10 @@ class SectionTen(models.Model):
     teacher = models.CharField(max_length=100)
 
 
+class TestResult(models.Model):
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    result = models.CharField(max_length=100)
+
 class PaymentCheck(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     order_id = models.CharField(max_length=100)

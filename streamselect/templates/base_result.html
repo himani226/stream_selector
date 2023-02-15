@@ -12,7 +12,7 @@
     <title>intelliTest - KAAMYAAB BANO</title>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.5/pdfmake.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.5/vfs_fonts.min.js"></script>
-
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <!-- Custom fonts for this template-->
     <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
     <link
@@ -84,12 +84,14 @@
 					   </div>
 					 {% block content %}
 					   {% endblock %}
-
-		<img src="{% static 'img/report-bg_footer.jpg '%}" id="image-preview-footer" alt="footer">
-            </div>
-        </div>
-	</div>
-    </div>
+						<div class="col-md-12">
+							<h5 class="text-danger">Note:- display text here about test is not 100% authenticated </h5>
+						</div>
+					   <img src="{% static 'img/report-bg_footer.jpg '%}" id="image-preview-footer" alt="footer">
+            		</div>
+        		</div>
+			</div>
+		</div>
 {% endif %}
 {% endif %}
     <!-- Bootstrap core JavaScript-->
@@ -132,7 +134,7 @@
 	</script>-->
 
 
-	<script>
+	<!--<script>
 		var buttonElement = document.querySelector("#btn-generate");
 		buttonElement.addEventListener('click', function() {
 			var pdfContent = document.querySelector("#pdf-content").innerText;
@@ -162,7 +164,15 @@
            context.drawImage(imgSource, 0, 0);
            return canvas.toDataURL('image/jpeg');
         }
-	</script>
+	</script>-->
+
+<script>
+	var buttonElement = document.querySelector("#btn-generate");
+		buttonElement.addEventListener('click', function() {
+			var element = document.getElementById('pdf-content');
+			html2pdf(element);
+			});
+</script>
 
 </body>
 
