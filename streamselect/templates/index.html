@@ -31,9 +31,9 @@
 </head>
 
 <body>
-
   <!-- ======= Header ======= -->
   <header id="header" class="fixed-top  header-transparent ">
+    <div id="google_translate_element"></div>
     <div class="container d-flex align-items-center justify-content-between">
 
       <div class="logo">
@@ -329,6 +329,16 @@ student towards a particular stream, without considering the student's interests
 
   <!-- Template Main JS File -->
   <script src="{% static 'landingPage/assets/js/main.js' %}"></script>
+  <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement(
+                {pageLanguage: 'en',includedLanguages: 'hi,gu', layout: google.translate.TranslateElement.InlineLayout.SIMPLE},
+                'google_translate_element'
+            );
+        }
+    </script>
+    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
 
 </body>
 

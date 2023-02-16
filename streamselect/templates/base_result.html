@@ -29,9 +29,9 @@
 	<a href="#" id="btn-generate" class="d-none d-sm-inline-block btn btn-danger shadow-sm"><i class="fas fa-file-alt fa-sm text-white-50"></i>  Generate PDF Report</a>
 	<a href="{% url 'home' %}" class="d-none d-sm-inline-block btn btn-primary shadow-sm">  Back to Dashboard</a>
 
-    <div class="container">
+    <div id="pdf-content"  class="container">
 
-		<div id="pdf-content" class="card o-hidden border-0 shadow-lg my-5">
+		<div class="card o-hidden border-0 shadow-lg my-5">
             <div class="card-body p-0">
                 <!-- Nested Row within Card Body -->
                 <div class="row">
@@ -169,8 +169,22 @@
 <script>
 	var buttonElement = document.querySelector("#btn-generate");
 		buttonElement.addEventListener('click', function() {
-			var element = document.getElementById('pdf-content');
-			html2pdf(element);
+		var element = document.getElementById('pdf-content');
+			let body = document.body
+      		let html = document.documentElement
+      		let height = Math.max(body.scrollHeight, body.offsetHeight,
+                       html.clientHeight, html.scrollHeight, html.offsetHeight)
+      		let heightCM = height / 35.35
+			html2pdf(element, {
+				margin: 1,
+				filename: 'result.pdf',
+				html2canvas: { dpi: 192 },
+				jsPDF: {
+					orientation: 'portrait',
+					unit: 'cm',
+					format: [heightCM, 40]
+				  }
+			})
 			});
 </script>
 
