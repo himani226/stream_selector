@@ -90,6 +90,8 @@ class SectionSecond(models.Model):
     attendance = models.CharField(max_length=100)
     scholarship = models.CharField(max_length=100)
     edu_gap = models.CharField(max_length=100)
+    most_perferred_stream = models.CharField(max_length=100)
+    least_perferred_stream = models.CharField(max_length=100)
 
 
 class SectionThree(models.Model):
