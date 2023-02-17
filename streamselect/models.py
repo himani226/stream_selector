@@ -74,8 +74,8 @@ class SectionFirst(models.Model):
     math_olampaid = models.CharField(max_length=100)
     sci_olampaid = models.CharField(max_length=100)
     workshop = models.CharField(max_length=100)
-    most_perfered_sub = models.CharField(max_length=100)
-    least_perfered_sub = models.CharField(max_length=100)
+    most_preferred_sub = models.CharField(max_length=100)
+    least_preferred_sub = models.CharField(max_length=100)
 
 
 class SectionSecond(models.Model):
@@ -90,8 +90,7 @@ class SectionSecond(models.Model):
     attendance = models.CharField(max_length=100)
     scholarship = models.CharField(max_length=100)
     edu_gap = models.CharField(max_length=100)
-    most_perferred_stream = models.CharField(max_length=100)
-    least_perferred_stream = models.CharField(max_length=100)
+
 
 
 class SectionThree(models.Model):

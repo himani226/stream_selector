@@ -45,161 +45,14 @@ def result(request):
         four = SectionFour.objects.get(user_id=user.id)
         five = SectionFive.objects.get(user_id=user.id)
 
-        # condition for checking Non-Medical stream
-        if (first.nineth_marks == 'Between_80%_90%' or first.nineth_marks == 'Between_70%_80%' or first.nineth_marks == 'More_than_90%') and \
-           (first.nineth_marks_math == 'Between_80%_90%' or first.nineth_marks_math == 'Between_70%_80%' or first.nineth_marks_math == 'More_than_90%') and \
-           (first.nineth_marks_science ==  'Between_70%_80%' or first.nineth_marks_science == 'Between_80%_90%' or first.nineth_marks_science == 'More_than_90%') and \
-           (first.tenth_marks == 'Between_80%_90%' or first.tenth_marks == 'Between_70%_80%'or first.tenth_marks == 'More_than_90%' or first.tenth_marks == 'awaited') and \
-           (first.tenth_marks_math == 'Between_80%_90%' or first.tenth_marks_math == 'awaited' or first.tenth_marks_math == 'More_than_90%') and \
-           (first.tenth_marks_science ==  'Between_70%_80%' or first.tenth_marks_science == 'More_than_90%' or first.tenth_marks_science == 'awaited' or first.tenth_marks_science == 'Between_80%_90%') and \
-           first.most_perfered_sub == 'math' and \
-           second.games_time == '1hr' and \
-           second.screen_time == '1hr' and \
-           second.attempts == 'na'  and \
-           (second.study_time_spent == '4hr' or second.study_time_spent == 'more') and \
-           second.edu_gap == 'no' and \
-           (third.math == 'yes' or third.physics == 'yes' or third.chemistry == 'yes' or third.physics == 'maybe' or third.chemistry == 'maybe') and \
-           (five.annual_income == 'Less_than_10' or five.annual_income == 'More_than_10'):
-            resultmodel = TestResult()
-            resultmodel.user_id = user.id
-            resultmodel.result = "Non-Medical"
-            resultmodel.save()
-            return render(request, 'result_non_medical.html', {'user_detail': userdetail,
-                                                             'first': first,
-                                                             'second': second,
-                                                             'third': third,
-                                                             'four':four,
-                                                             'five':five
-                                                             })
-
-        # condition for checking Medical stream
-        elif (first.nineth_marks == 'Between_80%_90%' or first.nineth_marks == 'Between_70%_80%' or first.nineth_marks == 'More_than_90%') and\
-            (first.nineth_marks_math == 'Between_80%_90%' or first.nineth_marks_math == 'More_than_90%' or first.nineth_marks_math == 'Between_70%_80%') and\
-            (first.nineth_marks_science == 'Between_80%_90%' or first.nineth_marks_science == 'Between_70%_80%' or first.nineth_marks_science == 'More_than_90%') and \
-            (first.tenth_marks == 'Between_80%_90%' or first.tenth_marks == 'Between_70%_80%' or first.tenth_marks == 'More_than_90%' or first.tenth_marks == 'awaited') and\
-            (first.tenth_marks_math == 'Between_80%_90%' or first.tenth_marks_math == 'awaited' or first.tenth_marks_math == 'More_than_90%' or first.tenth_marks_math == 'Between_70%_80%') and \
-            (first.tenth_marks_science == 'More_than_90%'or first.tenth_marks_science == 'Between_70%_80%' or first.tenth_marks_science == 'awaited' or first.tenth_marks_science == 'Between_80%_90%') and \
-            first.most_perfered_sub == 'science' and \
-            (second.games_time == '1hr' or second.games_time == '2hr') and \
-            (second.screen_time == '1hr' or second.screen_time == '2hr') and \
-            second.attempts == 'na' and \
-            (second.study_time_spent == '4hr' or second.study_time_spent == 'more') and \
-            second.edu_gap == 'no' and \
-            (third.biology == 'yes' or third.physics == 'yes' or third.chemistry == 'yes' or third.biology == 'maybe' or third.physics == 'maybe' or third.chemistry == 'maybe') and \
-            (five.annual_income == 'Less_than_10' or five.annual_income == 'More_than_10'):
-            resultmodel = TestResult()
-            resultmodel.user_id = user.id
-            resultmodel.result = "Medical"
-            resultmodel.save()
-            return render(request, 'result_medical.html', {'user_detail': userdetail})
-
-        # condition for checking Non-Medical and Medical stream
-        elif (first.nineth_marks == 'More_than_90%' or first.nineth_marks == 'Between_80%_90%')  and \
-            (first.nineth_marks_math == 'More_than_90%' or first.nineth_marks_math == 'Between_80%_90%') and \
-            (first.nineth_marks_science == 'More_than_90%' or first.nineth_marks_science == 'Between_80%_90%')and \
-            (first.tenth_marks == 'More_than_90%' or first.tenth_marks == 'Between_80%_90%') and \
-            (first.tenth_marks_math == 'More_than_90%' or first.tenth_marks_math == 'Between_80%_90%') and \
-            (first.tenth_marks_science == 'More_than_90%' or first.tenth_marks_science == 'Between_80%_90%') and \
-            (first.most_perfered_sub == 'math' or first.most_perfered_sub == 'science') and \
-            second.study_time_spent == 'more' and \
-            second.games_time == '1hr' and \
-            second.screen_time == '1hr' and \
-            second.attempts == 'na' and \
-            second.edu_gap == 'no' and \
-            (third.math == 'yes' or third.math =='maybe' )and \
-            (third.biology == 'yes' or third.biology== 'maybe') and \
-            (five.annual_income == 'More_than_10' or five.annual_income == 'Less_than_10'):
-            resultmodel = TestResult()
-            resultmodel.user_id = user.id
-            resultmodel.result = "Both"
-            resultmodel.save()
-            return render(request, 'result_both.html', {'user_detail': userdetail})
-
-        # condition for checking Arts stream
-        elif (first.nineth_marks == 'Between_60%_70%' or first.nineth_marks == 'Less_than_60%') and \
-            (first.tenth_marks == 'Between_60%_70%' or first.tenth_marks == 'Less_than_60%' or first.tenth_marks == 'awaited') and\
-            first.most_perfered_sub == 'social_science' and \
-            (second.study_time_spent == '2hr' or second.study_time_spent == '3hr') and\
-            (second.games_time == '3hr' or second.games_time == '1hr' or second.games_time == 'more') and \
-            (second.screen_time == '3hr' or second.screen_time == '2hr') and \
-            (second.attempts == 'na' or second.attempts == '1') and \
-            (third.language == "no" or third.language == "yes" or third.language == "maybe" or third.history == 'yes' or four.political_science == 'yes' or third.geography == 'yes' or third.history == 'maybe' or four.political_science == 'maybe' or third.geography == 'maybe'):
-            resultmodel = TestResult()
-            resultmodel.user_id = user.id
-            resultmodel.result = "Arts"
-            resultmodel.save()
-            return render(request, 'result_arts.html', {'user_detail': userdetail})
-
-        # condition for checking Commerce stream
-        elif (first.nineth_marks == 'Between_60%_70%'or first.nineth_marks == 'Between_70%_80%' or first.nineth_marks == 'Less_than_60%') and \
-             (first.nineth_marks_math == 'Between_60%_70%' or first.nineth_marks_math == 'Between_70%_80%' or first.nineth_marks_math == 'Less_than_60%') and \
-             (first.tenth_marks == 'Between_60%_70%' or first.tenth_marks == 'Between_70%_80%' or first.tenth_marks == 'Less_than_60%' or first.tenth_marks == 'awaited') and \
-             (second.study_time_spent == '3hr' or second.study_time_spent == '4hr' or second.study_time_spent == '2hr') and \
-             (second.games_time == '3hr' or second.games_time == '4hr') and \
-             (second.screen_time == '2hr' or second.screen_time == '3hr' or second.screen_time == '4hr') and \
-             (third.commerce == 'yes' or third.commerce == 'maybe' or third.accounts == 'yes' or third.accounts == 'maybe' or third.statistics == 'maybe' or third.statistics == 'yes'):
-             resultmodel = TestResult()
-             resultmodel.user_id = user.id
-             resultmodel.result = "Commerce"
-             resultmodel.save()
-             return render(request, 'result_commerce.html', {'user_detail': userdetail,
-                                                             'first': first,
-                                                             'second': second,
-                                                             'third': third,
-                                                             'four':four,
-                                                             'five':five
-                                                             })
-
-        # condition for checking Vocational Courses
-        elif (first.nineth_marks == 'Less_than_60%') and \
-            (first.nineth_marks_math == 'Less_than_60%') and \
-            (first.tenth_marks == 'Less_than_60%' or first.tenth_marks == 'awaited') and\
-            first.most_perfered_sub == 'math' and \
-            (second.study_time_spent == '3hr' or second.study_time_spent == '2hr') and \
-            (second.games_time == '3hr' or second.games_time == '2hr') and \
-            (second.screen_time == '2hr' or second.screen_time == '3hr') and \
-            (four.typewriting == 'yes' or four.typewriting == 'maybe') and \
-            (third.math == 'yes' or four.computer == 'yes') and \
-            (four.stenography == 'yes' or four.stenography == 'maybe') and \
-            (four.beautician == 'yes' or four.beautician == 'maybe') and \
-            (four.library_asst =='yes' or four.library_asst =='maybe') and \
-            (four.secretarial_roles == 'yes' or four.secretarial_roles == 'maybe'):
-            resultmodel = TestResult()
-            resultmodel.user_id = user.id
-            resultmodel.result = "Vocational Courses"
-            resultmodel.save()
-            return render(request, 'result_vocational.html', {'user_detail': userdetail})
-
-        # condition for checking Diploma stream
-        elif (first.nineth_marks == 'Between_70%_60%' or first.nineth_marks == 'Less_than_60%') and \
-            (first.tenth_marks == 'Between_70%_60%' or first.tenth_marks == 'Less_than_60%' or first.tenth_marks == 'awaited') and \
-            (first.most_perfered_sub == 'math' or first.most_perfered_sub == 'science') and \
-            (second.attempts == 'na' or second.attempts == '1') and \
-            (second.study_time_spent == '3hr' or second.study_time_spent == '2hr') and \
-            (second.games_time == '3hr' or second.games_time == '2hr') and \
-            (second.screen_time == '3hr' or second.screen_time == '2hr') and \
-            (third.math == 'yes' or third.physics == 'yes' or third.chemistry == 'yes' or third.biology == 'yes' or four.computer == 'yes') and \
-            five.annual_income == 'Less_than_5':
-            resultmodel = TestResult()
-            resultmodel.user_id = user.id
-            resultmodel.result = "Diploma"
-            resultmodel.save()
-            return render(request, 'result_diploma.html', {'user_detail': userdetail})
-
-        elif (first.nineth_marks == 'Less_than_60%') and \
-            (first.tenth_marks == 'Less_than_60%' or first.tenth_marks == 'awaited') and \
-            (second.attempts == 'more' or second.attempts == '2') and \
-            second.study_time_spent == '1hr' and \
-            (second.games_time == 'more' or second.screen_time == 'more') and \
-            five.annual_income == 'Less_than_2':
-            resultmodel = TestResult()
-            resultmodel.user_id = user.id
-            resultmodel.result = "Open Schooling"
-            resultmodel.save()
-            return render(request, 'result_open.html', {'user_detail': userdetail})
-        else:
-            return render(request, 'no_result.html', {'user_detail': userdetail})
-    return render(request, 'home.html')
+        context = {'user_detail': userdetail,
+                     'first': first,
+                     'second': second,
+                     'third': third,
+                     'four':four,
+                     'five':five
+                     }
+        return render(request, 'result.html', context )
 
 
 @csrf_exempt
@@ -389,7 +242,7 @@ def section_first(request):
                     sci_tenth_marks = request.POST['sci_tenth_marks']
                     math_olympiad = request.POST['math_olympiad']
                     sci_olympiad = request.POST['sci_olympiad']
-                    sci_workshop = request.POST['sci_workshop']
+                    sci_workshop = request.POST['workshop']
                     most_preferred_sub = request.POST['most_preferred_sub']
                     least_preferred_sub = request.POST['least_preferred_sub']
 
