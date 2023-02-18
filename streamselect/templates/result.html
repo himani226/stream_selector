@@ -6,107 +6,11 @@
 {% if third %}
 {% if four %}
 {% if five %}
+{% if total %}
 
-{% with num=10 num1=8 num2=5.6 num3=5 num4=4 num5=3.5 num6=3 num7=2.4 num8=1.5 num11=0 %}
-
-{% if first.most_preferred_sub == "math" || first.most_preferred_sub == "science" || first.most_preferred_sub == "social_science" ||
-    first.most_preferred_sub == "hindi" || first.most_preferred_sub == "english" || first.most_preferred_stream == "Non-Medical" ||
-    first.most_preferred_stream == "Medical" || first.most_preferred_stream == "Commerce" || first.most_preferred_stream == "Arts" ||
-    first.most_preferred_stream == "Diploma/Vocational_Courses" || first.most_preferred_stream == "Diploma/Vocational_Courses" ||
-    first.most_preferred_stream == "Open_Schooling" || five.mother_preferred_stream == "Non-Medical" ||
-    five.mother_preferred_stream == "Medical" || five.mother_preferred_stream == "Commerce" || five.mother_preferred_stream == "Arts" ||
-    five.mother_preferred_stream == "Diploma/Vocational_Courses" || five.mother_preferred_stream == "Diploma/Vocational_Courses" ||
-    five.mother_preferred_stream == "Open_Schooling" || five.father_preferred_stream == "Non-Medical" ||
-    five.father_preferred_stream == "Medical" || five.father_preferred_stream == "Commerce" || five.father_preferred_stream == "Arts" ||
-    five.father_preferred_stream == "Diploma/Vocational_Courses" || five.father_preferred_stream == "Diploma/Vocational_Courses" ||
-    five.father_preferred_stream == "Open_Schooling" || five.annual_income == "More_than_10" || third.math == "yes" || third.physics == "yes" ||
-    third.chemistry == "yes" || third.biology == "yes" || third.history == "yes" || third.geography == "yes" || third.business == "yes" ||
-    third.accounts == "yes" || third.statistics == "yes" || four.political_science == "yes" || four.computer == "yes"
-%}
-
-    {{num}}
-
-{% if first.nineth_marks == "Between_80%_90%" || first.nineth_marks == "More_than_90%" ||
-    first.tenth_marks == "Between_80%_90%" || first.tenth_marks == "More_than_90%" ||
-    first.tenth_marks_math == "Between_80%_90%" || first.tenth_marks_math == "More_than_90%" ||
-    first.tenth_marks_science == "Between_80%_90%" || first.tenth_marks_science = "More_than_90%" ||
-    first.nineth_marks_math == "Between_80%_90%" || first.nineth_marks_math == "More_than_90%" ||
-    first.nineth_marks_science == "Between_80%_90%" || first.nineth_marks_science = "More_than_90%" ||
-    second.attendance == "More_than_90%" || five.annual_income == "Less_than_10"
-%}
-
-    {{num1}}
-
-{% if first.nineth_marks == "Between_70%_80%" || first.tenth_marks == "Between_70%_80%" ||
-    first.tenth_marks_math == "Between_70%_80%" || first.tenth_marks_science == "Between_70%_80%" ||
-    first.nineth_marks_math = "Between_70%_80%" || first.nineth_marks_science == "Between_70%_80%" ||
-    second.attendance = "Between_70%_90%"
-%}
-    {{num2}}
-
-
-{% if second.study_method == "both" || second.study_environment == "alone" || second.study_time_spent == "more"||
-    second.games_time == "1hr" || second.screen_time = "1hr" || five.annual_income == "Less_than_5" || third.math == "maybe" ||
-    third.physics == "maybe" || third.chemistry == "maybe" || third.biology == "maybe" || third.history == "maybe" ||
-    third.geography == "maybe" || third.business == "maybe" || third.accounts == "maybe" || third.statistics == "maybe" ||
-    four.political_science == "maybe" || four.computer == "maybe"
-%}
-    {{num3}}
-
-{% if first.nineth_marks == "Between_60%_70%" || first.tenth_marks == "Between_60%_70%" ||
-    first.tenth_marks_math == "Between_60%_70%" || first.tenth_marks_science == "Between_60%_70%" ||
-    first.nineth_marks_math = "Between_60%_70%" || first.nineth_marks_science == "Between_60%_70%" ||
-    second.attendance = "Between_60%_70%"
-%}
-    {{num4}}
-
-{% if second.study_method == "writing" || second.study_environment == "group" || second.study_environment == "family" ||
-    second.study_environment == "any"|| second.study_time_spent == "4hr"|| second.games_time == "3hr" ||
-    second.screen_time = "2hr"
-%}
-    {{num5}}
-
-{% if first.math_olympiad == "yes" || first.sci_olympiad == "yes" || first.workshop == "yes" ||
-    second.study_method == "reading" || second.attempts == "1" || second.scholarship == "yes" || second.edu_gap == "no" ||
-    five.curricular == "sports" || five.curricular == "singing" || five.curricular == "media" ||
-    five.curricular == "creative" || five.annual_income == "Less_than_2.5"
-%}
-    {{num6}}
-
-{% if first.nineth_marks == "Less_than_60%" || first.tenth_marks == "Less_than_60%" ||
-    first.tenth_marks_math == "Less_than_60%" || first.tenth_marks_science == "Less_than_60%" ||
-    first.nineth_marks_math = "Less_than_60%" || first.nineth_marks_science == "Less_than_60%" ||
-    second.study_time_spent == "3hr"|| second.games_time == "4hr" || second.screen_time = "3hr" ||
-    second.attendance = "Less_than_60%"
-%}
-    {{num7}}
-
-{% if second.study_time_spent == "1hr"|| second.games_time == "more" || second.screen_time = "more" || second.attempts == "2" %}
-    {{num8}}
-
-##### need changes
-{% third.math == "no" || third.physics == "no" || third.chemistry == "no" || third.biology == "no" ||
-    third.history == "no" || third.geography == "no" || third.business == "no" || third.accounts == "no" ||
-    third.statistics == "no" || four.political_science == "no" || four.computer == "no"
-%}
-    {{num11}}
-
-
-
-
-{% with total %}
-    total = {{ num|add:num1|add:num2|add:num3}}
-    {{total}}
-{% endwith %}
-
-
-
-
-
-
+<p>{{total}}</p>
 
 {% endif %}
-{% endwith %}
 {% endif %}
 {% endif %}
 {% endif %}

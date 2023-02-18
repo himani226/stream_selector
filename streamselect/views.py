@@ -30,12 +30,24 @@ from .models import UserBasicInfo, PaymentCheck, SectionFirst, SectionSecond, Se
 from django.utils.datastructures import MultiValueDictKeyError
 
 # from django_xhtml2pdf.utils import pdf_decorator
-SpecialSym =['$', '@', '#', '%']
+from .utility.constant import MOST_PREFERRED_SUBJECTS, MOST_PREFERRED_STREAMS, ANNUAL_INCOME, PREFERENCES, MARKS,\
+    STUDY_METHOD,STUDY_ENVIRONMENT,ATTEMPTS,CURRICULAR,TIMES
 
+SpecialSym =['$', '@', '#', '%']
 
 @csrf_exempt
 @login_required(login_url='login/')
 def result(request):
+    marks1 = 10
+    marks2 = 8
+    marks3 = 5.6
+    marks4 = 5
+    marks5 = 4
+    marks6 = 3.5
+    marks7 = 3
+    marks8 = 2.4
+    marks9 = 1.5
+    marks10 = 0
     if request.user.is_authenticated:
         user = request.user
         userdetail = UserBasicInfo.objects.get(user_id=user.id)
@@ -45,14 +57,84 @@ def result(request):
         four = SectionFour.objects.get(user_id=user.id)
         five = SectionFive.objects.get(user_id=user.id)
 
-        context = {'user_detail': userdetail,
-                     'first': first,
-                     'second': second,
-                     'third': third,
-                     'four':four,
-                     'five':five
-                     }
-        return render(request, 'result.html', context )
+        if first.most_preferred_sub in MOST_PREFERRED_SUBJECTS and \
+            second.most_preferred_stream in MOST_PREFERRED_STREAMS and \
+            five.mother_preferred_stream in MOST_PREFERRED_STREAMS and \
+            five.father_preferred_stream in MOST_PREFERRED_STREAMS and \
+            five.annual_income in ANNUAL_INCOME and \
+            third.math or third.physics or third.chemistry or third.biology or \
+            third.history or third.geography or third.business or third.accounts or \
+            third.statistics or four.political_science or four.computer in PREFERENCES:
+            marks1
+
+        if first.nineth_marks in MARKS or first.tenth_marks in MARKS  or \
+            first.tenth_marks_math in MARKS or first.tenth_marks_science in MARKS or \
+            first.nineth_marks_math in MARKS or \
+            first.nineth_marks_science in MARKS or \
+            second.attendance in MARKS or five.annual_income in ANNUAL_INCOME:
+            marks2
+
+        if first.nineth_marks in MARKS or first.tenth_marks in MARKS or \
+            first.tenth_marks_math in MARKS or first.tenth_marks_science in MARKS or \
+            first.nineth_marks_math in MARKS or first.nineth_marks_science in MARKS or \
+            second.attendance in MARKS:
+            marks3
+
+        if second.study_method in STUDY_METHOD or second.study_environment in STUDY_ENVIRONMENT or \
+            second.study_time_spent in TIMES or second.games_time in TIMES or second.screen_time in TIMES or\
+            five.annual_income in ANNUAL_INCOME or third.math in PREFERENCES or \
+            third.physics in PREFERENCES or third.chemistry in PREFERENCES or third.biology in PREFERENCES or\
+            third.history in PREFERENCES or third.geography in PREFERENCES or third.business in PREFERENCES or \
+            third.accounts in PREFERENCES or third.statistics in PREFERENCES or \
+            four.political_science in PREFERENCES or four.computer in PREFERENCES:
+            marks4
+
+        if first.nineth_marks in MARKS or first.tenth_marks in MARKS or \
+            first.tenth_marks_math in MARKS or first.tenth_marks_science in MARKS or \
+            first.nineth_marks_math in MARKS or first.nineth_marks_science in MARKS or \
+            second.attendance in MARKS:
+            marks5
+
+        if second.study_method in STUDY_METHOD or second.study_environment in STUDY_ENVIRONMENT or\
+            second.study_time_spent in TIMES or second.games_time in TIMES or \
+            second.screen_time in TIMES:
+            marks6
+
+        if first.math_olampaid in PREFERENCES or first.sci_olampaid in PREFERENCES or first.workshop in PREFERENCES or \
+            second.study_method in STUDY_METHOD or second.attempts in ATTEMPTS or second.scholarship in PREFERENCES or \
+            second.edu_gap in PREFERENCES or five.curricular in CURRICULAR or five.annual_income in ANNUAL_INCOME:
+            marks7
+
+        if first.nineth_marks in MARKS or first.tenth_marks in MARKS or \
+            first.tenth_marks_math in MARKS or first.tenth_marks_science in MARKS or \
+            first.nineth_marks_math in MARKS or first.nineth_marks_science in MARKS or \
+            second.study_time_spent in TIMES or second.games_time in TIMES or second.screen_time in TIMES or \
+            second.attendance in MARKS:
+            marks8
+
+        if second.study_time_spent in TIMES or second.games_time in TIMES or second.screen_time in TIMES or \
+            second.attempts in ATTEMPTS:
+            marks9
+
+        if first.math_olampaid in PREFERENCES or first.sci_olampaid in PREFERENCES or first.workshop in PREFERENCES or \
+            second.scholarship in PREFERENCES or second.edu_gap in PREFERENCES or third.math in PREFERENCES or \
+            third.physics in PREFERENCES or third.chemistry in PREFERENCES or third.biology in PREFERENCES or \
+            third.history in PREFERENCES or third.geography in PREFERENCES or \
+            third.business in PREFERENCES or third.accounts in PREFERENCES or third.statistics in PREFERENCES or \
+            four.political_science in PREFERENCES or four.computer in PREFERENCES or five.curricular in PREFERENCES:
+            marks10
+
+            total = ((marks1 + marks2 + marks3 + marks4 + marks5 + marks6 + marks7 + marks8 + marks9 + marks10)/10)
+            print(total)
+            context = {'user_detail': userdetail,
+                         'first': first,
+                         'second': second,
+                         'third': third,
+                         'four':four,
+                         'five':five,
+                        'total' : total
+                         }
+            return render(request, 'result.html', context )
 
 
 @csrf_exempt
@@ -304,11 +386,9 @@ def section_second(request):
                     attendance = request.POST['attendance']
                     scholarship = request.POST['scholarship']
                     edu_gap = request.POST['edu_gap']
+                    most_preferred_stream = request.POST['most_preferred_stream']
+                    least_preferred_stream = request.POST['least_preferred_stream']
 
-                    if study_method == "" and study_environment == "" and study_time_spent == "" and games_time == "" and screen_time == "" and \
-                            role_model == "" and attempts == "" and attendance == "" and edu_gap == "" and scholarship == "":
-                        messages.error(request, "Kindly fill the fields")
-                        return redirect("section_second")
                     if request.user.is_authenticated:
                         secondmodel = SectionSecond()
                         secondmodel.study_method = study_method
@@ -321,6 +401,8 @@ def section_second(request):
                         secondmodel.attendance = attendance
                         secondmodel.scholarship = scholarship
                         secondmodel.edu_gap = edu_gap
+                        secondmodel.least_preferred_stream = least_preferred_stream
+                        secondmodel.most_preferred_stream = most_preferred_stream
                         secondmodel.user_id = user.id
                         secondmodel.save()
 
@@ -357,7 +439,7 @@ def section_three(request):
                     biology = request.POST['biology']
                     history = request.POST['history']
                     geography = request.POST['geography']
-                    commerce = request.POST['commerce']
+                    commerce = request.POST['business']
                     accounts = request.POST['accounts']
                     statistics = request.POST['statistics']
                     language = request.POST['language']
@@ -473,12 +555,10 @@ def section_five(request):
                     father_job = request.POST['father_job']
                     mother_job = request.POST['mother_job']
                     sibling_job = request.POST['sibling_job']
+                    mother_preferred_stream = request.POST['mother_preferred_stream']
+                    father_preferred_stream = request.POST['father_preferred_stream']
                     annual_income = request.POST['annual_income']
 
-                    if curricular == "" and performance_level == "" and father_qual == "" and mother_qual == "" and \
-                            sibling_qual == "" and father_job == "" and mother_job == "" and sibling_job == "" and annual_income == "":
-                        messages.error(request, "Kindly fill the fields")
-                        return redirect("section_five")
                     if request.user.is_authenticated:
                         fifthmodel = SectionFive()
                         fifthmodel.curricular = curricular
@@ -489,6 +569,8 @@ def section_five(request):
                         fifthmodel.father_job = father_job
                         fifthmodel.mother_job = mother_job
                         fifthmodel.sibling_job = sibling_job
+                        fifthmodel.father_preferred_stream = father_preferred_stream
+                        fifthmodel.mother_preferred_stream = mother_preferred_stream
                         fifthmodel.annual_income = annual_income
                         fifthmodel.user_id = user.id
                         fifthmodel.save()

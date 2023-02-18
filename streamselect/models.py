@@ -90,6 +90,8 @@ class SectionSecond(models.Model):
     attendance = models.CharField(max_length=100)
     scholarship = models.CharField(max_length=100)
     edu_gap = models.CharField(max_length=100)
+    most_preferred_stream = models.CharField(max_length=100)
+    least_preferred_stream = models.CharField(max_length=100)
 
 
 
@@ -131,6 +133,8 @@ class SectionFive(models.Model):
     father_job = models.CharField(max_length=100)
     mother_job = models.CharField(max_length=100)
     sibling_job = models.CharField(max_length=100)
+    mother_preferred_stream = models.CharField(max_length=100)
+    father_preferred_stream = models.CharField(max_length=100)
     annual_income = models.CharField(max_length=100)
 
 

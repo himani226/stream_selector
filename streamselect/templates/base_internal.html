@@ -444,4 +444,14 @@
         </script>
     <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
     <script src="{% static 'js/cities.js' %}"></script>
+    <script>
+        $(document).ready(function(){
+            $('input[type="radio"]').click(function(){
+                var inputValue = $(this).attr("value");
+                var targetBox = $("." + inputValue);
+                $(".box").not(targetBox).show();
+                $(targetBox).hide();
+            });
+        });
+</script>
 </html>

@@ -1,0 +1,11 @@
+
+MOST_PREFERRED_SUBJECTS = ("math","science","social_science","hindi","english")
+MOST_PREFERRED_STREAMS = ("Non-Medical","Medical","Commerce","Arts","Diploma/Vocational_Courses")
+ANNUAL_INCOME = ("Less_than_2","Less_than_5","Less_than_10","More_than_10")
+PREFERENCES = ("yes","no","maybe")
+MARKS = ("More_than_90%","Between_80%_90%","Between_70%_80%","Between_60%_70%","Less_than_60%","More_than_70%_90%")
+STUDY_METHOD = ("reading","writing","both")
+STUDY_ENVIRONMENT = ("alone","group","family","any")
+TIMES = ("1hr","2hr_3hr","4hr","more")
+ATTEMPTS = ("1","2","more")
+CURRICULAR = ("sports","singing","media","creative")
