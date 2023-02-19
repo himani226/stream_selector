@@ -30,24 +30,17 @@ from .models import UserBasicInfo, PaymentCheck, SectionFirst, SectionSecond, Se
 from django.utils.datastructures import MultiValueDictKeyError
 
 # from django_xhtml2pdf.utils import pdf_decorator
-from .utility.constant import MOST_PREFERRED_SUBJECTS, MOST_PREFERRED_STREAMS, ANNUAL_INCOME, PREFERENCES, MARKS,\
-    STUDY_METHOD,STUDY_ENVIRONMENT,ATTEMPTS,CURRICULAR,TIMES
+from .utility.answer import Q1, Q7_9, Q28, Q13, Q16, Q15, Q19, Q22, Q27
+from .utility.constant import MOST_PREFERRED_SUBJECTS, MOST_PREFERRED_STREAMS, ANNUAL_INCOME, PREFERENCES, MARKS, \
+    STUDY_METHOD, STUDY_ENVIRONMENT, ATTEMPTS, CURRICULAR, TIMES
 
-SpecialSym =['$', '@', '#', '%']
+SpecialSym = ['$', '@', '#', '%']
+
 
 @csrf_exempt
 @login_required(login_url='login/')
 def result(request):
-    marks1 = 10
-    marks2 = 8
-    marks3 = 5.6
-    marks4 = 5
-    marks5 = 4
-    marks6 = 3.5
-    marks7 = 3
-    marks8 = 2.4
-    marks9 = 1.5
-    marks10 = 0
+    total = 40
     if request.user.is_authenticated:
         user = request.user
         userdetail = UserBasicInfo.objects.get(user_id=user.id)
@@ -57,85 +50,55 @@ def result(request):
         four = SectionFour.objects.get(user_id=user.id)
         five = SectionFive.objects.get(user_id=user.id)
 
-        if first.most_preferred_sub in MOST_PREFERRED_SUBJECTS and \
-            second.most_preferred_stream in MOST_PREFERRED_STREAMS and \
-            five.mother_preferred_stream in MOST_PREFERRED_STREAMS and \
-            five.father_preferred_stream in MOST_PREFERRED_STREAMS and \
-            five.annual_income in ANNUAL_INCOME and \
-            third.math or third.physics or third.chemistry or third.biology or \
-            third.history or third.geography or third.business or third.accounts or \
-            third.statistics or four.political_science or four.computer in PREFERENCES:
-            marks1
+        total += Q1(first.nineth_marks) + Q1(first.nineth_marks_math) + Q1(first.nineth_marks_science) + Q1(
+            first.tenth_marks) + \
+                 Q1(first.tenth_marks_math) + Q1(first.tenth_marks_science)
+        total += Q7_9(first.math_olampaid) + Q7_9(first.sci_olampaid) + Q7_9(first.workshop) + Q7_9(
+            second.scholarship) + Q7_9(five.curricular)
+        total += Q28(third.math) + Q28(third.physics) + Q28(third.biology) + Q28(third.chemistry) + Q28(
+            third.commerce) + \
+                 Q28(third.history) + Q28(third.geography) + Q28(four.computers) + Q28(four.political_science) + Q28(
+            third.accounts) + \
+                 Q28(third.statistics) + Q22(second.edu_gap)
+        total += Q13(second.study_method) + Q13(second.study_environment) + Q16(second.games_time) + Q16(
+            second.screen_time) + Q15(second.study_time_spent)
+        total += Q19(second.attempts) + Q1(second.attendance) + Q27(five.annual_income)
 
-        if first.nineth_marks in MARKS or first.tenth_marks in MARKS  or \
-            first.tenth_marks_math in MARKS or first.tenth_marks_science in MARKS or \
-            first.nineth_marks_math in MARKS or \
-            first.nineth_marks_science in MARKS or \
-            second.attendance in MARKS or five.annual_income in ANNUAL_INCOME:
-            marks2
-
-        if first.nineth_marks in MARKS or first.tenth_marks in MARKS or \
-            first.tenth_marks_math in MARKS or first.tenth_marks_science in MARKS or \
-            first.nineth_marks_math in MARKS or first.nineth_marks_science in MARKS or \
-            second.attendance in MARKS:
-            marks3
-
-        if second.study_method in STUDY_METHOD or second.study_environment in STUDY_ENVIRONMENT or \
-            second.study_time_spent in TIMES or second.games_time in TIMES or second.screen_time in TIMES or\
-            five.annual_income in ANNUAL_INCOME or third.math in PREFERENCES or \
-            third.physics in PREFERENCES or third.chemistry in PREFERENCES or third.biology in PREFERENCES or\
-            third.history in PREFERENCES or third.geography in PREFERENCES or third.business in PREFERENCES or \
-            third.accounts in PREFERENCES or third.statistics in PREFERENCES or \
-            four.political_science in PREFERENCES or four.computer in PREFERENCES:
-            marks4
-
-        if first.nineth_marks in MARKS or first.tenth_marks in MARKS or \
-            first.tenth_marks_math in MARKS or first.tenth_marks_science in MARKS or \
-            first.nineth_marks_math in MARKS or first.nineth_marks_science in MARKS or \
-            second.attendance in MARKS:
-            marks5
-
-        if second.study_method in STUDY_METHOD or second.study_environment in STUDY_ENVIRONMENT or\
-            second.study_time_spent in TIMES or second.games_time in TIMES or \
-            second.screen_time in TIMES:
-            marks6
-
-        if first.math_olampaid in PREFERENCES or first.sci_olampaid in PREFERENCES or first.workshop in PREFERENCES or \
-            second.study_method in STUDY_METHOD or second.attempts in ATTEMPTS or second.scholarship in PREFERENCES or \
-            second.edu_gap in PREFERENCES or five.curricular in CURRICULAR or five.annual_income in ANNUAL_INCOME:
-            marks7
-
-        if first.nineth_marks in MARKS or first.tenth_marks in MARKS or \
-            first.tenth_marks_math in MARKS or first.tenth_marks_science in MARKS or \
-            first.nineth_marks_math in MARKS or first.nineth_marks_science in MARKS or \
-            second.study_time_spent in TIMES or second.games_time in TIMES or second.screen_time in TIMES or \
-            second.attendance in MARKS:
-            marks8
-
-        if second.study_time_spent in TIMES or second.games_time in TIMES or second.screen_time in TIMES or \
-            second.attempts in ATTEMPTS:
-            marks9
-
-        if first.math_olampaid in PREFERENCES or first.sci_olampaid in PREFERENCES or first.workshop in PREFERENCES or \
-            second.scholarship in PREFERENCES or second.edu_gap in PREFERENCES or third.math in PREFERENCES or \
-            third.physics in PREFERENCES or third.chemistry in PREFERENCES or third.biology in PREFERENCES or \
-            third.history in PREFERENCES or third.geography in PREFERENCES or \
-            third.business in PREFERENCES or third.accounts in PREFERENCES or third.statistics in PREFERENCES or \
-            four.political_science in PREFERENCES or four.computer in PREFERENCES or five.curricular in PREFERENCES:
-            marks10
-
-            total = ((marks1 + marks2 + marks3 + marks4 + marks5 + marks6 + marks7 + marks8 + marks9 + marks10)/10)
-            print(total)
-            context = {'user_detail': userdetail,
-                         'first': first,
-                         'second': second,
-                         'third': third,
-                         'four':four,
-                         'five':five,
-                        'total' : total
-                         }
-            return render(request, 'result.html', context )
-
+        total /= 25.5
+        tt = round(total, 1)
+        print("#######################################")
+        print (tt)
+        print("#######################################")
+        if tt >= 8.0:
+            return render(request, 'result_both.html', {'user_detail' : userdetail})
+        elif 7.9 > tt >= 5.0:
+            if second.most_preferred_stream == "Non-Medical" and first.most_preferred_sub == "math" and third.math == "yes":
+                res = second.most_preferred_stream
+                #return render(request, 'result_non_medical.html', {'user_detail': userdetail})
+            elif second.most_preferred_stream == "Medical" and first.most_preferred_sub == "science" and third.biology == "yes":
+                res = second.most_preferred_stream
+                #return render(request, 'result_medical.html', {'user_detail': userdetail})
+            else:
+                res = second.most_preferred_stream
+                #return render(request, 'result_commerce.html', {'user_detail': userdetail})
+        elif 4.9 > tt >= 4.0:
+            res  = "Commerce"
+            #return render(request, 'result_commerce.html', {'user_detail': userdetail})
+        elif 4.0 > tt >= 3.5:
+            res = "Arts"
+            #return render(request, 'result_arts.html', {'user_detail': userdetail})
+        elif 3.5 > tt >= 2.5:
+            res = "Arts"
+            #return render(request, 'result_diploma.html', {'user_detail': userdetail})
+        else:
+            res = "Open Schooling"
+            #return render(request, 'result_open.html', {'user_detail': userdetail})
+        print("#######################################")
+        print(res)
+        print("#######################################")
+        return render(request, 'result.html', {'user_detail': userdetail,
+                                               'result' : res
+                                               })
 
 @csrf_exempt
 @login_required(login_url='login/')
@@ -152,6 +115,7 @@ def home(request):
 
 def index(request):
     return render(request, "index.html")
+
 
 @csrf_exempt
 def register(request):
@@ -189,7 +153,6 @@ def register(request):
             messages.error(request, "Password Must contain atleast one Special Character '$', '@', '#', '%'")
             return redirect('register')
 
-
         if username == "" and pass1 == "" and email == "" and fname == "" and lname == "":
             messages.error(request, "Kindly fill the fields")
             return redirect("register")
@@ -207,6 +170,7 @@ def register(request):
             return redirect('register')
     else:
         return render(request, 'register.html')
+
 
 @csrf_exempt
 def user_login(request):
@@ -253,7 +217,8 @@ def profile(request):
                 mobile = request.POST['number']
                 anumber = request.POST['anumber']
                 # photo = request.FILES['image']
-                if (name == "" and fathername == "" and mothername == "" and dob == "" and gender == "" and category == "" and \
+                if (
+                        name == "" and fathername == "" and mothername == "" and dob == "" and gender == "" and category == "" and \
                         school_type == "" and state == "" and city == "" and district == "" and pin == "" and area == "" and board == "" and school == "" and mobile == "" and anumber == ""):
                     messages.error(request, "Kindly fill the fields")
                     return redirect("profile")
@@ -304,7 +269,7 @@ def profile(request):
     else:
         user = request.user
         userdetail = UserBasicInfo.objects.get(user_id=user.id)
-        return render(request, 'profile.html', {'user_detail': userdetail} )
+        return render(request, 'profile.html', {'user_detail': userdetail})
 
 
 @csrf_exempt
@@ -367,6 +332,7 @@ def section_first(request):
 
     return render(request, 'section_first.html')
 
+
 @csrf_exempt
 @login_required(login_url='login/')
 def section_second(request):
@@ -423,6 +389,7 @@ def section_second(request):
         messages.error(request, f'You forgot to fill Student Information form. Kindly fill it first.')
         return redirect('profile')
     return render(request, 'section_second.html')
+
 
 @csrf_exempt
 @login_required(login_url='login/')
@@ -482,6 +449,7 @@ def section_three(request):
 
     return render(request, 'section_three.html')
 
+
 @csrf_exempt
 @login_required(login_url='login/')
 def section_four(request):
@@ -538,6 +506,7 @@ def section_four(request):
         return redirect('profile')
     return render(request, 'section_four.html')
 
+
 @csrf_exempt
 @login_required(login_url='login/')
 def section_five(request):
@@ -577,13 +546,15 @@ def section_five(request):
 
                         # check errors
                         # success message redirect to result page
-                        messages.success(request,f'You had given your test successfully. Now you can proceed with payment for result')
+                        messages.success(request,
+                                         f'You had given your test successfully. Now you can proceed with payment for result')
                         return redirect('result')
                     else:
                         messages.error(request, f'Some error in the form.')
                         return redirect('section_five')
                 except MultiValueDictKeyError:
-                    messages.success(request, f'You had given your test successfully. Now you can proceed with payment for result')
+                    messages.success(request,
+                                     f'You had given your test successfully. Now you can proceed with payment for result')
                     return redirect('result')
         else:
             messages.error(request, f'answer Already given the test. Kindly check result')
@@ -614,6 +585,7 @@ def section_nine(request):
 def section_ten(request):
     return render(request, 'section_ten.html')
 
+
 @csrf_exempt
 @login_required
 def password_change(request):
@@ -638,6 +610,7 @@ class ActivationTokenGenerator(PasswordResetTokenGenerator):
 
 
 account_activation_token = ActivationTokenGenerator()
+
 
 @csrf_exempt
 def password_reset(request):
@@ -675,6 +648,7 @@ def password_reset(request):
     form = PasswordResetForm()
     return render(request, "password_reset.html", context={"form": form})
 
+
 @csrf_exempt
 def password_reset_confirm(request, uidb64, token):
     User = get_user_model()
@@ -702,6 +676,7 @@ def password_reset_confirm(request, uidb64, token):
 
     messages.error(request, 'Something went wrong, redirecting back to Homepage')
     return redirect("home")
+
 
 @csrf_exempt
 @login_required
@@ -785,6 +760,7 @@ def payment_handler(request):
     else:
         # if other than POST request is made.
         return HttpResponseBadRequest()
+
 
 @csrf_exempt
 def error_404_view(request, exception):

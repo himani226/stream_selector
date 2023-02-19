@@ -1,19 +1,17 @@
 {% extends 'base_result.html' %}
 {% load static %}
 {% block content %}
-{% if first %}
-{% if second %}
-{% if third %}
-{% if four %}
-{% if five %}
-{% if total %}
-
-<p>{{total}}</p>
-
-{% endif %}
-{% endif %}
-{% endif %}
-{% endif %}
-{% endif %}
+{% if result %}
+<div class="row">
+    <div class = "col-md-12">
+        <div class="col-md-12">
+            <h4 class="text-danger">Student Review</h4>
+                 <p> As we can see you are interested in pursuing a career in {{result}}.</p>
+            <h4 class="text-danger">Which Stream to Choose?</h4>
+            <h5>{{ result }}</h5>
+        </div>
+    <!-- Area Chart -->
+    </div>
+</div>
 {% endif %}
 {% endblock %}
