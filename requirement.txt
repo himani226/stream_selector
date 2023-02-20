@@ -1,0 +1,10 @@
+pip install django
+
+pip install social-auth-app-django
+
+pip install django-crispy-forms
+
+pip install six
+
+pip install 
+

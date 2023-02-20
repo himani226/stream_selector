@@ -11,6 +11,36 @@
             <h5>{{ result }}</h5>
         </div>
     <!-- Area Chart -->
+        <div class="col-xl-8 col-lg-7">
+            <!-- Card Header - Dropdown -->
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Student Interest</h6>
+                </div>
+                <div class="card-body">
+                    <h4 class="small font-weight-bold">{{ result }}
+                        <span class="float-right">80%</span>
+                    </h4>
+                    <div class="progress mb-4">
+                        <div class="progress-bar bg-danger" role="progressbar" style="width: 80%"
+                            aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <h4 class="small font-weight-bold">{% if result == "Both Medical and Non-Medical" %}Science (Non-Medical)
+                        {% elif result == "Non-Medical" %} Medical
+                        {% elif result == "Medical" %} Non-Medical
+                        {% elif result == "Commerce" %} Non-Medical
+                        {% elif result == "Arts" %} Diploma/Vocational Courses
+                        {% else %} Diploma/Vocational Courses
+                        {% endif %}
+                        <span class="float-right">60%</span></h4>
+                    <div class="progress mb-4">
+                        <div class="progress-bar bg-warning" role="progressbar" style="width: 60%"
+                            aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    </br></br>
+                </div>
+            </div>
+    </div>
     </div>
 </div>
 {% endif %}

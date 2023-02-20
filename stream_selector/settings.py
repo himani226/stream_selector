@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'streamselect', #added
     'social_django', #added
     #'django-wkhtmltopdf', #added
+    'crispy_forms', #added
 ]
 
 MIDDLEWARE = [

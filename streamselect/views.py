@@ -66,21 +66,24 @@ def result(request):
 
         total /= 25.5
         tt = round(total, 1)
-        print("#######################################")
-        print (tt)
-        print("#######################################")
+        print("#################")
+        print(tt)
+        print("##############")
         if tt >= 8.0:
-            return render(request, 'result_both.html', {'user_detail' : userdetail})
-        elif 7.9 > tt >= 5.0:
-            if second.most_preferred_stream == "Non-Medical" and first.most_preferred_sub == "math" and third.math == "yes":
-                res = second.most_preferred_stream
-                #return render(request, 'result_non_medical.html', {'user_detail': userdetail})
-            elif second.most_preferred_stream == "Medical" and first.most_preferred_sub == "science" and third.biology == "yes":
-                res = second.most_preferred_stream
-                #return render(request, 'result_medical.html', {'user_detail': userdetail})
+            if second.most_preferred_stream == "other":
+                res = "Both Medical and Non-Medical"
             else:
-                res = second.most_preferred_stream
-                #return render(request, 'result_commerce.html', {'user_detail': userdetail})
+                res = "Both Medical and Non-Medical"
+        elif 7.9 > tt >= 5.0:
+            if five.annual_income == "More_than_10" or five.annual_income == "Less_than_10":
+                if third.math == "yes":
+                    res = "Non-Medical"
+                elif third.biology == "yes":
+                    res = "Medical"
+                else:
+                    res= "Commerce"
+            else:
+                res= "Commerce"
         elif 4.9 > tt >= 4.0:
             res  = "Commerce"
             #return render(request, 'result_commerce.html', {'user_detail': userdetail})
@@ -88,17 +91,25 @@ def result(request):
             res = "Arts"
             #return render(request, 'result_arts.html', {'user_detail': userdetail})
         elif 3.5 > tt >= 2.5:
-            res = "Arts"
+            res = "Diploma/Vocational Courses"
             #return render(request, 'result_diploma.html', {'user_detail': userdetail})
         else:
             res = "Open Schooling"
             #return render(request, 'result_open.html', {'user_detail': userdetail})
-        print("#######################################")
+        print("###########")
         print(res)
-        print("#######################################")
-        return render(request, 'result.html', {'user_detail': userdetail,
-                                               'result' : res
-                                               })
+        print("###########")
+    return render(request, 'result.html', {'user_detail': userdetail,
+                                                'result' : res,
+                                                })
+'''@login_required(login_url='login/')
+def save_result(request):
+    if request.user.is_authenticated:
+        user = request.user
+        userdetail = UserBasicInfo.objects.get(user_id=user.id)'''
+
+
+
 
 @csrf_exempt
 @login_required(login_url='login/')
