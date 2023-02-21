@@ -69,9 +69,9 @@ def result(request):
         print("#################")
         print(tt)
         print("##############")
-        if tt >= 8.0:
+        if tt >= 7.8:
             res = "Both Medical and Non-Medical"
-        elif 7.9 >= tt >= 6.5:
+        elif 7.7 >= tt >= 6.5:
             if five.annual_income == "More_than_10" or five.annual_income == "Less_than_10":
                 if third.math == "yes":
                     res = "Non-Medical"
