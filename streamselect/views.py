@@ -44,7 +44,7 @@ def result(request):
     if request.user.is_authenticated:
         user = request.user
         userdetail = UserBasicInfo.objects.get(user_id=user.id)
-        first = SectionFirst.objects.get(user_id=user.id)
+        first = SectionFirst.objects.filter(user_id=user.id).first()
         second = SectionSecond.objects.get(user_id=user.id)
         third = SectionThree.objects.get(user_id=user.id)
         four = SectionFour.objects.get(user_id=user.id)
@@ -70,11 +70,8 @@ def result(request):
         print(tt)
         print("##############")
         if tt >= 8.0:
-            if second.most_preferred_stream == "other":
-                res = "Both Medical and Non-Medical"
-            else:
-                res = "Both Medical and Non-Medical"
-        elif 7.9 > tt >= 5.0:
+            res = "Both Medical and Non-Medical"
+        elif 7.9 > tt >= 6.0:
             if five.annual_income == "More_than_10" or five.annual_income == "Less_than_10":
                 if third.math == "yes":
                     res = "Non-Medical"
@@ -84,13 +81,13 @@ def result(request):
                     res= "Commerce"
             else:
                 res= "Commerce"
-        elif 4.9 > tt >= 4.0:
+        elif 5.9 > tt >= 5.0:
             res  = "Commerce"
             #return render(request, 'result_commerce.html', {'user_detail': userdetail})
-        elif 4.0 > tt >= 3.5:
+        elif 4.9 > tt >= 4:
             res = "Arts"
             #return render(request, 'result_arts.html', {'user_detail': userdetail})
-        elif 3.5 > tt >= 2.5:
+        elif 3.9 > tt >= 3:
             res = "Diploma/Vocational Courses"
             #return render(request, 'result_diploma.html', {'user_detail': userdetail})
         else:
@@ -272,7 +269,7 @@ def profile(request):
                 # userimage.user_image_ext = photo.name.split('.')[-1]
                 # userimage.save()
                 messages.success(request, f'Your profile data has been added. Now you can take Stream Selection test')
-                return redirect('section_first')
+                return redirect('profile')
             else:
                 messages.error(request, f'Some errors in the form')
                 return redirect('profile')
@@ -334,9 +331,6 @@ def section_first(request):
                 except MultiValueDictKeyError:
                     messages.success(request, f'Already filled the previous section.')
                     return redirect('section_second')
-        else:
-            messages.error(request, f'Already filled the Section 1.  Kindly fill section 2')
-            return redirect('section_second')
     except UserBasicInfo.DoesNotExist:
         messages.error(request, f'You forgot to fill Student Information form. Kindly fill it first.')
         return redirect('profile')
