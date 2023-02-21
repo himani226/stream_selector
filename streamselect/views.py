@@ -71,7 +71,7 @@ def result(request):
         print("##############")
         if tt >= 8.0:
             res = "Both Medical and Non-Medical"
-        elif 7.9 > tt >= 6.0:
+        elif 7.9 >= tt >= 6.5:
             if five.annual_income == "More_than_10" or five.annual_income == "Less_than_10":
                 if third.math == "yes":
                     res = "Non-Medical"
@@ -81,13 +81,13 @@ def result(request):
                     res= "Commerce"
             else:
                 res= "Commerce"
-        elif 5.9 > tt >= 5.0:
+        elif 6.4 >= tt >= 5.5:
             res  = "Commerce"
             #return render(request, 'result_commerce.html', {'user_detail': userdetail})
-        elif 4.9 > tt >= 4:
+        elif 5.5 >= tt >= 4:
             res = "Arts"
             #return render(request, 'result_arts.html', {'user_detail': userdetail})
-        elif 3.9 > tt >= 3:
+        elif 3.9 >= tt >= 3:
             res = "Diploma/Vocational Courses"
             #return render(request, 'result_diploma.html', {'user_detail': userdetail})
         else:
@@ -269,7 +269,7 @@ def profile(request):
                 # userimage.user_image_ext = photo.name.split('.')[-1]
                 # userimage.save()
                 messages.success(request, f'Your profile data has been added. Now you can take Stream Selection test')
-                return redirect('profile')
+                return redirect('disclaimer_stream')
             else:
                 messages.error(request, f'Some errors in the form')
                 return redirect('profile')
@@ -278,6 +278,16 @@ def profile(request):
         user = request.user
         userdetail = UserBasicInfo.objects.get(user_id=user.id)
         return render(request, 'profile.html', {'user_detail': userdetail})
+
+
+@login_required(login_url='login/')
+def disclaimer_stream(request):
+    return render(request, 'disclaimer_stream.html')
+
+
+@login_required(login_url='login/')
+def disclaimer_career(request):
+    return render(request, 'disclaimer_career.html')
 
 
 @csrf_exempt

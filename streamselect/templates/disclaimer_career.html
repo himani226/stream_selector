@@ -1,0 +1,54 @@
+{% extends 'base_internal.html' %}
+{% load static %}
+{% block title %}Disclaimer{% endblock %}
+{% block content %}
+{% if user.is_authenticated %}
+    <div class="container-fluid">
+        <!-- Page Heading -->
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Career Selection Test</h1>
+        </div>
+        <!-- Content Row -->
+        <hr><br>
+        <div class="row">
+            <!-- profile -->
+            <div class="col-md-12 mb-4">
+                <div class="container rounded bg-white mt-3 mb-3">
+                <div class="row">
+                <form>
+                <div class="col-md-12 ">
+                <div class="p-3 py-5">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="text-danger" >The Hand Holding and Complete Career Guidance program for +2 pass students involves several key steps:</h4>
+                </div>
+                    <hr>
+                <div class="mt-3 text-lg"> <p class="text-primary">1. Stream selection and state quota eligibility criteria:</p>
+                    <p>Students will be informed about the different stream options available and the eligibility criteria for admission into professional colleges in
+                        various states, including the number of seats available and the benefits of studying in a particular state.</p>
+                </div>
+                <div class="mt-3 text-lg"> <p class="text-primary">2. Study pattern and competitive exam preparation:</p>
+                    <p>During the two years leading up to the final +2 examination, students will receive tips on how to study effectively,
+                        how to prepare for competitive exams, and which exams they are eligible to take.</p>
+                </div>
+                <div class="mt-3 text-lg"> <p class="text-primary">3. Career options after +2:</p>
+                    <p>After the final exams and competitive exams, students will be informed about other career options available to them.</p>
+                </div>
+				<div class="mt-3 text-lg"> <p class="text-primary">4. Online PTM: </p>
+                    <p>The program will include online parent-teacher meetings every six months to provide updates on the student's progress and offer any additional support
+                        or guidance as needed.</p>
+                </div>
+				<div class="mt-3 text-lg"> <p>This program aims to provide comprehensive support and guidance to students as they navigate the challenging and often
+                    confusing transition from high school to higher education and beyond.</p>
+                </div>
+
+				<div class="mt-5 "><button class="btn btn-primary profile-button" type="button">Next Section</button> </div>
+
+            </div>
+        </div>
+       </form>
+    </div>
+</div>
+</div>
+</div>
+{% endif %}
+{% endblock %}
