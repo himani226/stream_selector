@@ -71,7 +71,7 @@ def result(request):
         print("##############")
         if tt >= 7.8:
             res = "Both Medical and Non-Medical"
-        elif 7.7 >= tt >= 6.5:
+        elif 7.7 >= tt >= 6.3:
             if five.annual_income == "More_than_10" or five.annual_income == "Less_than_10":
                 if third.math == "yes":
                     res = "Non-Medical"
@@ -81,7 +81,7 @@ def result(request):
                     res= "Commerce"
             else:
                 res= "Commerce"
-        elif 6.4 >= tt >= 5.5:
+        elif 6.2 >= tt >= 5.5:
             res  = "Commerce"
             #return render(request, 'result_commerce.html', {'user_detail': userdetail})
         elif 5.5 >= tt >= 4:
@@ -96,6 +96,14 @@ def result(request):
         print("###########")
         print(res)
         print("###########")
+        if not (TestResult.objects.filter(user_id=user.id).exists()):
+            resultmodel = TestResult()
+            resultmodel.result = res
+            resultmodel.save()
+        else:
+            return render(request, 'result.html', {'user_detail': userdetail,
+                                                'result' : res,
+                                                })
     return render(request, 'result.html', {'user_detail': userdetail,
                                                 'result' : res,
                                                 })
@@ -542,6 +550,7 @@ def section_five(request):
                     mother_preferred_stream = request.POST['mother_preferred_stream']
                     father_preferred_stream = request.POST['father_preferred_stream']
                     annual_income = request.POST['annual_income']
+                    motivation = request.POST['motivation']
 
                     if request.user.is_authenticated:
                         fifthmodel = SectionFive()
@@ -556,6 +565,7 @@ def section_five(request):
                         fifthmodel.father_preferred_stream = father_preferred_stream
                         fifthmodel.mother_preferred_stream = mother_preferred_stream
                         fifthmodel.annual_income = annual_income
+                        fifthmodel.motivation = motivation
                         fifthmodel.user_id = user.id
                         fifthmodel.save()
 

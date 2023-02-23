@@ -135,6 +135,7 @@ class SectionFive(models.Model):
     sibling_job = models.CharField(max_length=100)
     mother_preferred_stream = models.CharField(max_length=100)
     father_preferred_stream = models.CharField(max_length=100)
+    motivation = models.CharField(max_length=100)
     annual_income = models.CharField(max_length=100)
 
 
